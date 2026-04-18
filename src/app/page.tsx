@@ -7,7 +7,7 @@ export default function HomePage() {
     <div>
       {/* Full Screen Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Hero Image */}
+        {/* Hero Image - Full Bleed */}
         <div className="absolute inset-0">
           <Image
             src="/hero.jpg"
@@ -16,31 +16,10 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0" style={{ background: 'rgba(10,10,10,0.7)' }} />
         </div>
         
+        {/* Only buttons section with subtle backdrop */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-1 text-xs font-sans tracking-widest rounded-full"
-              style={{ backgroundColor: '#125787', color: 'white' }}>
-              ESTABLISHED 1957 - LOS ANGELES
-            </span>
-          </div>
-          
-          <h1 className="font-display text-6xl md:text-8xl mb-4 tracking-widest" style={{ color: '#e83a23' }}>
-            LA ROADSTERS
-          </h1>
-          
-          <p className="text-text text-xl md:text-2xl font-body mb-8 max-w-2xl mx-auto">
-            Hot Rods of Southern California
-          </p>
-          
-          <p className="text-text-muted font-body text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-            The Los Angeles Roadsters Car Club was established in 1957 and remains active today. 
-            The club is well known for their beautiful 1936 and older roadsters and their 
-            club uniform of red shirts and white pants.
-          </p>
-          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/show-news"
@@ -53,7 +32,7 @@ export default function HomePage() {
             <Link
               href="/photo-gallery"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 font-sans font-semibold rounded transition-colors duration-200"
-              style={{ borderColor: '#125787', color: '#125787' }}
+              style={{ borderColor: 'white', color: 'white' }}
             >
               <FaCar size={16} />
               View Gallery
