@@ -2,28 +2,37 @@
 
 @theme {
   --color-primary: #0a0a0a;
-  --color-secondary: #1a1a1a;
-  --color-gold: #d4a574;
-  --color-gold-dark: #b8956a;
+  --color-secondary: #111111;
+  --color-tertiary: #1a1a1a;
+  --color-red: #e83a23;
+  --color-red-dark: #c43220;
+  --color-blue: #125787;
+  --color-blue-dark: #0e4569;
   --color-cream: #f5f0e8;
   --color-text: #e8e4dc;
-  --color-text-muted: #a09890;
+  --color-text-muted: #909090;
 }
 
 body {
   background-color: var(--color-primary);
   color: var(--color-text);
-  font-family: "Crimson Pro", Georgia, serif;
+  font-family: var(--font-crimson), Georgia, serif;
 }
 
 .font-display {
-  font-family: "Bebas Neue", Impact, sans-serif;
+  font-family: var(--font-bebas), "Oswald", Impact, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .font-body {
-  font-family: "Crimson Pro", Georgia, serif;
+  font-family: var(--font-crimson), Georgia, serif;
 }
 
 .font-sans {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.sunset-gradient {
+  background: linear-gradient(135deg, #e83a23 0%, #f59e0b 50%, #125787 100%);
 }

@@ -1,24 +1,33 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaCalendarAlt, FaMapMarkerAlt, FaChevronRight, FaCar } from "react-icons/fa";
+import { FaChevronRight, FaCar } from "react-icons/fa";
 
 export default function HomePage() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-b from-primary via-secondary to-primary overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/30 via-transparent to-transparent" />
+      {/* Full Screen Hero */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Hero Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/hero.jpg"
+            alt="LA Roadsters"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0" style={{ background: 'rgba(10,10,10,0.7)' }} />
         </div>
         
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <div className="mb-6">
-            <span className="inline-block px-4 py-1 bg-gold/20 text-gold text-sm font-sans tracking-wider rounded-full">
-              ESTABLISHED 1957
+            <span className="inline-block px-4 py-1 text-xs font-sans tracking-widest rounded-full"
+              style={{ backgroundColor: '#125787', color: 'white' }}>
+              ESTABLISHED 1957 - LOS ANGELES
             </span>
           </div>
           
-          <h1 className="font-display text-6xl md:text-8xl text-gold tracking-widest mb-4">
+          <h1 className="font-display text-6xl md:text-8xl mb-4 tracking-widest" style={{ color: '#e83a23' }}>
             LA ROADSTERS
           </h1>
           
@@ -35,14 +44,16 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/show-news"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-primary font-sans font-semibold rounded hover:bg-gold-dark transition-colors duration-200"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 font-sans font-semibold rounded transition-colors duration-200"
+              style={{ backgroundColor: '#e83a23', color: 'white' }}
             >
               <FaChevronRight size={16} />
               2026 Show News
             </Link>
             <Link
               href="/photo-gallery"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-gold text-gold font-sans font-semibold rounded hover:bg-gold hover:text-primary transition-colors duration-200"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 font-sans font-semibold rounded transition-colors duration-200"
+              style={{ borderColor: '#125787', color: '#125787' }}
             >
               <FaCar size={16} />
               View Gallery
@@ -52,14 +63,15 @@ export default function HomePage() {
       </section>
 
       {/* 2026 Show Announcement */}
-      <section className="bg-secondary py-16 border-y border-gold/20">
+      <section className="py-16 border-y-4" style={{ borderColor: '#125787', backgroundColor: '#111111' }}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="inline-block px-3 py-1 bg-gold/20 text-gold text-xs font-sans tracking-wider rounded mb-4">
+              <span className="inline-block px-3 py-1 text-xs font-sans tracking-wider rounded mb-4"
+                style={{ backgroundColor: '#e83a23', color: 'white' }}>
                 60TH ANNIVERSARY 2026
               </span>
-              <h2 className="font-display text-4xl md:text-5xl text-gold tracking-wider mb-4">
+              <h2 className="font-display text-4xl md:text-5xl mb-4 tracking-wider" style={{ color: '#125787' }}>
                 THE ROADSTER SHOW
               </h2>
               <p className="text-text-muted font-body leading-relaxed mb-6">
@@ -69,31 +81,21 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col gap-3 text-text-muted font-sans text-sm">
                 <div className="flex items-center gap-3">
-                  <FaCalendarAlt className="text-gold" size={18} />
-                  <span>Father Day Weekend: June 19 - 20, 2026</span>
+                  <span style={{ color: '#e83a23' }}>Father Day Weekend: June 19 - 20, 2026</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <FaMapMarkerAlt className="text-gold" size={18} />
-                  <span>Fairplex, 1101 West McKinley Avenue, Pomona, CA</span>
+                  <span style={{ color: '#e83a23' }}>Fairplex, 1101 West McKinley Avenue, Pomona, CA</span>
                 </div>
               </div>
               <div className="mt-8">
                 <Link
                   href="/show-news"
-                  className="inline-flex items-center gap-2 text-gold font-sans hover:underline"
+                  className="inline-flex items-center gap-2 font-sans hover:underline"
+                  style={{ color: '#e83a23' }}
                 >
                   Full Show Details <FaChevronRight size={14} />
                 </Link>
               </div>
-            </div>
-            
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-primary">
-              <Image
-                src="/original/Pictures/Show 2025/LA Roadster Flyer with Andys Art 2025.jpg"
-                alt="LA Roadster Show Flyer"
-                fill
-                className="object-contain"
-              />
             </div>
           </div>
         </div>
@@ -102,7 +104,7 @@ export default function HomePage() {
       {/* Quick Links Grid */}
       <section className="py-16 bg-primary">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="font-display text-3xl text-gold tracking-wider text-center mb-12">
+          <h2 className="font-display text-3xl tracking-wider text-center mb-12" style={{ color: '#125787' }}>
             EXPLORE OUR SITE
           </h2>
           
@@ -120,35 +122,18 @@ export default function HomePage() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="group p-6 bg-secondary rounded-lg border border-gold/10 hover:border-gold/30 hover:bg-gold/5 transition-all duration-300"
+                className="group p-6 rounded border-2 transition-all duration-300"
+                style={{ 
+                  borderColor: '#125787',
+                  backgroundColor: '#111111',
+                }}
               >
-                <h3 className="font-display text-lg text-gold tracking-wider mb-1 group-hover:translate-x-1 transition-transform duration-200">
+                <h3 className="font-display text-lg tracking-wider mb-1" style={{ color: '#125787' }}>
                   {item.label}
                 </h3>
                 <p className="text-text-muted text-xs font-sans">{item.desc}</p>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Image */}
-      <section className="py-12 bg-secondary border-y border-gold/20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-lg overflow-hidden">
-            <Image
-              src="/original/Pictures/bent axles 2018r.jpg"
-              alt="Bent Axles Car Show 2019"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <p className="font-display text-2xl md:text-3xl text-gold tracking-wider">
-                BENT AXLES CAR SHOW 2019
-              </p>
-              <p className="text-text-muted text-sm font-sans mt-1">A tradition of excellence since 1957</p>
-            </div>
           </div>
         </div>
       </section>
