@@ -140,12 +140,12 @@ export function AboutUs() {
 
         {/* Join CTA */}
         <div className="about-section mt-20 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to Join Our Family?</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to be part of the 60th Anniversary?</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Become part of a legendary community that shares your passion for automotive excellence
+            Register now to reserve your vendor space or roadster spot for the 44th Annual Show
           </p>
           <button className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-            Become a Member
+            Register Now
           </button>
         </div>
       </div>

@@ -142,7 +142,7 @@ export function Hero() {
               className="hero-cta relative px-8 py-4 bg-red-600 text-white font-semibold rounded-full overflow-hidden group"
               strength={0.4}
             >
-              <span className="relative z-10">Join the Club</span>
+              <span className="relative z-10">Register Now</span>
               <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             </MagneticButton>
 

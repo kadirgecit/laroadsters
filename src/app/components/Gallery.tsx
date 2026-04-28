@@ -237,7 +237,7 @@ export function Gallery() {
           <div className="inline-block p-12 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <h3 className="text-3xl font-bold text-white mb-4">Want to showcase your classic?</h3>
             <p className="text-gray-400 mb-6 max-w-2xl">
-              Join our community and share your automotive masterpiece with thousands of enthusiasts
+              Register now and reserve your vendor space for the 44th Annual Roadster Show & Swap
             </p>
             <button className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300">
               Submit Your Car

@@ -99,7 +99,7 @@ export function Navigation() {
                 className="px-6 py-3 bg-red-600 text-white text-sm font-semibold rounded-full hover:bg-red-500 transition-colors duration-300"
                 strength={0.3}
               >
-                Join Us
+                Register Now
               </MagneticButton>
             </div>
 
@@ -137,7 +137,7 @@ export function Navigation() {
 
           <div className="pb-8">
             <button className="w-full px-6 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-              Join Us
+              Register Now
             </button>
           </div>
         </div>
