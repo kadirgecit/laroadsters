@@ -69,23 +69,23 @@ export function SwapMeet() {
                     <Calendar className="w-8 h-8 text-red-500" />
                   </div>
                   <div className="text-sm text-gray-400">Date</div>
-                  <div className="text-xl font-bold text-white">Saturday, June 14, 2026</div>
+                  <div className="text-xl font-bold text-white">June 19-20, 2026</div>
                 </div>
 
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center">
                     <Clock className="w-8 h-8 text-red-500" />
                   </div>
-                  <div className="text-sm text-gray-400">Hours</div>
-                  <div className="text-xl font-bold text-white">6:00 AM - 2:00 PM</div>
+                  <div className="text-sm text-gray-400">Move-In (Thu)</div>
+                  <div className="text-xl font-bold text-white">June 18, 7am-4pm</div>
                 </div>
 
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center">
                     <MapPin className="w-8 h-8 text-red-500" />
                   </div>
-                  <div className="text-sm text-gray-400">Location</div>
-                  <div className="text-xl font-bold text-white">Fairplex, Pomona CA</div>
+                  <div className="text-sm text-gray-400">Enter Gate</div>
+                  <div className="text-xl font-bold text-white">Gate #15 (Arrow Hwy)</div>
                 </div>
               </div>
 
@@ -110,32 +110,38 @@ export function SwapMeet() {
         {/* Info Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           <div className="swap-card p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500">
-            <Package className="w-12 h-12 text-red-500 mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-3">What You'll Find</h3>
-            <p className="text-gray-400 leading-relaxed">
-              Vintage parts, complete engines, body panels, chrome, upholstery, wheels, tires, and everything automotive.
-            </p>
-          </div>
-
-          <div className="swap-card p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500">
             <DollarSign className="w-12 h-12 text-red-500 mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-3">Vendor Pricing</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Swap Space Pricing</h3>
             <ul className="text-gray-400 space-y-2">
-              <li>• Single Space: $50</li>
-              <li>• Double Space: $90</li>
-              <li>• Premium Corner: $75</li>
-              <li>• Early Entry: $25 extra</li>
+              <li>• Regular Space (25' x 20'): $125</li>
+              <li>• Corner Space: $150</li>
+              <li>• Each space = 3 Fairplex parking spots</li>
+              <li>• Pre-register by mail or phone</li>
+              <li>• Contact: Ken Butler (805) 390-5187</li>
             </ul>
           </div>
 
           <div className="swap-card p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500">
             <Users className="w-12 h-12 text-red-500 mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-3">Admission</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Show Admission</h3>
             <ul className="text-gray-400 space-y-2">
-              <li>• General: $10</li>
-              <li>• LAR Members: $5</li>
-              <li>• Kids Under 12: Free</li>
-              <li>• Early Bird (5 AM): $20</li>
+              <li>• Adults: $25/person/day</li>
+              <li>• Military (ID): $10</li>
+              <li>• Children under 12: Free</li>
+              <li>• 2-Day Pass: $45</li>
+              <li>• Cash, debit & credit accepted</li>
+            </ul>
+          </div>
+
+          <div className="swap-card p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500">
+            <Package className="w-12 h-12 text-red-500 mb-4" />
+            <h3 className="text-2xl font-bold text-white mb-3">Items for Sale</h3>
+            <ul className="text-gray-400 space-y-2">
+              <li>• Car parts only</li>
+              <li>• Car-related items</li>
+              <li>• No general merchandise</li>
+              <li>• Contact Ken Butler for info</li>
+              <li>• 36fordken@gmail.com</li>
             </ul>
           </div>
         </div>
@@ -147,37 +153,45 @@ export function SwapMeet() {
 
             <div className="grid md:grid-cols-2 gap-8 text-gray-400">
               <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Setup & Rules</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">Swap Meet Move-In</h3>
                 <ul className="space-y-2 leading-relaxed">
-                  <li>• Vendor setup begins at 4:00 AM</li>
-                  <li>• All vehicles must be unloaded by 6:00 AM</li>
-                  <li>• 20x20 ft spaces include one parking pass</li>
-                  <li>• Tables and canopies permitted</li>
-                  <li>• No early pack-up before 1:00 PM</li>
+                  <li>• Thursday June 18: Vendor move-in 7am-4pm</li>
+                  <li>• Enter Gate #15 off Arrow Highway</li>
+                  <li>• Spaces 25' x 20' (3 Fairplex spots)</li>
+                  <li>• No early pack-up before 1:00 PM Sunday</li>
+                  <li>• Contact: Ken Butler (805) 390-5187</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-white mb-4">What to Bring</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">Commercial Vendors</h3>
                 <ul className="space-y-2 leading-relaxed">
-                  <li>• Tables and display equipment</li>
-                  <li>• Canopy or shade structure</li>
-                  <li>• Cash for change</li>
-                  <li>• Business cards</li>
-                  <li>• Proper identification</li>
+                  <li>• Thursday June 18: Move-in 7am-4pm</li>
+                  <li>• Enter Gate #1</li>
+                  <li>• All vehicles must be off ramp by 10am</li>
+                  <li>• Contact: Rich Cohn (818) 402-8145</li>
+                  <li>• Exhibitor inquiries welcome</li>
                 </ul>
               </div>
             </div>
 
             <div className="mt-8 pt-8 border-t border-white/10">
               <p className="text-gray-400 mb-4">
-                <strong className="text-white">Contact for Reservations:</strong> Email us at{' '}
+                <strong className="text-white">Swap Meet Contact:</strong>{' '}
+                <a href="mailto:36fordken@gmail.com" className="text-red-500 hover:text-red-400 transition-colors duration-300">
+                  36fordken@gmail.com
+                </a>{' '}
+                or Ken Butler (805) 390-5187
+              </p>
+              <p className="text-gray-400 mb-4">
+                <strong className="text-white">Exhibitor Contact:</strong>{' '}
                 <a href="mailto:1932lar@gmail.com" className="text-red-500 hover:text-red-400 transition-colors duration-300">
                   1932lar@gmail.com
-                </a>
+                </a>{' '}
+                or Rich Cohn (818) 402-8145
               </p>
               <p className="text-sm text-gray-500">
-                Spaces are limited and fill up quickly. Reserve early to guarantee your spot!
+                Show Chairman: Dave Meissen (916) 220-0514
               </p>
             </div>
           </div>

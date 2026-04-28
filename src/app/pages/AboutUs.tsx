@@ -29,23 +29,23 @@ export function AboutUs() {
   const values = [
     {
       icon: Heart,
-      title: 'Passion',
-      desc: 'A shared love for automotive history and craftsmanship drives everything we do.',
+      title: 'Pre-War Focus',
+      desc: 'Dedicated to preserving 1936 and older roadsters — the golden age of American hot rodding.',
     },
     {
       icon: Users,
       title: 'Community',
-      desc: 'Building lasting friendships through our mutual appreciation of classic cars.',
+      desc: 'Building lasting friendships through our shared love of classic roadsters and automotive culture.',
     },
     {
       icon: Award,
-      title: 'Excellence',
-      desc: 'Celebrating the highest standards in restoration and custom builds.',
+      title: 'Quality',
+      desc: 'Only finished roadsters in the show area — no project cars. Quality above all else.',
     },
     {
       icon: Wrench,
       title: 'Preservation',
-      desc: 'Keeping automotive heritage alive for future generations to enjoy.',
+      desc: 'Keeping automotive heritage alive for future generations to enjoy and appreciate.',
     },
   ];
 
@@ -55,7 +55,7 @@ export function AboutUs() {
         {/* Header */}
         <div className="mb-20 text-center">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-            ESTABLISHED 1967
+            ESTABLISHED 1957 · 60TH ANNIVERSARY
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
@@ -73,26 +73,20 @@ export function AboutUs() {
               </h2>
               <div className="space-y-4 text-lg text-gray-400 leading-relaxed">
                 <p>
-                  The Los Angeles Roadsters was founded in 1967 by a group of passionate automotive
-                  enthusiasts who shared a vision: to preserve and celebrate the classic roadster
-                  culture that defined Southern California's automotive heritage.
+                  The Los Angeles Roadsters Car Club was established in 1957 and remains active today. For 60 years, we've celebrated the pre-war roadster culture that defines Southern California's automotive heritage.
                 </p>
                 <p>
-                  What began as informal weekend gatherings has grown into one of the most
-                  respected automotive clubs in the nation. For over five decades, we've been
-                  the gold standard for roadster preservation, restoration, and celebration.
+                  Our 44th Annual Roadster Show & Swap will be held Father's Day Weekend, June 19-20, 2026 at the Fairplex in Pomona, California. The main attraction: hundreds of 1936 and older open cars — some original, some modified, all of the highest quality.
                 </p>
                 <p>
-                  Our annual Father's Day Roadster Show at the Fairplex in Pomona has become
-                  a pilgrimage for automotive enthusiasts nationwide, showcasing the finest
-                  examples of classic roadsters, hot rods, and sports cars.
+                  Only finished roadsters are admitted to the Show Roadster Parking Area. No cruising fairgrounds for liability reasons. Roadsters enter through Gate #1B — roadster and driver are free. Passengers pay $20 for the weekend.
                 </p>
               </div>
             </div>
 
             <div className="aspect-[4/3] bg-gradient-to-br from-red-600/20 to-blue-900/20 rounded-2xl border border-red-500/20 backdrop-blur-sm relative overflow-hidden group">
               <div className="absolute inset-0 flex items-center justify-center text-9xl font-black text-white/5">
-                1967
+                1957
               </div>
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
@@ -129,16 +123,16 @@ export function AboutUs() {
             </p>
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               <div className="text-center">
-                <div className="text-5xl font-black text-red-500 mb-2">5000+</div>
-                <div className="text-gray-400">Members Strong</div>
+                <div className="text-5xl font-black text-red-500 mb-2">1957</div>
+                <div className="text-gray-400">Year Founded</div>
               </div>
               <div className="text-center">
-                <div className="text-5xl font-black text-red-500 mb-2">50+</div>
-                <div className="text-gray-400">Years of Excellence</div>
+                <div className="text-5xl font-black text-red-500 mb-2">60</div>
+                <div className="text-gray-400">Years Strong</div>
               </div>
               <div className="text-center">
-                <div className="text-5xl font-black text-red-500 mb-2">100K+</div>
-                <div className="text-gray-400">Annual Visitors</div>
+                <div className="text-5xl font-black text-red-500 mb-2">44</div>
+                <div className="text-gray-400">Annual Shows</div>
               </div>
             </div>
           </div>

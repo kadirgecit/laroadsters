@@ -5,36 +5,56 @@ import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const carImages = [
+  '/images/BUCKRDSTER3.jpg',
+  '/images/jordan copy.JPG',
+  '/images/gammell_car copy.jpg',
+  '/images/winson copy.JPG',
+  '/images/COHN6.jpg',
+  '/images/BUTLER1.jpg',
+  '/images/kreb_carJT copy.jpg',
+  '/images/Scritchfield_Roadster copy.jpg',
+  '/images/simeone_car1 copy.JPG',
+  '/images/tann cabby copy.jpg',
+  '/images/tann topdown copy.jpg',
+];
+
+const categories = [
+  {
+    title: 'Classic Roadsters',
+    subtitle: 'Timeless Elegance',
+    desc: 'Open-top legends from the golden era of automotive design',
+    year: '1920s-1960s',
+    image: carImages[0],
+  },
+  {
+    title: 'Hot Rods',
+    subtitle: 'Raw Power',
+    desc: 'Custom-built machines pushing performance boundaries',
+    year: '1930s-1950s',
+    image: carImages[1],
+  },
+  {
+    title: 'Sports Cars',
+    subtitle: 'European Precision',
+    desc: 'Iconic speedsters that defined motorsport excellence',
+    year: '1950s-1970s',
+    image: carImages[2],
+  },
+  {
+    title: 'Custom Builds',
+    subtitle: 'Modern Artistry',
+    desc: 'Contemporary interpretations of classic automotive culture',
+    year: '2000s-Present',
+    image: carImages[3],
+  },
+];
+
+const featuredImages = carImages.slice(4);
+
 export function Gallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const categories = [
-    {
-      title: 'Classic Roadsters',
-      subtitle: 'Timeless Elegance',
-      desc: 'Open-top legends from the golden era of automotive design',
-      year: '1920s-1960s'
-    },
-    {
-      title: 'Hot Rods',
-      subtitle: 'Raw Power',
-      desc: 'Custom-built machines pushing performance boundaries',
-      year: '1930s-1950s'
-    },
-    {
-      title: 'Sports Cars',
-      subtitle: 'European Precision',
-      desc: 'Iconic speedsters that defined motorsport excellence',
-      year: '1950s-1970s'
-    },
-    {
-      title: 'Custom Builds',
-      subtitle: 'Modern Artistry',
-      desc: 'Contemporary interpretations of classic automotive culture',
-      year: '2000s-Present'
-    },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -74,7 +94,7 @@ export function Gallery() {
           opacity: 1,
           duration: 0.4,
         }, '-=0.2')
-        .to(item.querySelector('.gallery-image'), {
+        .to(item.querySelector('.gallery-image img'), {
           scale: 1.1,
           duration: 0.6,
         }, 0);
@@ -92,6 +112,19 @@ export function Gallery() {
         stagger: 0.2,
       });
 
+      // Animate featured images
+      gsap.from('.featured-image', {
+        scrollTrigger: {
+          trigger: '.featured-section',
+          start: 'top 70%',
+        },
+        y: 80,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -100,11 +133,11 @@ export function Gallery() {
   return (
     <div ref={sectionRef} className="relative py-40 px-4 bg-black overflow-hidden">
       {/* Background Grid */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(255,107,0,0.3) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,107,0,0.3) 1px, transparent 1px)
+            linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
           backgroundSize: '100px 100px',
         }} />
@@ -140,8 +173,14 @@ export function Gallery() {
               style={{ perspective: '1000px' }}
               onMouseEnter={() => setActiveIndex(index)}
             >
-              {/* Background Image Placeholder */}
-              <div className="gallery-image absolute inset-0 bg-gradient-to-br from-red-600/30 to-blue-900/30 scale-100 transition-transform duration-700" />
+              {/* Background Image */}
+              <div className="gallery-image absolute inset-0 scale-100 transition-transform duration-700 overflow-hidden">
+                <img
+                  src={category.image}
+                  alt={category.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
               {/* Overlay */}
               <div className="gallery-overlay absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80" />
@@ -167,6 +206,30 @@ export function Gallery() {
               <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-500" />
             </div>
           ))}
+        </div>
+
+        {/* Featured Images Section */}
+        <div className="featured-section mt-24">
+          <div className="text-sm tracking-[0.3em] text-red-500 mb-8 font-light text-center">
+            MORE FROM OUR COLLECTION
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {featuredImages.map((img, index) => (
+              <div
+                key={index}
+                className="featured-image relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
+              >
+                <img
+                  src={img}
+                  alt={`Classic car ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <ArrowRight className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Bottom CTA */}

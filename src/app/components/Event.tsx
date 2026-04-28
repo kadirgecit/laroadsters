@@ -92,7 +92,7 @@ export function Event() {
               </div>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              The most anticipated automotive celebration on the West Coast
+              The world's premier pre-war roadster show — 44th Annual at Fairplex Pomona
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export function Event() {
                   </div>
                   <div>
                     <div className="text-sm text-white/70 mb-1">Date</div>
-                    <div className="text-xl font-bold text-white">Father's Day Weekend</div>
+                    <div className="text-xl font-bold text-white">June 19-20, 2026</div>
                   </div>
                 </div>
 
@@ -132,7 +132,7 @@ export function Event() {
                   </div>
                   <div>
                     <div className="text-sm text-white/70 mb-1">Location</div>
-                    <div className="text-xl font-bold text-white">Fairplex, Pomona</div>
+                    <div className="text-xl font-bold text-white">Fairplex, 1101 W McKinley, Pomona</div>
                   </div>
                 </div>
 
@@ -141,8 +141,8 @@ export function Event() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/70 mb-1">When</div>
-                    <div className="text-xl font-bold text-white">Every June</div>
+                    <div className="text-sm text-white/70 mb-1">Hours</div>
+                    <div className="text-xl font-bold text-white">7am - 4pm Daily</div>
                   </div>
                 </div>
               </div>
@@ -162,9 +162,9 @@ export function Event() {
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { title: 'Legendary Showcases', desc: 'Over 500 pristine classics on display' },
-            { title: 'National Recognition', desc: 'Attracting enthusiasts from across America' },
-            { title: 'Award Ceremonies', desc: 'Celebrating excellence in automotive craftsmanship' },
+            { title: 'Pre-1936 Roadsters Only', desc: 'Only finished 1936 and older open cars admitted to Show area' },
+            { title: 'Swap Meet', desc: 'Vendor spaces available — car parts and related items only' },
+            { title: 'Street Rod Parking', desc: 'Specialty parking for 1985 and older cars at Gate #15' },
           ].map((feature, index) => (
             <div
               key={index}
