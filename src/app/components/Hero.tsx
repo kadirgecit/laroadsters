@@ -108,29 +108,13 @@ export function Hero() {
 
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden bg-black">
-      {/* Animated Grid Background */}
-      <div className="hero-grid absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255,107,0,0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,107,0,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-        }} />
-      </div>
-
-      {/* Parallax Layers */}
-      <div className="absolute inset-0 parallax-layer-1">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-red-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="absolute inset-0 parallax-layer-2">
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl" />
-      </div>
-
-      {/* Dark Overlay for Scroll */}
-      <div ref={overlayRef} className="absolute inset-0 bg-black opacity-0 pointer-events-none" />
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/hero-bg.png)' }}
+      />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60" />
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
