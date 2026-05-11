@@ -85,10 +85,10 @@ export function About() {
   };
 
   const stats = [
-    { icon: Calendar, value: '1957', label: 'Founded', color: 'from-red-500 to-red-600' },
-    { icon: Award, value: '60', label: 'Years Strong', color: 'from-blue-500 to-red-600' },
-    { icon: Star, value: '44', label: 'Annual Shows', color: 'from-blue-500 to-cyan-600' },
-    { icon: MapPin, value: 'Pomona', label: 'Fairplex, CA', color: 'from-yellow-500 to-red-600' },
+    { icon: Calendar, value: '1957', label: 'Club Founded', color: 'from-red-500 to-red-600' },
+    { icon: Award, value: '69 Years', label: 'Club Strong', color: 'from-blue-500 to-red-600' },
+    { icon: Star, value: '60th', label: 'Show Anniversary', color: 'from-blue-500 to-cyan-600' },
+    { icon: MapPin, value: '44 Times', label: 'Show at Pomona Fairplex', color: 'from-yellow-500 to-red-600' },
   ];
 
   return (
