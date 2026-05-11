@@ -72,7 +72,7 @@ export function News() {
             </div>
             
             {/* Embedded PDF Viewer */}
-            <div className="w-full h-[600px] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+            <div className="w-full h-[800px] rounded-xl overflow-hidden border border-white/10 bg-white/5">
               <iframe
                 src="/44th-Anniversary.pdf"
                 className="w-full h-full"
