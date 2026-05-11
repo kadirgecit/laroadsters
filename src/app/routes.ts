@@ -14,7 +14,6 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: 'news', Component: News },
-      { path: 'swap-meet', Component: SwapMeet },
       { path: 'about', Component: AboutUs },
       { path: 'member-news', Component: MemberNews },
       { path: 'gallery', Component: PhotoGallery },
