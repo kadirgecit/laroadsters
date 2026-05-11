@@ -48,11 +48,11 @@ export function Navigation() {
 
   const navItems = [
     { path: '/', label: 'Home' },
-    { path: '/news', label: 'News' },
-    { path: '/swap-meet', label: 'Swap Meet' },
+    { path: '/news', label: 'Show News' },
     { path: '/about', label: 'About Us' },
     { path: '/member-news', label: 'Member News' },
-    { path: '/gallery', label: 'Photo Gallery' },
+    { path: '/gallery', label: 'Gallery' },
+    { path: '/contact', label: 'Contact Us' },
   ];
 
   return (
