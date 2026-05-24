@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Trophy, Wrench, Calendar } from 'lucide-react';
+import { Calendar, MapPin, Clock, FileText, Download, Users } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,15 +10,15 @@ export function Members() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.member-card', {
+      gsap.from('.member-section', {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 70%',
         },
-        y: 100,
+        y: 60,
         opacity: 0,
-        duration: 1,
-        stagger: 0.15,
+        duration: 0.8,
+        stagger: 0.2,
         ease: 'power3.out',
       });
     }, sectionRef);
@@ -26,50 +26,47 @@ export function Members() {
     return () => ctx.revert();
   }, []);
 
-  const memberUpdates = [
+  const events = [
     {
-      icon: Trophy,
-      date: 'June 20, 2026',
-      member: 'LA Roadsters Members',
-      title: 'Best Roadster Awards',
-      content: 'The 44th Annual Show wrapped up with outstanding results. Special recognition awards presented by SoCal Speed Shop. Full award list available on the official show page.',
-      highlight: true,
+      date: 'June 19-20, 2026',
+      title: '44th Annual Roadster Show & Swap',
+      location: 'Fairplex, Pomona',
+      description: "Father's Day Weekend - The premier classic roadster event of the year",
     },
     {
-      icon: Calendar,
-      date: 'June 1, 2026',
-      member: 'Show Committee',
-      title: 'Pre-Registration Required',
-      content: 'Roadster pre-registration is now closed. All pre-registered roadsters will receive confirmation packets. Roadsters not pre-registered may not be admitted to the show area.',
+      date: 'July 2026',
+      title: 'Club Meeting',
+      location: 'TBD',
+      description: 'Monthly member meeting - locations rotate',
     },
     {
-      icon: Wrench,
-      date: 'May 2026',
-      member: 'Vendor Setup',
-      title: 'Commercial Vendors - Gate #1',
-      content: 'Commercial vendor move-in begins Thursday June 18 at 7am. Enter through Gate #1. All vehicles must be unloaded and moved to parking by 10am Thursday.',
+      date: 'August 2026',
+      title: 'Club Meeting',
+      location: 'TBD',
+      description: 'Monthly member meeting',
     },
     {
-      icon: Calendar,
-      date: 'May 2026',
-      member: 'Swap Meet',
-      title: 'Swap Meet Move-In - Gate #15',
-      content: 'Swap meet vendors enter Gate #15 off Arrow Highway. Spaces are 25\' x 20\' (approximately 3 Fairplex parking spots). Contact Ken Butler for availability.',
+      date: 'September 2026',
+      title: 'Club Picnic',
+      location: 'TBD',
+      description: 'Annual summer picnic for members and families',
     },
+  ];
+
+  const meetings = [
     {
-      icon: Trophy,
-      date: 'April 2026',
-      member: 'Club Members',
-      title: '60th Anniversary Awards',
-      content: 'Special 60th Anniversary awards presented at this year\'s show, made possible by SoCal Speed Shop and the Los Angeles Roadsters Car Club.',
+      day: '3rd Wednesday of Each Month',
+      time: '7:00 PM',
+      location: 'Various Locations',
+      note: 'Meetings rotate between member homes and local venues',
     },
-    {
-      icon: Calendar,
-      date: '2026',
-      member: 'Event Info',
-      title: 'Fairplex Gate Locations',
-      content: 'Classic roadster parking Gate #1B. Swap meet Gate #15. Commercial vendors Gate #1. All gates off Arrow Highway, Pomona.',
-    },
+  ];
+
+  const documents = [
+    { name: 'Club Bylaws', size: 'PDF' },
+    { name: 'Membership Application', size: 'PDF' },
+    { name: 'Event Waiver', size: 'PDF' },
+    { name: 'Show Guidelines', size: 'PDF' },
   ];
 
   return (
@@ -78,89 +75,113 @@ export function Members() {
         {/* Header */}
         <div className="mb-16">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-            MEMBER SPOTLIGHT
+            CLUB INFORMATION
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
-              MEMBERS
+              MEMBER NEWS
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            Meet the passionate members who keep the Los Angeles Roadsters legacy alive
+            Stay connected with the latest events, meetings, and club information
           </p>
         </div>
 
-        {/* Featured Member */}
-        {memberUpdates[0] && (
-          <div className="member-card mb-12">
-            <div className="relative p-12 md:p-16 rounded-3xl bg-gradient-to-br from-red-600/20 to-red-900/20 border border-red-500/30 backdrop-blur-sm overflow-hidden group">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center">
-                    {React.createElement(memberUpdates[0].icon, { className: "w-8 h-8 text-white" })}
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-400">{memberUpdates[0].date}</div>
-                    <div className="text-2xl font-bold text-white">{memberUpdates[0].member}</div>
-                  </div>
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                  {memberUpdates[0].title}
-                </h2>
-
-                <p className="text-lg text-gray-300 max-w-3xl leading-relaxed">
-                  {memberUpdates[0].content}
-                </p>
-              </div>
-            </div>
+        {/* Calendar of Events */}
+        <section className="member-section mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <Calendar className="w-8 h-8 text-red-500" />
+            <h2 className="text-3xl font-bold text-white">Calendar of Events</h2>
           </div>
-        )}
-
-        {/* Member Updates Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {memberUpdates.slice(1).map((update, index) => (
-            <div
-              key={index}
-              className="member-card group cursor-pointer"
-            >
-              <div className="h-full p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-red-500/30 transition-colors duration-300">
-                    <update.icon className="w-6 h-6 text-red-500" />
-                  </div>
+          <div className="space-y-4">
+            {events.map((event, index) => (
+              <div
+                key={index}
+                className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="text-sm text-gray-500 mb-1">{update.date}</div>
-                    <div className="text-lg font-bold text-white">{update.member}</div>
+                    <div className="text-red-500 font-semibold mb-2">{event.date}</div>
+                    <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
+                    <p className="text-gray-400">{event.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-500">
+                    <MapPin className="w-4 h-4" />
+                    <span>{event.location}</span>
                   </div>
                 </div>
-
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
-                  {update.title}
-                </h3>
-
-                <p className="text-gray-400 leading-relaxed">
-                  {update.content}
-                </p>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Submit CTA */}
-        <div className="member-card mt-20">
-          <div className="p-12 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Share Your Story</h2>
-            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Have a build update, achievement, or event to share with the community? We'd love to feature your story!
-            </p>
-            <button className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-              Submit Your News
-            </button>
+            ))}
           </div>
-        </div>
+        </section>
+
+        {/* Meeting Dates */}
+        <section className="member-section mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <Clock className="w-8 h-8 text-red-500" />
+            <h2 className="text-3xl font-bold text-white">Meeting Dates</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {meetings.map((meeting, index) => (
+              <div
+                key={index}
+                className="p-8 rounded-2xl bg-gradient-to-br from-red-600/10 to-red-900/10 border border-red-500/30"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <Users className="w-6 h-6 text-red-500" />
+                  <span className="text-white font-semibold">Regular Meetings</span>
+                </div>
+                <div className="space-y-3 text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-gray-500" />
+                    <span>{meeting.day}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-gray-500" />
+                    <span>{meeting.time}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-gray-500" />
+                    <span>{meeting.location}</span>
+                  </div>
+                </div>
+                <p className="mt-4 text-gray-500 text-sm">{meeting.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Club Documents */}
+        <section className="member-section">
+          <div className="flex items-center gap-4 mb-8">
+            <FileText className="w-8 h-8 text-red-500" />
+            <h2 className="text-3xl font-bold text-white">Club Documents</h2>
+          </div>
+          <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
+            <p className="text-gray-400 mb-6">
+              Members-only documents. Please log in to access these files.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {documents.map((doc, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <FileText className="w-5 h-5 text-red-500" />
+                    <span className="text-white">{doc.name}</span>
+                  </div>
+                  <span className="text-gray-500 text-sm">{doc.size}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-center">
+              <p className="text-gray-400">
+                For document access, please contact the club secretary or visit a meeting.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

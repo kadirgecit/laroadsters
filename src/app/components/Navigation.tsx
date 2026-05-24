@@ -50,7 +50,7 @@ export function Navigation() {
     { path: '/', label: 'Home' },
     { path: '/news', label: 'Show News' },
     { path: '/about', label: 'About Us' },
-    { path: '/members', label: 'Members' },
+    { path: '/member-news', label: 'Member News' },
     { path: '/gallery', label: 'Gallery' },
     { path: '/contact', label: 'Contact Us' },
   ];
