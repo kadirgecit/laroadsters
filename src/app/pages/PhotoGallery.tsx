@@ -27,21 +27,17 @@ export function PhotoGallery() {
     return () => ctx.revert();
   }, []);
 
-  const filters = ['All', 'Roadsters', 'Hot Rods', 'Sports Cars', 'Events', 'Members'];
+  const filters = ['All', 'LA Roadster Shows', 'Runs', 'Members'];
 
   const galleries = [
-    { category: 'Events', title: 'Father\'s Day Show 2025', count: 250 },
-    { category: 'Roadsters', title: '1932 Ford Collection', count: 45 },
-    { category: 'Hot Rods', title: 'Traditional Builds', count: 67 },
-    { category: 'Sports Cars', title: 'European Classics', count: 38 },
-    { category: 'Events', title: 'Spring Cruise Night', count: 120 },
+    { category: 'LA Roadster Shows', title: "Father's Day Show 2025", count: 250 },
+    { category: 'LA Roadster Shows', title: 'Swap Meet 2025', count: 95 },
+    { category: 'Runs', title: 'Spring Cruise Night', count: 120 },
+    { category: 'Runs', title: 'Car Club Runs 2025', count: 85 },
+    { category: 'Runs', title: 'Road Trips', count: 62 },
     { category: 'Members', title: 'Member Spotlights', count: 89 },
-    { category: 'Roadsters', title: 'Vintage Roadsters', count: 54 },
-    { category: 'Hot Rods', title: 'Custom Builds', count: 72 },
-    { category: 'Events', title: 'Swap Meet 2025', count: 95 },
     { category: 'Members', title: 'Workshop Sessions', count: 43 },
-    { category: 'Sports Cars', title: 'British Invasion', count: 31 },
-    { category: 'Roadsters', title: 'T-Bucket Collection', count: 28 },
+    { category: 'Members', title: 'Member Builds', count: 75 },
   ];
 
   const filteredGalleries = activeFilter === 'all'
