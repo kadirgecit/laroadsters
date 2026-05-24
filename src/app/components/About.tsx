@@ -120,7 +120,7 @@ export function About() {
                 The Los Angeles Roadsters Car Club — established in 1957 and still going strong. We're celebrating our 60th Anniversary in 2026.
               </p>
               <p>
-                For six decades, we've hosted the world's premier pre-war roadster show at the Fairplex in Pomona, California. Our 44th Annual Show & Swap brings together the finest classics on Father's Day Weekend.
+                For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 44th Annual Show & Swap brings together the finest classics on Father's Day Weekend.
               </p>
               <p>
                 Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.
@@ -135,9 +135,14 @@ export function About() {
 
           <div ref={imageRef} className="relative">
             <div className="aspect-[4/3] bg-gradient-to-br from-red-600/20 to-blue-900/20 rounded-2xl border border-red-500/20 backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="absolute inset-0 flex items-center justify-center text-6xl font-black text-white/10">
-                1957
+              <img 
+                src="/assets/photos/mugs2.jpg" 
+                alt="Los Angeles Roadsters Heritage" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-6 left-6">
+                <span className="text-4xl md:text-5xl font-black text-white drop-shadow-lg">1957</span>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@ import { Trophy, Wrench, Calendar } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function MemberNews() {
+export function Members() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export function MemberNews() {
       date: '2026',
       member: 'Event Info',
       title: 'Fairplex Gate Locations',
-      content: 'Roadster parking Gate #1B (pre-1936 only). Swap meet Gate #15. Commercial vendors Gate #1. All gates off Arrow Highway, Pomona.',
+      content: 'Classic roadster parking Gate #1B. Swap meet Gate #15. Commercial vendors Gate #1. All gates off Arrow Highway, Pomona.',
     },
   ];
 
@@ -82,11 +82,11 @@ export function MemberNews() {
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
-              MEMBER NEWS
+              MEMBERS
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            Celebrating the achievements, builds, and stories of our incredible community
+            Meet the passionate members who keep the Los Angeles Roadsters legacy alive
           </p>
         </div>
 

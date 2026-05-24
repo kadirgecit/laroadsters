@@ -29,8 +29,8 @@ export function AboutUs() {
   const values = [
     {
       icon: Heart,
-      title: 'Pre-War Focus',
-      desc: 'Dedicated to preserving 1936 and older roadsters — the golden age of American hot rodding.',
+      title: 'Classic Focus',
+      desc: 'Dedicated to preserving classic roadsters — the golden age of American hot rodding.',
     },
     {
       icon: Users,
@@ -73,10 +73,10 @@ export function AboutUs() {
               </h2>
               <div className="space-y-4 text-lg text-gray-400 leading-relaxed">
                 <p>
-                  The Los Angeles Roadsters Car Club was established in 1957 and remains active today. For 60 years, we've celebrated the pre-war roadster culture that defines Southern California's automotive heritage.
+                  The Los Angeles Roadsters Car Club was established in 1957 and remains active today. For 60 years, we've celebrated the classic roadster culture that defines Southern California's automotive heritage.
                 </p>
                 <p>
-                  Our 44th Annual Roadster Show & Swap will be held Father's Day Weekend, June 19-20, 2026 at the Fairplex in Pomona, California. The main attraction: hundreds of 1936 and older open cars — some original, some modified, all of the highest quality.
+                  Our 44th Annual Roadster Show & Swap will be held Father's Day Weekend, June 19-20, 2026 at the Fairplex in Pomona, California. The main attraction: hundreds of classic open cars — some original, some modified, all of the highest quality.
                 </p>
                 <p>
                   Only finished roadsters are admitted to the Show Roadster Parking Area. No cruising fairgrounds for liability reasons. Roadsters enter through Gate #1B — roadster and driver are free. Passengers pay $20 for the weekend.
@@ -142,11 +142,11 @@ export function AboutUs() {
         <div className="about-section mt-20 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Ready to be part of the 60th Anniversary?</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Register now to reserve your vendor space or roadster spot for the 44th Annual Show
+            Download the flyer to reserve your vendor space or roadster spot for the 44th Annual Show
           </p>
-          <button className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-            Register Now
-          </button>
+          <a href="/44th-Anniversary.pdf" download className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block">
+            Download Flyer (PDF)
+          </a>
         </div>
       </div>
     </div>

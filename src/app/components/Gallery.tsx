@@ -21,31 +21,31 @@ const carImages = [
 
 const categories = [
   {
+    title: 'Our Members',
+    subtitle: 'Car Enthusiasts',
+    desc: 'Meet the passionate members who keep the legacy alive',
+    year: '1957-Present',
+    image: carImages[0],
+  },
+  {
     title: 'Classic Roadsters',
     subtitle: 'Timeless Elegance',
     desc: 'Open-top legends from the golden era of automotive design',
     year: '1920s-1960s',
-    image: carImages[0],
+    image: carImages[1],
   },
   {
     title: 'Hot Rods',
     subtitle: 'Raw Power',
     desc: 'Custom-built machines pushing performance boundaries',
     year: '1930s-1950s',
-    image: carImages[1],
-  },
-  {
-    title: 'Sports Cars',
-    subtitle: 'European Precision',
-    desc: 'Iconic speedsters that defined motorsport excellence',
-    year: '1950s-1970s',
     image: carImages[2],
   },
   {
-    title: 'Custom Builds',
-    subtitle: 'Modern Artistry',
-    desc: 'Contemporary interpretations of classic automotive culture',
-    year: '2000s-Present',
+    title: 'Events',
+    subtitle: 'Community',
+    desc: 'Annual shows, swap meets, and cruise nights',
+    year: 'Annual',
     image: carImages[3],
   },
 ];
@@ -149,18 +149,18 @@ export function Gallery() {
           <div className="flex items-end justify-between flex-wrap gap-8">
             <div>
               <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-                EXPLORE EXCELLENCE
+                COMMUNITY SPOTLIGHT
               </div>
               <h2 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.9] tracking-tight">
                 <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
-                  FEATURED<br />COLLECTION
+                  OUR<br />MEMBERS
                 </div>
               </h2>
             </div>
-            <button className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold flex items-center gap-2 group">
-              View All
+            <a href="/members" className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold flex items-center gap-2 group">
+              View All Members
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
+            </a>
           </div>
         </div>
 

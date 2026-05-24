@@ -92,7 +92,7 @@ export function Event() {
               </div>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              The world's premier pre-war roadster show — 44th Annual at Fairplex Pomona
+              The world's premier classic roadster show — 44th Annual at Fairplex Pomona
             </p>
           </div>
         </div>
@@ -147,13 +147,20 @@ export function Event() {
                 </div>
               </div>
 
-              <div className="text-center">
-                <MagneticButton
-                  className="px-12 py-5 bg-white text-red-600 font-bold rounded-full hover:shadow-2xl transition-all duration-300 text-lg"
-                  strength={0.5}
+              <div className="text-center flex flex-wrap justify-center gap-4">
+                <a
+                  href="/flyer.pdf"
+                  download
+                  className="px-8 py-5 bg-white text-red-600 font-bold rounded-full hover:shadow-2xl transition-all duration-300 text-lg inline-block"
                 >
-                  Register Now
-                </MagneticButton>
+                  Download Flyer (PDF)
+                </a>
+                <a
+                  href="/news"
+                  className="px-8 py-5 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-red-600 transition-all duration-300 text-lg inline-block"
+                >
+                  Show News
+                </a>
               </div>
             </div>
           </div>
@@ -162,7 +169,7 @@ export function Event() {
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { title: 'Pre-1936 Roadsters Only', desc: 'Only finished 1936 and older open cars admitted to Show area' },
+            { title: 'Classic Roadsters Only', desc: 'Only finished classic open cars admitted to Show area' },
             { title: 'Swap Meet', desc: 'Vendor spaces available — car parts and related items only' },
             { title: 'Street Rod Parking', desc: 'Specialty parking for 1985 and older cars at Gate #15' },
           ].map((feature, index) => (

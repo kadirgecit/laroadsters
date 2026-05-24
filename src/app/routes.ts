@@ -3,7 +3,7 @@ import { Root } from './components/Root';
 import { Home } from './pages/Home';
 import { News } from './pages/News';
 import { AboutUs } from './pages/AboutUs';
-import { MemberNews } from './pages/MemberNews';
+import { Members } from './pages/Members';
 import { PhotoGallery } from './pages/PhotoGallery';
 import { Contact } from './pages/Contact';
 
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: 'news', Component: News },
       { path: 'about', Component: AboutUs },
-      { path: 'member-news', Component: MemberNews },
+      { path: 'members', Component: Members },
       { path: 'gallery', Component: PhotoGallery },
       { path: 'contact', Component: Contact },
     ],

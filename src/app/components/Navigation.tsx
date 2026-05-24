@@ -50,7 +50,7 @@ export function Navigation() {
     { path: '/', label: 'Home' },
     { path: '/news', label: 'Show News' },
     { path: '/about', label: 'About Us' },
-    { path: '/member-news', label: 'Member News' },
+    { path: '/members', label: 'Members' },
     { path: '/gallery', label: 'Gallery' },
     { path: '/contact', label: 'Contact Us' },
   ];
@@ -95,12 +95,13 @@ export function Navigation() {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <MagneticButton
-                className="px-6 py-3 bg-red-600 text-white text-sm font-semibold rounded-full hover:bg-red-500 transition-colors duration-300"
-                strength={0.3}
+              <a
+                href="/44th-Anniversary.pdf"
+                download
+                className="px-6 py-3 bg-red-600 text-white text-sm font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block"
               >
-                Register Now
-              </MagneticButton>
+                Download Flyer (PDF)
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -136,9 +137,13 @@ export function Navigation() {
           </div>
 
           <div className="pb-8">
-            <button className="w-full px-6 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-              Register Now
-            </button>
+            <a 
+              href="/44th-Anniversary.pdf" 
+              download
+              className="w-full px-6 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block text-center block"
+            >
+              Download Flyer (PDF)
+            </a>
           </div>
         </div>
       </div>
