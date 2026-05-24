@@ -61,18 +61,6 @@ export function Footer() {
                 </div>
                 <span>1932lar@gmail.com</span>
               </a>
-              <a href="tel:5551234567" className="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors duration-300 group">
-                <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center group-hover:bg-red-500/20 transition-colors duration-300">
-                  <Phone className="w-4 h-4" />
-                </div>
-                <span>(555) 123-4567</span>
-              </a>
-              <div className="flex items-center gap-3 text-gray-400">
-                <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
-                  <MapPin className="w-4 h-4" />
-                </div>
-                <span>Fairplex, Pomona, CA</span>
-              </div>
             </div>
           </div>
 

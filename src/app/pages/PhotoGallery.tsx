@@ -102,12 +102,19 @@ export function PhotoGallery() {
   useEffect(() => {
     if (selectedGallery) {
       document.body.style.overflow = 'hidden';
+      // Add escape key handler
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeGallery();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+      };
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [selectedGallery]);
 
   const filteredGalleries = activeFilter === 'all'
@@ -251,10 +258,8 @@ export function PhotoGallery() {
       {/* Lightbox */}
       {selectedGallery && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center cursor-pointer" 
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center" 
           onClick={closeGallery}
-          onKeyDown={(e) => e.key === 'Escape' && closeGallery()}
-          tabIndex={0}
         >
           {/* Close button */}
           <button
