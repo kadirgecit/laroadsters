@@ -144,17 +144,6 @@ export function PhotoGallery() {
             </div>
           </div>
         </div>
-
-        {/* Submit CTA */}
-        <div className="mt-12 text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Share Your Photos</h3>
-          <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-            Contribute to our visual archive by submitting your event and build photos
-          </p>
-          <button className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300">
-            Submit Photos
-          </button>
-        </div>
       </div>
     </div>
   );

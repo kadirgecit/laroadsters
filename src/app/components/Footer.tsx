@@ -104,24 +104,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="footer-section mb-16 p-8 rounded-2xl bg-gradient-to-br from-red-600/10 to-red-900/10 border border-red-500/20">
-          <div className="max-w-2xl">
-            <h4 className="text-2xl font-bold text-white mb-3">Stay Updated</h4>
-            <p className="text-gray-400 mb-6">Get the latest news, event updates, and exclusive content delivered to your inbox.</p>
-            <div className="flex gap-3 flex-wrap">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 min-w-[250px] px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder:text-gray-600 focus:outline-none focus:border-red-500 transition-colors duration-300"
-              />
-              <button className="px-8 py-4 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-red-500/50">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Bottom Bar */}
         <div className="footer-section pt-8 border-t border-white/10 flex flex-wrap justify-between items-center gap-6">
           <div className="text-sm text-gray-600">
