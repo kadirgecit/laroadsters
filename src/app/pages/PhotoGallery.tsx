@@ -1,48 +1,48 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Filter } from 'lucide-react';
+import { Filter, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Image data for each category
 const galleryImages = {
   'la-roadster-shows': [
-    '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg',
-    '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg',
-    '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg',
-    '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg',
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg', caption: "Father's Day Show 2025" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg', caption: "Father's Day Show 2025" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg', caption: "Father's Day Show 2025" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg', caption: "Father's Day Show 2025" },
   ],
   runs: [
-    '/assets/gallery/Runs/run1.jpeg',
-    '/assets/gallery/Runs/run3.jpeg',
-    '/assets/gallery/Runs/run4.jpg',
-    '/assets/gallery/Runs/run5.jpg',
-    '/assets/gallery/Runs/run6.jpg',
-    '/assets/gallery/Runs/run7.jpg',
-    '/assets/gallery/Runs/run8.jpg',
-    '/assets/gallery/Runs/run9.jpg',
-    '/assets/gallery/Runs/run10.jpg',
-    '/assets/gallery/Runs/run11.jpg',
-    '/assets/gallery/Runs/run12.jpg',
-    '/assets/gallery/Runs/run13.jpeg',
-    '/assets/gallery/Runs/run14.jpeg',
-    '/assets/gallery/Runs/run15.jpeg',
-    '/assets/gallery/Runs/run16.jpg',
-    '/assets/gallery/Runs/run17.jpg',
+    { src: '/assets/gallery/Runs/run1.jpeg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run3.jpeg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run4.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run5.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run6.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run7.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run8.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run9.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run10.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run11.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run12.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run13.jpeg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run14.jpeg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run15.jpeg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run16.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/Runs/run17.jpg', caption: 'Club Run' },
   ],
   members: [
-    '/assets/gallery/Club-cars/BUCKRDSTER3.jpg',
-    '/assets/gallery/Club-cars/BUTLER1.jpg',
-    '/assets/gallery/Club-cars/COHN6.jpg',
-    '/assets/gallery/Club-cars/gammell_car copy.jpg',
-    '/assets/gallery/Club-cars/jordan copy.JPG',
-    '/assets/gallery/Club-cars/kreb_carJT copy.jpg',
-    '/assets/gallery/Club-cars/Scritchfield_Roadster copy.jpg',
-    '/assets/gallery/Club-cars/simeone_car1 copy.JPG',
-    '/assets/gallery/Club-cars/tann cabby copy.jpg',
-    '/assets/gallery/Club-cars/tann topdown copy.jpg',
-    '/assets/gallery/Club-cars/winson copy.JPG',
+    { src: '/assets/gallery/Club-cars/BUCKRDSTER3.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/BUTLER1.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/COHN6.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/gammell_car copy.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/jordan copy.JPG', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/kreb_carJT copy.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/Scritchfield_Roadster copy.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/simeone_car1 copy.JPG', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/tann cabby copy.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/tann topdown copy.jpg', caption: 'Member Car' },
+    { src: '/assets/gallery/Club-cars/winson copy.JPG', caption: 'Member Car' },
   ],
 };
 
@@ -58,25 +58,27 @@ const galleries = [
     category: 'la-roadster-shows', 
     title: "Father's Day Show 2025", 
     count: galleryImages['la-roadster-shows'].length,
-    image: galleryImages['la-roadster-shows'][0]
+    image: galleryImages['la-roadster-shows'][0].src
   },
   { 
     category: 'runs', 
     title: 'Club Runs', 
     count: galleryImages['runs'].length,
-    image: galleryImages['runs'][0]
+    image: galleryImages['runs'][0].src
   },
   { 
     category: 'members', 
     title: 'Member Cars', 
     count: galleryImages['members'].length,
-    image: galleryImages['members'][0]
+    image: galleryImages['members'][0].src
   },
 ];
 
 export function PhotoGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [selectedGallery, setSelectedGallery] = useState<typeof galleries[0] | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -96,9 +98,45 @@ export function PhotoGallery() {
     return () => ctx.revert();
   }, []);
 
+  // Prevent body scroll when lightbox is open
+  useEffect(() => {
+    if (selectedGallery) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedGallery]);
+
   const filteredGalleries = activeFilter === 'all'
     ? galleries
     : galleries.filter(g => g.category.toLowerCase() === activeFilter.toLowerCase());
+
+  const openGallery = (gallery: typeof galleries[0]) => {
+    setSelectedGallery(gallery);
+    setCurrentImageIndex(0);
+  };
+
+  const closeGallery = () => {
+    setSelectedGallery(null);
+    setCurrentImageIndex(0);
+  };
+
+  const nextImage = () => {
+    const images = galleryImages[selectedGallery!.category as keyof typeof galleryImages];
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    const images = galleryImages[selectedGallery!.category as keyof typeof galleryImages];
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const currentImages = selectedGallery 
+    ? galleryImages[selectedGallery.category as keyof typeof galleryImages]
+    : [];
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
@@ -145,6 +183,7 @@ export function PhotoGallery() {
             <div
               key={index}
               className="gallery-grid-item group cursor-pointer"
+              onClick={() => openGallery(gallery)}
             >
               <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
                 {/* Background Image */}
@@ -174,6 +213,13 @@ export function PhotoGallery() {
 
                 {/* Hover Effect */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Click icon */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-16 h-16 bg-red-500/80 rounded-full flex items-center justify-center">
+                    <Maximize2 className="w-8 h-8 text-white" />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -201,6 +247,77 @@ export function PhotoGallery() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {selectedGallery && (
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+          {/* Close button */}
+          <button
+            onClick={closeGallery}
+            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Gallery title */}
+          <div className="absolute top-6 left-6 z-10">
+            <div className="text-sm text-red-500 font-semibold tracking-wider uppercase">
+              {selectedGallery.category.replace('-', ' ')}
+            </div>
+            <h2 className="text-2xl font-black text-white">{selectedGallery.title}</h2>
+            <div className="text-gray-400 text-sm mt-1">
+              {currentImageIndex + 1} of {currentImages.length}
+            </div>
+          </div>
+
+          {/* Prev button */}
+          <button
+            onClick={prevImage}
+            className="absolute left-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={nextImage}
+            className="absolute right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Main image */}
+          <div className="max-w-5xl max-h-[80vh] px-20">
+            <img
+              src={currentImages[currentImageIndex].src}
+              alt={currentImages[currentImageIndex].caption}
+              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            />
+            <div className="text-center mt-4 text-gray-400">
+              {currentImages[currentImageIndex].caption}
+            </div>
+          </div>
+
+          {/* Thumbnail strip */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-4">
+            {currentImages.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentImageIndex(idx)}
+                className={`w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
+                  idx === currentImageIndex ? 'border-red-500' : 'border-transparent opacity-50 hover:opacity-100'
+                }`}
+              >
+                <img
+                  src={img.src}
+                  alt={`Thumbnail ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
