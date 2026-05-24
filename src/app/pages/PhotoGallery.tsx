@@ -250,17 +250,25 @@ export function PhotoGallery() {
 
       {/* Lightbox */}
       {selectedGallery && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center cursor-pointer" 
+          onClick={closeGallery}
+          onKeyDown={(e) => e.key === 'Escape' && closeGallery()}
+          tabIndex={0}
+        >
           {/* Close button */}
           <button
-            onClick={closeGallery}
-            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              closeGallery();
+            }}
+            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-50"
           >
             <X className="w-6 h-6 text-white" />
           </button>
 
           {/* Gallery title */}
-          <div className="absolute top-6 left-6 z-10">
+          <div className="absolute top-6 left-6 z-40">
             <div className="text-sm text-red-500 font-semibold tracking-wider uppercase">
               {selectedGallery.category.replace('-', ' ')}
             </div>
@@ -272,22 +280,31 @@ export function PhotoGallery() {
 
           {/* Prev button */}
           <button
-            onClick={prevImage}
-            className="absolute left-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImage();
+            }}
+            className="absolute left-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
           >
             <ChevronLeft className="w-6 h-6 text-white" />
           </button>
 
           {/* Next button */}
           <button
-            onClick={nextImage}
-            className="absolute right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImage();
+            }}
+            className="absolute right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
           >
             <ChevronRight className="w-6 h-6 text-white" />
           </button>
 
           {/* Main image */}
-          <div className="max-w-5xl max-h-[80vh] px-20">
+          <div 
+            className="max-w-5xl max-h-[80vh] px-20 cursor-default" 
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src={currentImages[currentImageIndex].src}
               alt={currentImages[currentImageIndex].caption}
@@ -299,11 +316,17 @@ export function PhotoGallery() {
           </div>
 
           {/* Thumbnail strip */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-4">
+          <div 
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-4 cursor-default" 
+            onClick={(e) => e.stopPropagation()}
+          >
             {currentImages.map((img, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentImageIndex(idx)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex(idx);
+                }}
                 className={`w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
                   idx === currentImageIndex ? 'border-red-500' : 'border-transparent opacity-50 hover:opacity-100'
                 }`}
