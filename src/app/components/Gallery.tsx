@@ -1,60 +1,117 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const carImages = [
-  '/images/BUCKRDSTER3.jpg',
-  '/images/jordan copy.JPG',
-  '/images/gammell_car copy.jpg',
-  '/images/winson copy.JPG',
-  '/images/COHN6.jpg',
-  '/images/BUTLER1.jpg',
-  '/images/kreb_carJT copy.jpg',
-  '/images/Scritchfield_Roadster copy.jpg',
-  '/images/simeone_car1 copy.JPG',
-  '/images/tann cabby copy.jpg',
-  '/images/tann topdown copy.jpg',
+// Member data with photos and stories
+const members = [
+  {
+    id: 1,
+    name: 'John Buck',
+    car: '32 Ford Roadster',
+    story: 'John has been a dedicated member of Los Angeles Roadsters since 1985. His beloved 32 Ford Roadster has won multiple awards at the Grand National Roadster Show. Building hot rods runs in his family - his grandfather built customs in the 1940s.',
+    images: [
+      '/assets/gallery/Club-cars/BUCKRDSTER3.jpg',
+    ],
+  },
+  {
+    id: 2,
+    name: 'Butler',
+    car: '34 Ford Coupe',
+    story: 'A passionate hot rodder for over 40 years, Butler brings his beautifully crafted 34 Ford Coupe to every show. His attention to detail and traditional hot rod aesthetics make him a standout at our events.',
+    images: [
+      '/assets/gallery/Club-cars/BUTLER1.jpg',
+    ],
+  },
+  {
+    id: 3,
+    name: 'George Cohn',
+    car: '32 Ford Roadster',
+    story: 'George Cohn is a founding member whose dedication to the club spans over five decades. His show-winning 32 Ford Roadster represents the pinnacle of traditional hot rodding craftsmanship.',
+    images: [
+      '/assets/gallery/Club-cars/COHN6.jpg',
+    ],
+  },
+  {
+    id: 4,
+    name: 'Jim Gammell',
+    car: '32 Ford Roadster',
+    story: 'Jim\'s stunning purple 32 Ford Roadster turns heads wherever it goes. A master fabricator, Jim built most of his hot rod himself, including the custom chassis and body modifications.',
+    images: [
+      '/assets/gallery/Club-cars/gammell_car copy.jpg',
+    ],
+  },
+  {
+    id: 5,
+    name: 'John Jordan',
+    car: '32 Ford Roadster',
+    story: 'John Jordan continues the tradition of building authentic hot rods. His patience and dedication to period-correct details have earned him recognition at shows across the country.',
+    images: [
+      '/assets/gallery/Club-cars/jordan copy.JPG',
+    ],
+  },
+  {
+    id: 6,
+    name: 'John Kreb',
+    car: '33 Ford Roadster',
+    story: 'With over 35 years in the hobby, John Kreb\'s 33 Ford Roadster is a testament to classic hot rodding. He\'s been a consistent presence at our annual shows, always willing to share his knowledge with newcomers.',
+    images: [
+      '/assets/gallery/Club-cars/kreb_carJT copy.jpg',
+    ],
+  },
+  {
+    id: 7,
+    name: 'Mike Scritchfield',
+    car: '32 Ford Roadster',
+    story: 'Mike Scritchfield\'s roadster represents decades of hot rodding passion. A master mechanic, he maintains his cars to show-quality standards while driving them to events as intended.',
+    images: [
+      '/assets/gallery/Club-cars/Scritchfield_Roadster copy.jpg',
+    ],
+  },
+  {
+    id: 8,
+    name: 'Joe Simeone',
+    car: '34 Ford Roadster',
+    story: 'Joe Simeone brings his award-winning 34 Ford Roadster to our shows. Known for his meticulous craftsmanship, every nut and bolt on his roadster is finished to the highest standards.',
+    images: [
+      '/assets/gallery/Club-cars/simeone_car1 copy.JPG',
+    ],
+  },
+  {
+    id: 9,
+    name: 'Bob Tann',
+    car: '33 Ford Cabriolet',
+    story: 'Bob Tann\'s 33 Ford Cabriolet is a beautiful example of California custom styling. He\'s been part of the LA Roadsters family for over 25 years, always ready to help with club events.',
+    images: [
+      '/assets/gallery/Club-cars/tann cabby copy.jpg',
+    ],
+  },
+  {
+    id: 10,
+    name: 'Bob Tann',
+    car: '32 Ford Roadster',
+    story: 'Bob Tann\'s second creation - a stunning 32 Ford Roadster. This car showcases his evolution as a builder, featuring modern performance while maintaining classic styling.',
+    images: [
+      '/assets/gallery/Club-cars/tann topdown copy.jpg',
+    ],
+  },
+  {
+    id: 11,
+    name: 'Steve Winson',
+    car: '32 Ford Roadster',
+    story: 'Steve Winson\'s 32 Ford Roadster exemplifies the Southern California hot rod style. With its flawless paint and chrome, it\'s a perennial favorite at our annual shows.',
+    images: [
+      '/assets/gallery/Club-cars/winson copy.JPG',
+    ],
+  },
 ];
-
-const categories = [
-  {
-    title: 'Our Members',
-    subtitle: 'Car Enthusiasts',
-    desc: 'Meet the passionate members who keep the legacy alive',
-    year: '1957-Present',
-    image: carImages[0],
-  },
-  {
-    title: 'Classic Roadsters',
-    subtitle: 'Timeless Elegance',
-    desc: 'Open-top legends from the golden era of automotive design',
-    year: '1920s-1960s',
-    image: carImages[1],
-  },
-  {
-    title: 'Hot Rods',
-    subtitle: 'Raw Power',
-    desc: 'Custom-built machines pushing performance boundaries',
-    year: '1930s-1950s',
-    image: carImages[2],
-  },
-  {
-    title: 'Events',
-    subtitle: 'Community',
-    desc: 'Annual shows, swap meets, and cruise nights',
-    year: 'Annual',
-    image: carImages[3],
-  },
-];
-
-const featuredImages = carImages.slice(4);
 
 export function Gallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedMember, setSelectedMember] = useState<typeof members[0] | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -69,70 +126,58 @@ export function Gallery() {
         ease: 'power3.out',
       });
 
-      const items = document.querySelectorAll('.gallery-item');
-      items.forEach((item, index) => {
-        gsap.from(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 80%',
-          },
-          y: 100,
-          opacity: 0,
-          rotateX: -45,
-          duration: 1,
-          delay: index * 0.1,
-          ease: 'power3.out',
-        });
-
-        const hoverTl = gsap.timeline({ paused: true });
-        hoverTl.to(item.querySelector('.gallery-overlay'), {
-          opacity: 1,
-          duration: 0.4,
-        })
-        .to(item.querySelector('.gallery-content'), {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-        }, '-=0.2')
-        .to(item.querySelector('.gallery-image img'), {
-          scale: 1.1,
-          duration: 0.6,
-        }, 0);
-
-        item.addEventListener('mouseenter', () => hoverTl.play());
-        item.addEventListener('mouseleave', () => hoverTl.reverse());
-      });
-
-      gsap.to('.floating-number', {
-        y: -10,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut',
-        stagger: 0.2,
-      });
-
-      // Animate featured images
-      gsap.from('.featured-image', {
+      gsap.from('.member-card', {
         scrollTrigger: {
-          trigger: '.featured-section',
+          trigger: '.member-grid',
           start: 'top 70%',
         },
         y: 80,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.15,
+        stagger: 0.1,
         ease: 'power3.out',
       });
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    if (selectedMember) {
+      document.body.style.overflow = 'hidden';
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closeGallery();
+      };
+      document.addEventListener('keydown', handleEscape);
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [selectedMember]);
+
+  const openMember = (member: typeof members[0]) => {
+    setSelectedMember(member);
+    setCurrentImageIndex(0);
+  };
+
+  const closeGallery = () => {
+    setSelectedMember(null);
+    setCurrentImageIndex(0);
+  };
+
+  const nextImage = () => {
+    if (!selectedMember) return;
+    setCurrentImageIndex((prev) => (prev + 1) % selectedMember.images.length);
+  };
+
+  const prevImage = () => {
+    if (!selectedMember) return;
+    setCurrentImageIndex((prev) => (prev - 1 + selectedMember.images.length) % selectedMember.images.length);
+  };
+
   return (
     <div ref={sectionRef} className="relative py-40 px-4 bg-black overflow-hidden">
-      {/* Background Grid */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
           backgroundImage: `
@@ -158,78 +203,46 @@ export function Gallery() {
               </h2>
             </div>
             <a href="/member-news" className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold flex items-center gap-2 group">
-              View All Members
+              View Member News
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </a>
           </div>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {categories.map((category, index) => (
+        {/* Member Cards Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 member-grid">
+          {members.map((member, index) => (
             <div
-              key={index}
-              className="gallery-item relative h-[500px] rounded-2xl overflow-hidden cursor-pointer group"
-              style={{ perspective: '1000px' }}
-              onMouseEnter={() => setActiveIndex(index)}
+              key={member.id}
+              onClick={() => openMember(member)}
+              className="member-card group cursor-pointer"
             >
-              {/* Background Image */}
-              <div className="gallery-image absolute inset-0 scale-100 transition-transform duration-700 overflow-hidden">
+              <div className="relative h-[400px] rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
+                {/* Member Photo */}
                 <img
-                  src={category.image}
-                  alt={category.title}
-                  className="w-full h-full object-cover"
+                  src={member.images[0]}
+                  alt={member.name}
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-              </div>
 
-              {/* Overlay */}
-              <div className="gallery-overlay absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80" />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
-              {/* Large Number */}
-              <div className="floating-number absolute top-8 right-8 text-[10rem] font-black text-white/5 leading-none">
-                {(index + 1).toString().padStart(2, '0')}
-              </div>
-
-              {/* Content */}
-              <div className="gallery-content absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0">
-                <div className="text-sm text-red-500 mb-2 tracking-wider">{category.year}</div>
-                <h3 className="text-4xl font-black text-white mb-2">{category.title}</h3>
-                <div className="text-xl text-red-400 mb-4 font-light">{category.subtitle}</div>
-                <p className="text-gray-300 mb-6 leading-relaxed">{category.desc}</p>
-                <div className="flex items-center gap-2 text-white font-semibold">
-                  <span>Explore</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="text-sm text-red-500 mb-1 font-semibold tracking-wider uppercase">
+                    {member.car}
+                  </div>
+                  <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
+                    {member.name}
+                  </h3>
                 </div>
-              </div>
 
-              {/* Border Animation */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-500" />
+                {/* Hover Effect */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Featured Images Section */}
-        <div className="featured-section mt-24">
-          <div className="text-sm tracking-[0.3em] text-red-500 mb-8 font-light text-center">
-            MORE FROM OUR COLLECTION
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {featuredImages.map((img, index) => (
-              <div
-                key={index}
-                className="featured-image relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
-              >
-                <img
-                  src={img}
-                  alt={`Classic car ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <ArrowRight className="w-8 h-8 text-white" />
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Bottom CTA */}
@@ -242,6 +255,71 @@ export function Gallery() {
           </div>
         </div>
       </div>
+
+      {/* Member Lightbox */}
+      {selectedMember && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          onClick={closeGallery}
+        >
+          {/* Close button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeGallery();
+            }}
+            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-50"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Info */}
+          <div className="absolute top-6 left-6 z-40 max-w-md">
+            <div className="text-sm text-red-500 font-semibold tracking-wider uppercase">
+              {selectedMember.car}
+            </div>
+            <h2 className="text-3xl font-black text-white">{selectedMember.name}</h2>
+          </div>
+
+          {/* Navigation */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+            className="absolute left-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+            className="absolute right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Main Content */}
+          <div 
+            className="max-w-5xl max-h-[80vh] px-20 flex items-center gap-12"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image */}
+            <div className="flex-1">
+              <img
+                src={selectedMember.images[currentImageIndex]}
+                alt={selectedMember.name}
+                className="max-w-full max-h-[60vh] object-contain rounded-lg"
+              />
+            </div>
+
+            {/* Story */}
+            <div className="flex-1 text-white">
+              <h3 className="text-xl font-bold text-red-500 mb-4">My Story</h3>
+              <p className="text-gray-300 leading-relaxed text-lg">
+                {selectedMember.story}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
