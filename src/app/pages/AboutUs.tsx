@@ -21,6 +21,18 @@ export function AboutUs() {
         stagger: 0.2,
         ease: 'power3.out',
       });
+
+      gsap.from('.about-image', {
+        scrollTrigger: {
+          trigger: '.about-images',
+          start: 'top 70%',
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -47,6 +59,15 @@ export function AboutUs() {
       title: 'Preservation',
       desc: 'Keeping automotive heritage alive for future generations to enjoy and appreciate.',
     },
+  ];
+
+  const aboutImages = [
+    '/assets/aboutus/photo1.jpg',
+    '/assets/aboutus/photo2.jpg',
+    '/assets/aboutus/photo3.jpg',
+    '/assets/aboutus/photo001.jpg',
+    '/assets/aboutus/photo002.jpg',
+    '/assets/aboutus/photo003.jpg',
   ];
 
   return (
@@ -85,11 +106,32 @@ export function AboutUs() {
             </div>
 
             <div className="aspect-[4/3] bg-gradient-to-br from-red-600/20 to-blue-900/20 rounded-2xl border border-red-500/20 backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute inset-0 flex items-center justify-center text-9xl font-black text-white/5">
-                1957
-              </div>
+              <img
+                src="/assets/aboutus/roadster1.gif"
+                alt="Classic Roadster"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
+          </div>
+        </div>
+
+        {/* Photo Gallery */}
+        <div className="about-section mb-20">
+          <h2 className="text-4xl font-black text-white mb-12 text-center">Our History</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 about-images">
+            {aboutImages.map((img, index) => (
+              <div
+                key={index}
+                className="about-image aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 hover:border-red-500/50 transition-all duration-500 group"
+              >
+                <img
+                  src={img}
+                  alt={`Historical photo ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
