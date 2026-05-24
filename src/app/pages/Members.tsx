@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Calendar, MapPin, Clock, FileText, Download, Users } from 'lucide-react';
+import { Calendar, MapPin, FileText } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,33 +33,6 @@ export function Members() {
       location: 'Fairplex, Pomona',
       description: "Father's Day Weekend - The premier classic roadster event of the year",
     },
-    {
-      date: 'July 2026',
-      title: 'Club Meeting',
-      location: 'TBD',
-      description: 'Monthly member meeting - locations rotate',
-    },
-    {
-      date: 'August 2026',
-      title: 'Club Meeting',
-      location: 'TBD',
-      description: 'Monthly member meeting',
-    },
-    {
-      date: 'September 2026',
-      title: 'Club Picnic',
-      location: 'TBD',
-      description: 'Annual summer picnic for members and families',
-    },
-  ];
-
-  const meetings = [
-    {
-      day: '3rd Wednesday of Each Month',
-      time: '7:00 PM',
-      location: 'Various Locations',
-      note: 'Meetings rotate between member homes and local venues',
-    },
   ];
 
   const documents = [
@@ -83,7 +56,7 @@ export function Members() {
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            Stay connected with the latest events, meetings, and club information
+            Stay connected with the latest events and club information
           </p>
         </div>
 
@@ -115,42 +88,6 @@ export function Members() {
           </div>
         </section>
 
-        {/* Meeting Dates */}
-        <section className="member-section mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <Clock className="w-8 h-8 text-red-500" />
-            <h2 className="text-3xl font-bold text-white">Meeting Dates</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {meetings.map((meeting, index) => (
-              <div
-                key={index}
-                className="p-8 rounded-2xl bg-gradient-to-br from-red-600/10 to-red-900/10 border border-red-500/30"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <Users className="w-6 h-6 text-red-500" />
-                  <span className="text-white font-semibold">Regular Meetings</span>
-                </div>
-                <div className="space-y-3 text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-500" />
-                    <span>{meeting.day}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-500" />
-                    <span>{meeting.time}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-500" />
-                    <span>{meeting.location}</span>
-                  </div>
-                </div>
-                <p className="mt-4 text-gray-500 text-sm">{meeting.note}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Club Documents */}
         <section className="member-section">
           <div className="flex items-center gap-4 mb-8">
@@ -159,13 +96,13 @@ export function Members() {
           </div>
           <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <p className="text-gray-400 mb-6">
-              Members-only documents. Please log in to access these files.
+              Club documents are password protected. Contact us for access.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               {documents.map((doc, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/50 transition-colors"
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
                 >
                   <div className="flex items-center gap-3">
                     <FileText className="w-5 h-5 text-red-500" />
@@ -174,11 +111,6 @@ export function Members() {
                   <span className="text-gray-500 text-sm">{doc.size}</span>
                 </div>
               ))}
-            </div>
-            <div className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-center">
-              <p className="text-gray-400">
-                For document access, please contact the club secretary or visit a meeting.
-              </p>
             </div>
           </div>
         </section>
