@@ -5,6 +5,75 @@ import { Filter } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Image data for each category
+const galleryImages = {
+  'la-roadster-shows': [
+    '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg',
+    '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg',
+    '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg',
+    '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg',
+  ],
+  runs: [
+    '/assets/gallery/Runs/run1.jpeg',
+    '/assets/gallery/Runs/run3.jpeg',
+    '/assets/gallery/Runs/run4.jpg',
+    '/assets/gallery/Runs/run5.jpg',
+    '/assets/gallery/Runs/run6.jpg',
+    '/assets/gallery/Runs/run7.jpg',
+    '/assets/gallery/Runs/run8.jpg',
+    '/assets/gallery/Runs/run9.jpg',
+    '/assets/gallery/Runs/run10.jpg',
+    '/assets/gallery/Runs/run11.jpg',
+    '/assets/gallery/Runs/run12.jpg',
+    '/assets/gallery/Runs/run13.jpeg',
+    '/assets/gallery/Runs/run14.jpeg',
+    '/assets/gallery/Runs/run15.jpeg',
+    '/assets/gallery/Runs/run16.jpg',
+    '/assets/gallery/Runs/run17.jpg',
+  ],
+  members: [
+    '/assets/gallery/Club-cars/BUCKRDSTER3.jpg',
+    '/assets/gallery/Club-cars/BUTLER1.jpg',
+    '/assets/gallery/Club-cars/COHN6.jpg',
+    '/assets/gallery/Club-cars/gammell_car copy.jpg',
+    '/assets/gallery/Club-cars/jordan copy.JPG',
+    '/assets/gallery/Club-cars/kreb_carJT copy.jpg',
+    '/assets/gallery/Club-cars/Scritchfield_Roadster copy.jpg',
+    '/assets/gallery/Club-cars/simeone_car1 copy.JPG',
+    '/assets/gallery/Club-cars/tann cabby copy.jpg',
+    '/assets/gallery/Club-cars/tann topdown copy.jpg',
+    '/assets/gallery/Club-cars/winson copy.JPG',
+  ],
+};
+
+const filters = [
+  { id: 'all', label: 'All' },
+  { id: 'la-roadster-shows', label: 'LA Roadster Shows' },
+  { id: 'runs', label: 'Runs' },
+  { id: 'members', label: 'Members' },
+];
+
+const galleries = [
+  { 
+    category: 'la-roadster-shows', 
+    title: "Father's Day Show 2025", 
+    count: galleryImages['la-roadster-shows'].length,
+    image: galleryImages['la-roadster-shows'][0]
+  },
+  { 
+    category: 'runs', 
+    title: 'Club Runs', 
+    count: galleryImages['runs'].length,
+    image: galleryImages['runs'][0]
+  },
+  { 
+    category: 'members', 
+    title: 'Member Cars', 
+    count: galleryImages['members'].length,
+    image: galleryImages['members'][0]
+  },
+];
+
 export function PhotoGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -19,26 +88,13 @@ export function PhotoGallery() {
         y: 100,
         opacity: 0,
         duration: 1,
-        stagger: 0.05,
+        stagger: 0.1,
         ease: 'power3.out',
       });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
-
-  const filters = ['All', 'LA Roadster Shows', 'Runs', 'Members'];
-
-  const galleries = [
-    { category: 'LA Roadster Shows', title: "Father's Day Show 2025", count: 250 },
-    { category: 'LA Roadster Shows', title: 'Swap Meet 2025', count: 95 },
-    { category: 'Runs', title: 'Spring Cruise Night', count: 120 },
-    { category: 'Runs', title: 'Car Club Runs 2025', count: 85 },
-    { category: 'Runs', title: 'Road Trips', count: 62 },
-    { category: 'Members', title: 'Member Spotlights', count: 89 },
-    { category: 'Members', title: 'Workshop Sessions', count: 43 },
-    { category: 'Members', title: 'Member Builds', count: 75 },
-  ];
 
   const filteredGalleries = activeFilter === 'all'
     ? galleries
@@ -58,7 +114,7 @@ export function PhotoGallery() {
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            Explore thousands of photos showcasing our events, member builds, and automotive excellence
+            Explore photos from our shows, runs, and member cars
           </p>
         </div>
 
@@ -70,15 +126,15 @@ export function PhotoGallery() {
           </div>
           {filters.map((filter) => (
             <button
-              key={filter}
-              onClick={() => setActiveFilter(filter.toLowerCase())}
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
-                activeFilter === filter.toLowerCase()
+                activeFilter === filter.id
                   ? 'bg-red-500 text-white'
                   : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
-              {filter}
+              {filter.label}
             </button>
           ))}
         </div>
@@ -91,8 +147,12 @@ export function PhotoGallery() {
               className="gallery-grid-item group cursor-pointer"
             >
               <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
-                {/* Placeholder Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600/30 to-blue-900/30" />
+                {/* Background Image */}
+                <img 
+                  src={gallery.image} 
+                  alt={gallery.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
@@ -105,7 +165,7 @@ export function PhotoGallery() {
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <div className="text-sm text-red-500 mb-2 font-semibold tracking-wider uppercase">
-                    {gallery.category}
+                    {gallery.category.replace('-', ' ')}
                   </div>
                   <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
                     {gallery.title}
@@ -131,8 +191,8 @@ export function PhotoGallery() {
               <div className="text-gray-400">Years of Photos</div>
             </div>
             <div>
-              <div className="text-5xl font-black text-red-500 mb-2">1936</div>
-              <div className="text-gray-400">Oldest Car Featured</div>
+              <div className="text-5xl font-black text-red-500 mb-2">1957</div>
+              <div className="text-gray-400">Club Founded</div>
             </div>
             <div>
               <div className="text-5xl font-black text-red-500 mb-2">Pomona</div>
