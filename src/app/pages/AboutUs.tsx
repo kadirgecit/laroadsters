@@ -21,18 +21,6 @@ export function AboutUs() {
         stagger: 0.2,
         ease: 'power3.out',
       });
-
-      gsap.from('.about-image', {
-        scrollTrigger: {
-          trigger: '.about-images',
-          start: 'top 70%',
-        },
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-      });
     }, sectionRef);
 
     return () => ctx.revert();
