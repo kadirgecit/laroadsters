@@ -80,15 +80,15 @@ export function Footer() {
           <div className="footer-section">
             <h4 className="text-lg font-bold text-white mb-6 tracking-wider">FOLLOW US</h4>
             <div className="flex gap-3">
-              <button className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
+              <a href="https://www.instagram.com/laroadsters1957/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
                 <Instagram className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
-              </button>
-              <button className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
+              </a>
+              <a href="https://www.facebook.com/LARoadsterShow/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
                 <Facebook className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
-              </button>
-              <button className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
+              </a>
+              <a href="https://twitter.com/LARoadsters" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/5 hover:bg-red-500 rounded-full flex items-center justify-center border border-white/10 hover:border-red-500 transition-all duration-300 group">
                 <Twitter className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
-              </button>
+              </a>
             </div>
             <div className="mt-8">
               <button
