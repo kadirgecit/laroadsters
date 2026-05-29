@@ -305,7 +305,8 @@ export function News() {
 
           {/* Swap Meet */}
           <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-            <h2 className="text-3xl font-bold text-white mb-6">Swap Meet</h2>
+            <h2 className="text-3xl font-bold text-white mb-2">Swap Meet</h2>
+            <p className="text-lg text-red-500 font-semibold mb-6">Swap Meet spaces available — car parts and related items only.</p>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4 text-gray-300">
                 <p>
