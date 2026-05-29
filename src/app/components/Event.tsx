@@ -165,27 +165,6 @@ export function Event() {
             </div>
           </div>
         </div>
-
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { title: 'Classic Roadsters Only', desc: 'Only finished classic open cars admitted to Show area' },
-            { title: 'Swap Meet', desc: 'Vendor spaces available — car parts and related items only' },
-            { title: 'Street Rod Parking', desc: 'Specialty parking for 1985 and older cars at Gate #15' },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="feature-item relative p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500 group overflow-hidden"
-            >
-              <div className="absolute top-4 right-4">
-                <Sparkles className="w-5 h-5 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-gray-400">{feature.desc}</p>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-red-500/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
