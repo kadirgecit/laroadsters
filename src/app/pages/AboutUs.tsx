@@ -99,15 +99,18 @@ export function AboutUs() {
                 <p>
                   In June 2007, the Club celebrated it's 50th Anniversary and the 75th Anniversary of the '32 Ford. The '32 Ford is now 94 years old.
                 </p>
-                <p className="text-red-500 font-semibold mt-8">
-                  Our "Founding Father"<br />
-                  Dick Stritchfield
-                </p>
-                <p className="text-white font-semibold mt-8">
-                  The Club is famous for our red shirts and white pants<br />
-                  which has been a tradition since the Club was<br />
-                  founded in 1957
-                </p>
+                <div className="grid grid-cols-2 gap-6 mt-8">
+                  <div className="text-center">
+                    <p className="text-red-500 font-semibold mb-2">Our "Founding Father"</p>
+                    <img src="/Dick-Scritchfield.jpg" alt="Dick Stritchfield" className="w-full rounded-xl shadow-lg mb-2" />
+                    <p className="text-white font-semibold">Dick Stritchfield</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white font-semibold mb-2">The Club is famous for our red shirts and white pants</p>
+                    <img src="/club-clothing.png" alt="Club Uniform" className="w-full rounded-xl shadow-lg mb-2" />
+                    <p className="text-gray-400 text-sm">A tradition since 1957</p>
+                  </div>
+                </div>
               </div>
             </div>
 
