@@ -64,7 +64,9 @@ export function Navigation() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="group">
-              <img src="/la-roadsters-inverted.png" alt="LA Roadsters" className="h-12" />
+              <div className="h-16 w-32 rounded-full overflow-hidden border-2 border-red-500 shadow-lg">
+                <img src="/la-roadsters-inverted.png" alt="LA Roadsters" className="w-full h-full object-cover" />
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
