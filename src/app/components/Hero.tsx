@@ -113,8 +113,8 @@ export function Hero() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: 'url(/hero-bg.png)' }}
       />
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      {/* Dark Overlay - removed per customer request */}
+      <div className="absolute inset-0" />
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
@@ -124,12 +124,7 @@ export function Hero() {
           </div>
 
           <h1 className="text-[clamp(3rem,12vw,11rem)] font-black leading-[0.9] mb-4 tracking-tight">
-            <div className="overflow-hidden text-white">
-              LOS ANGELES
-            </div>
-            <div className="overflow-hidden text-white" style={{ textShadow: '0 0 40px rgba(255,255,255,0.3)' }}>
-              ROADSTERS
-            </div>
+            {/* Title removed per customer request */}
           </h1>
 
           <p className="hero-subtitle text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light tracking-wide">
