@@ -37,9 +37,9 @@ export function Members() {
 
   const documents = [
     { name: 'Club Bylaws', size: 'PDF' },
+    { name: 'Club Roster', size: 'PDF' },
     { name: 'Membership Application', size: 'PDF' },
-    { name: 'Event Waiver', size: 'PDF' },
-    { name: 'Show Guidelines', size: 'PDF' },
+    { name: 'Mailing Labels', size: 'PDF' },
   ];
 
   return (
@@ -55,9 +55,6 @@ export function Members() {
               MEMBER NEWS
             </div>
           </h1>
-          <p className="text-xl text-gray-400 max-w-2xl">
-            Stay connected with the latest events and club information
-          </p>
         </div>
 
         {/* Calendar of Events */}
@@ -95,9 +92,6 @@ export function Members() {
             <h2 className="text-3xl font-bold text-white">Club Documents</h2>
           </div>
           <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-            <p className="text-gray-400 mb-6">
-              Club documents are password protected. Contact us for access.
-            </p>
             <div className="grid md:grid-cols-2 gap-4">
               {documents.map((doc, index) => (
                 <div
