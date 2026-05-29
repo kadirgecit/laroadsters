@@ -135,7 +135,7 @@ export function News() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {sponsors.map((sponsor, index) => (
               <a
                 key={index}
