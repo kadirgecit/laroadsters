@@ -118,20 +118,7 @@ export function Hero() {
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-        <div ref={titleRef} className="text-center mb-8">
-          <div className="text-sm tracking-[0.3em] text-red-500 mb-6 font-light">
-            ESTABLISHED 1957 · 60TH ANNIVERSARY 2026
-          </div>
-
-          <h1 className="text-[clamp(3rem,12vw,11rem)] font-black leading-[0.9] mb-4 tracking-tight">
-            {/* Title removed per customer request */}
-          </h1>
-
-          <p className="hero-subtitle text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light tracking-wide">
-            Father's Day Weekend · June 19-20, 2026<br />
-            Fairplex, Pomona, California · 44th Annual Show & Swap
-          </p>
-
+        <div ref={titleRef} className="text-center">
           <div className="flex gap-6 justify-center flex-wrap">
             <a
               href="/44th-Anniversary.pdf"
@@ -148,15 +135,6 @@ export function Hero() {
             >
               Explore Gallery
             </MagneticButton>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="scroll-indicator absolute bottom-12">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs text-gray-500 tracking-wider">SCROLL</span>
-            <div className="w-px h-16 bg-gradient-to-b from-red-500 to-transparent animate-pulse" />
-            <ChevronDown className="w-4 h-4 text-red-500 animate-bounce" />
           </div>
         </div>
       </div>
