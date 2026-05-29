@@ -82,13 +82,31 @@ export function AboutUs() {
               </h2>
               <div className="space-y-4 text-lg text-gray-400 leading-relaxed">
                 <p>
-                  The Los Angeles Roadsters Car Club was established in 1957 and remains active today. For 60 years, we've celebrated the classic roadster culture that defines Southern California's automotive heritage.
+                  The Los Angeles Roadsters Car Club was formed in 1957 and is still going strong after 69 years.
                 </p>
                 <p>
-                  Our 44th Annual Roadster Show & Swap will be held Father's Day Weekend, June 19-20, 2026 at the Fairplex in Pomona, California. The main attraction: hundreds of classic open cars — some original, some modified, all of the highest quality.
+                  Membership in 2026 consists of 20 active members, 14 associates, 6 lifetime members, 11 honorary lifetime members, and 4 honorary members, all with Roadsters from 1936 or earlier.
                 </p>
                 <p>
-                  Only finished roadsters are admitted to the Show Roadster Parking Area. No cruising fairgrounds for liability reasons. Roadsters enter through Gate #1B — roadster and driver are free. Passengers pay $20 for the weekend.
+                  In 1960, the Club started the now-famous Los Angeles Roadsters Show and Swap Meet. Over the years, the show has become a Father's Day tradition for car enthusiasts from around the world. The show has earned its reputation as "the greatest roadster show on earth". Through the years, the show has featured more than 500 pre-36 roadsters, 1,000 pre-85 specialty cars, a giant swap meet, and a commercial vendor midway.
+                </p>
+                <p>
+                  The annual Roadster Show is planned and operated by active, lifetime, and associate members and their spouses. It is a family affair and an annual tradition in the street-rodding industry. The Los Angeles Roadsters are well known for their beautiful roadsters and their Club uniform of red shirts and white pants. This uniform has been a tradition since the Club was founded in 1957.
+                </p>
+                <p>
+                  The Los Angeles Roadsters Car Club was formed in 1957, and in 1968 was chartered as a 501(c)(4) non-profit corporation.
+                </p>
+                <p>
+                  In June 2007, the Club celebrated it's 50th Anniversary and the 75th Anniversary of the '32 Ford. The '32 Ford is now 94 years old.
+                </p>
+                <p className="text-red-500 font-semibold mt-8">
+                  Our "Founding Father"<br />
+                  Dick Stritchfield
+                </p>
+                <p className="text-white font-semibold mt-8">
+                  The Club is famous for our red shirts and white pants<br />
+                  which has been a tradition since the Club was<br />
+                  founded in 1957
                 </p>
               </div>
             </div>
