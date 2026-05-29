@@ -248,20 +248,16 @@ export function News() {
           <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-6">Roadsters</h2>
+                <h2 className="text-3xl font-bold text-white mb-6">Roadsters - Parking Information</h2>
                 <div className="space-y-4 text-gray-300">
-                  <p>
-                    <span className="text-white font-semibold">Roadsters enter through Gate #1B.</span> 
-                    Roadster and driver are free. Passengers will be charged $20 each for the weekend.
+                  <p className="text-2xl font-bold text-red-500">
+                    Pre-36 Roadsters are Free
                   </p>
                   <p>
-                    Only finished classic roadsters will be allowed to park in the Show Roadster Parking 
-                    Area. Other roadsters will be referred to park in Street Rod Parking at Gate #15 off 
-                    Arrow Highway.
+                    Only finished pre-1936 roadsters will be allowed to park in the Show Roadster Parking Area. They will enter Gate #1B, car and driver are free admission, $20 for passenger.
                   </p>
-                  <p className="text-lg text-white font-semibold">No pre-registration necessary.</p>
-                  <p className="text-red-500 font-semibold mt-4">
-                    Complimentary Mug for roadster drivers, Saturday at 3:30 pm.
+                  <p>
+                    Other roadsters will be referred to park in Street Rod Specialty Parking at Gate #15 off Arrow Highway.
                   </p>
                 </div>
               </div>
