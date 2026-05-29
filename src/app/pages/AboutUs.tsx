@@ -116,11 +116,10 @@ export function AboutUs() {
 
             <div className="aspect-[4/3] bg-gradient-to-br from-red-600/20 to-blue-900/20 rounded-2xl border border-red-500/20 backdrop-blur-sm relative overflow-hidden group">
               <img
-                src="/assets/aboutus/roadster1.gif"
-                alt="Classic Roadster"
-                className="absolute inset-0 w-full h-full object-cover"
+                src="/laroadsters-logo.png"
+                alt="Los Angeles Roadsters Logo"
+                className="absolute inset-0 w-full h-full object-contain"
               />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
           </div>
         </div>
