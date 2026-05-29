@@ -142,16 +142,16 @@ export function News() {
                 href={sponsor.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group"
+                className="group w-48"
               >
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500 flex items-center justify-center h-32">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500 flex items-center justify-center h-28">
                   <img
                     src={sponsor.logo}
                     alt={sponsor.name}
                     className="max-w-full max-h-full object-contain"
                   />
                 </div>
-                <div className="text-center mt-3">
+                <div className="text-center mt-2">
                   <span className="text-sm text-gray-400 group-hover:text-white transition-colors duration-300">
                     {sponsor.name}
                   </span>
