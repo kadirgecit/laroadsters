@@ -118,25 +118,6 @@ export function Hero() {
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-        <div ref={titleRef} className="text-center">
-          <div className="flex gap-6 justify-center flex-wrap">
-            <a
-              href="/44th-Anniversary.pdf"
-              download
-              className="hero-cta relative px-8 py-4 bg-red-600 text-white font-semibold rounded-full overflow-hidden group inline-block"
-            >
-              <span className="relative z-10">Download Flyer (PDF)</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-            </a>
-
-            <MagneticButton
-              className="hero-cta relative px-8 py-4 border border-white/20 text-white font-semibold rounded-full backdrop-blur-sm hover:border-red-500/50 transition-colors duration-300"
-              strength={0.4}
-            >
-              Explore Gallery
-            </MagneticButton>
-          </div>
-        </div>
       </div>
 
       {/* Vignette */}
