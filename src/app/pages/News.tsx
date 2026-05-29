@@ -131,7 +131,7 @@ export function News() {
             </div>
             <h2 className="text-4xl font-black text-white mb-4">Our Sponsors</h2>
             <p className="text-gray-400">
-              Supporting the 44th Annual Roadster Show & Swap
+              Supporting the 60th Anniversary Roadster Show & Swap
             </p>
           </div>
 
