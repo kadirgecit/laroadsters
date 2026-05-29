@@ -40,9 +40,7 @@ export function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Section */}
           <div className="footer-section lg:col-span-2">
-            <h3 className="text-4xl font-black text-white mb-4 bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">
-              LOS ANGELES<br />ROADSTERS
-            </h3>
+            <img src="/la-roadsters-inverted.png" alt="LA Roadsters" className="h-20 mb-4" />
             <div className="text-sm text-gray-600">
               Established 1957 · 60th Anniversary 2026 · Pomona, California
             </div>

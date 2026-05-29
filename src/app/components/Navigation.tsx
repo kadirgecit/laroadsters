@@ -64,12 +64,7 @@ export function Navigation() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="group">
-              <div className="text-2xl font-black">
-                <span className="text-white group-hover:text-red-500 transition-colors duration-300">
-                  LA
-                </span>
-                <span className="text-red-500"> ROADSTERS</span>
-              </div>
+              <img src="/la-roadsters-inverted.png" alt="LA Roadsters" className="h-12" />
             </Link>
 
             {/* Desktop Navigation */}
