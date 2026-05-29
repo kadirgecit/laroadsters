@@ -107,21 +107,15 @@ export function Hero() {
   };
 
   return (
-    <div ref={heroRef} className="relative h-screen overflow-hidden bg-black pt-24">
-      {/* Background Image */}
+    <div ref={heroRef} className="relative h-screen overflow-hidden bg-black">
       <div
         className="absolute inset-0 bg-cover bg-no-repeat"
         style={{ backgroundImage: 'url(/hero-bg.png)' }}
       />
-      {/* Dark Overlay - removed per customer request */}
-      <div className="absolute inset-0" />
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
       </div>
-
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] pointer-events-none" />
     </div>
   );
 }
