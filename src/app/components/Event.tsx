@@ -92,7 +92,7 @@ export function Event() {
               </div>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              The world's premier classic roadster show — 44th Annual at Fairplex Pomona
+              The world's premier classic roadster show — 60th Anniversary at Fairplex Pomona
             </p>
           </div>
         </div>

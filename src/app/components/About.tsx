@@ -88,7 +88,7 @@ export function About() {
     { icon: Calendar, value: '1957', label: 'Club Founded', color: 'from-red-500 to-red-600' },
     { icon: Award, value: '69 Years', label: 'Club Strong', color: 'from-blue-500 to-red-600' },
     { icon: Star, value: '60th', label: 'Show Anniversary', color: 'from-blue-500 to-cyan-600' },
-    { icon: MapPin, value: '44 Times', label: 'Show at Pomona Fairplex', color: 'from-yellow-500 to-red-600' },
+    { icon: MapPin, value: '60', label: 'Years Strong', color: 'from-yellow-500 to-red-600' },
   ];
 
   return (
@@ -120,7 +120,7 @@ export function About() {
                 The Los Angeles Roadsters Car Club — established in 1957 and still going strong. We're celebrating our 60th Anniversary in 2026.
               </p>
               <p>
-                For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 44th Annual Show & Swap brings together the finest classics on Father's Day Weekend.
+                For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 60th Anniversary Show & Swap brings together the finest classics on Father's Day Weekend.
               </p>
               <p>
                 Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.

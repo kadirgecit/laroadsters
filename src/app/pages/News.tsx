@@ -85,7 +85,7 @@ export function News() {
         {/* Header */}
         <div className="news-section mb-16">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-            44TH ANNIVERSARY
+            60TH ANNIVERSARY
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
@@ -93,7 +93,7 @@ export function News() {
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            44th Annual Roadster Show & Swap — Father's Day Weekend, June 19-20, 2026
+            60th Anniversary Roadster Show & Swap — Father's Day Weekend, June 19-20, 2026
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export function News() {
         <div className="news-section mb-20">
           <div className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">44th Anniversary Flyer</h2>
+              <h2 className="text-2xl font-bold text-white">60th Anniversary Flyer</h2>
               <a
                 href="/44th-Anniversary.pdf"
                 download
@@ -117,7 +117,7 @@ export function News() {
               <iframe
                 src="/44th-Anniversary.pdf"
                 className="w-full h-full"
-                title="44th Anniversary Flyer"
+                title="60th Anniversary Flyer"
               />
             </div>
           </div>

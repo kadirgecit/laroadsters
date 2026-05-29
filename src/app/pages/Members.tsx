@@ -29,7 +29,7 @@ export function Members() {
   const events = [
     {
       date: 'June 19-20, 2026',
-      title: '44th Annual Roadster Show & Swap',
+      title: '60th Anniversary Roadster Show & Swap',
       location: 'Fairplex, Pomona',
       description: "Father's Day Weekend - The premier classic roadster event of the year",
     },

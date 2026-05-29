@@ -44,7 +44,7 @@ export function Footer() {
               LOS ANGELES<br />ROADSTERS
             </h3>
             <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
-              Celebrating 60 years of automotive excellence. The world's premier classic roadster club, hosting our 44th Annual Show & Swap at Fairplex, Pomona.
+              Celebrating 60 years of automotive excellence. The world's premier classic roadster club, hosting our 60th Anniversary Show & Swap at Fairplex, Pomona.
             </p>
             <div className="text-sm text-gray-600">
               Established 1957 · 60th Anniversary 2026 · Pomona, California
