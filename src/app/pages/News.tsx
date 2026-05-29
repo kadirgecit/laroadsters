@@ -58,6 +58,7 @@ export function News() {
     { name: 'Brookville Roadster', logo: '/sponsors/brookville-roadster.webp', url: 'https://brookvilleroadster.com' },
     { name: 'California Car Cover', logo: '/sponsors/california-car-cover.jpg', url: 'https://calcarcover.com' },
     { name: 'Grand National Roadster Show', logo: '/sponsors/grand-national-roadster-show.jpg', url: 'https://rodshows.com' },
+    { name: 'Rodding USA Magazine', logo: '/sponsors/rodding-usa.png', url: 'https://www.roddingusa.com' },
   ];
 
   useEffect(() => {
