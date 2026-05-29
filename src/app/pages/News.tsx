@@ -170,20 +170,17 @@ export function News() {
                 <h2 className="text-3xl font-bold text-white mb-6">About The Show</h2>
                 <div className="prose prose-invert max-w-none space-y-4 text-gray-300">
                   <p>
-                    The Los Angeles Roadsters Car Club was established in 1957 and remains active today. 
-                    The club will host its world-renowned show for the 60th Anniversary in 2026, marking 
-                    the 44th time it will be held at the Fairplex in Pomona, California.
+                    Our 60th Anniversary Roadster Show & Swap will be held on Father's Day Weekend, 
+                    Friday, June 19 and Saturday, June 20, 2026 at the Fairplex, 1101 West 
+                    McKinley Avenue, Pomona, California.
                   </p>
                   <p>
-                    This year, we welcome SoCal Speed Shop to help bring you an even better Show and 
-                    Swap experience, and we look forward to the first-ever awards presented by SoCal and 
-                    the Los Angeles Roadsters.
-                  </p>
-                  <p className="text-xl font-semibold text-white">
-                    The Roadster Show will take place on Father's Day Weekend, Friday, June 19th, and 
-                    Saturday, June 20th, at the Fairplex, 1101 West McKinley Avenue, Pomona, California.
-                    <br />
-                    <span className="text-red-500">No Show on Sunday.</span>
+                    This year, we welcome{' '}
+                    <a href="https://www.est1946.com" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-white underline">
+                      So-Cal Speed Shop
+                    </a>{' '}
+                    to help bring you an even better Show and Swap experience, and we look forward 
+                    to the first-ever awards presented by So-Cal and the Los Angeles Roadsters.
                   </p>
                 </div>
               </div>
