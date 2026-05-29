@@ -49,15 +49,6 @@ export function AboutUs() {
     },
   ];
 
-  const aboutImages = [
-    '/assets/aboutus/photo1.jpg',
-    '/assets/aboutus/photo2.jpg',
-    '/assets/aboutus/photo3.jpg',
-    '/assets/aboutus/photo001.jpg',
-    '/assets/aboutus/photo002.jpg',
-    '/assets/aboutus/photo003.jpg',
-  ];
-
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
       <div className="max-w-7xl mx-auto" ref={sectionRef}>
@@ -124,25 +115,6 @@ export function AboutUs() {
           </div>
         </div>
 
-        {/* Photo Gallery */}
-        <div className="about-section mb-20">
-          <h2 className="text-4xl font-black text-white mb-12 text-center">Our History</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 about-images">
-            {aboutImages.map((img, index) => (
-              <div
-                key={index}
-                className="about-image aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 hover:border-red-500/50 transition-all duration-500 group"
-              >
-                <img
-                  src={img}
-                  alt={`Historical photo ${index + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Values Grid */}
         <div className="about-section mb-20">
           <h2 className="text-4xl font-black text-white mb-12 text-center">Our Values</h2>
@@ -167,11 +139,9 @@ export function AboutUs() {
               Our Mission
             </h2>
             <p className="text-xl text-gray-300 text-center max-w-4xl mx-auto leading-relaxed mb-8">
-              To preserve automotive heritage, foster community among enthusiasts, and celebrate
-              the artistry and craftsmanship of classic roadsters, hot rods, and sports cars
-              through education, events, and fellowship.
+              The Club promotes street rodding safety, family unity and camaraderie amongst the members and other clubs.
             </p>
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
+            <div className="flex justify-center gap-20 mt-12">
               <div className="text-center">
                 <div className="text-5xl font-black text-red-500 mb-2">1957</div>
                 <div className="text-gray-400">Year Founded</div>
@@ -179,10 +149,6 @@ export function AboutUs() {
               <div className="text-center">
                 <div className="text-5xl font-black text-red-500 mb-2">60</div>
                 <div className="text-gray-400">Years Strong</div>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-black text-red-500 mb-2">44</div>
-                <div className="text-gray-400">Annual Shows</div>
               </div>
             </div>
           </div>
@@ -192,7 +158,7 @@ export function AboutUs() {
         <div className="about-section mt-20 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Ready to be part of the 60th Anniversary?</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Download the flyer to reserve your vendor space or roadster spot for the 44th Annual Show
+            Download the flyer to reserve your vendor space or roadster spot for the Show
           </p>
           <a href="/44th-Anniversary.pdf" download className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block">
             Download Flyer (PDF)
