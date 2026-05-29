@@ -109,7 +109,7 @@ export function Hero() {
   return (
     <div ref={heroRef} className="relative h-screen overflow-hidden bg-black">
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat"
+        className="absolute inset-0 bg-contain bg-no-repeat bg-center"
         style={{ backgroundImage: 'url(/hero-bg.png)' }}
       />
 
