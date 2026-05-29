@@ -5,77 +5,87 @@ import { ArrowRight, X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Member data from upload
+// Member data
 const members = [
   {
     id: 1,
-    name: 'Wayne & Betty Pendola',
-    car: '1932 Ford Roadster',
-    story: `Wayne Pendola
-
-Wayne has been a member of the club since 2000. His club car is a 1932 Ford Roadster. He has held the office of Vice President in 2006 and 2007.
-
-Wayne holds the office of People's Voice for 2012 and 2013.
-
-Wayne is married, his lovely wife is Betty. Wayne and Betty have four children and six grandchildren. 
-
-Wayne says he's retired – but he keeps plenty busy working in his "Hobby Rod Shop". Wayne is a meticulous car builder and it shows in every car he builds.
-
-Betty is retired too, she keeps busy spending time with family and friends and with her many hobbies. She enjoys knitting beautiful purses, creating lovely quilts, scrapbooking, and most recently she's into needlepoint. Very creative lady!
-
-Wayne and Betty enjoy traveling to the coast in their RV. Getting away, relaxing and spending time together and with family and friends.
-
-What it means to be a member of the L. A. Roadsters: Very proud to be a member of the Club.`,
-    coverImage: '/assets/gallery/members/Wayne & Betty Pendola/pendolacar.jpg',
-    storyImage: '/assets/gallery/members/Wayne & Betty Pendola/pemdolafill.jpg',
+    name: 'John Buck',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/John Buck/BUCKRDSTER3.jpg',
+    storyImage: '/assets/gallery/members/John Buck/BUCKRDSTER3.jpg',
+    story: 'John Buck - LA Roadsters Member',
   },
   {
     id: 2,
-    name: 'Jeff & Vickie Tann',
-    car: '1936 Ford Cabriolet',
-    story: `Jeff Tann
-
-Jeff has been a member of the club since 1997. His club car is a 1936 Ford Cabriolet.
-
-Jeff also built and owns a 1928 Ford Model A Coupe, 1928 Ford Sedan Delivery, 1940 Ford Coupe and 1965 Pontiac GTO.
-
-From 2013 to Present, Jeff holds the office of Vice President. He has also held the office of Secretary from 2003-2011, Show Chairman in 2006 and Assistant Show Chairman in 2007.
-
-Jeff and Vickie have been married for 47 years.
-
-Jeff has always had a job that he loved. His job was his hobby. He's retired now and loving it. He was the West Coast Technical Editor for Street Rod Builder and Super Rod Magazines for ten years; the former editor for Rod & Custom Magazine for nine years; and Muscle Car Classics Magazine for four years. He's also been on the editorial staff for Hot Rod and Popular Hot Rodding Magazines. 
-
-Vickie retired from Los Angeles Department of Water and Power in 2007 with 32 years of service. She keeps busy with family and friends, and maintaining the Club's documents and website.
-
-Jeff's hobbies include cars, all kinds of cars. Building, restoring and tinkering with cars in his home hobby shop. He does all work on his cars, except the interiors, and his garage is always full of beautiful cars.
-
-Jeff has owned the yellow 1928 Model A Coupe since 1967 when he met Vickie. He purchased the car for $450 from Club Member Larry Ready. Jeff says he'll never part with the car - she's a keeper – just like Vickie.
-
-What it means to be a member of the L. A. Roadsters: Being part of the greatest club on the face of the earth. Great cars and people. It's a privilege to be part of hot rodding history.`,
-    coverImage: '/assets/gallery/members/Jeff & Vickie Tann/tanncar.jpg',
-    storyImage: '/assets/gallery/members/Jeff & Vickie Tann/tannfill.jpg',
+    name: 'Ken Butler',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Ken Butler/BUTLER1.jpg',
+    storyImage: '/assets/gallery/members/Ken Butler/BUTLER1.jpg',
+    story: 'Ken Butler - LA Roadsters Member',
   },
   {
     id: 3,
-    name: 'Richard & Brenda Anderson',
-    car: '1928 Ford Roadster Pickup',
-    story: `Richard Anderson
-
-Richard (Dick) has been a member of the club since 1998. His club car is a 1928 Ford Roadster Pickup. He also owns a 1927 Ford Track Roadster, 1934 Ford Two-Door Sedan, 1939 Ford Two-Door Sedan, 1967 Ford Ranchero and 1964 Porsche 356C.
-
-Dick has held the offices of Secretary 2000-2001, Treasurer 2002-2004, and Vice President 2005.
-
-Dick has been married to his wife Brenda for 37 years. They have two sons: Scott, a former Marine Harrier Pilot. He now flies for Delta Airlines and the Air National Guard. Scott's married and also an Associate Member of the L. A. Roadsters. Son Gregg, is married with two boys. He is a manager of Canadian Operations for a Telemarketing company and an avid golfer.
-
-In 1994, Dick retired as a Certified Medical Representative and Surgical Consultant. Dick doesn't know what it's like to retire. He's still working, as the Director of Aircraft Maintenance for Fast Aviation at El Monte Airport.
-
-After 39 years, Brenda retired as a School Administrator. She now works part-time as a Pharmacy Tech and plays lots of tennis.
-
-Both Dick and Brenda are pilots. Dick is instrument and multi-engine rated. They enjoy playing tennis together and tinkering with cars and airplanes.
-
-What it means to be a member of the L. A. Roadsters: Dick is very proud and honored to be a part of history and tradition.`,
-    coverImage: '/assets/gallery/members/Richard & Brenda Anderson/andersoncar.jpg',
-    storyImage: '/assets/gallery/members/Richard & Brenda Anderson/andersonfill.jpg',
+    name: 'Rich Cohn',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Rich Cohn/COHN6.jpg',
+    storyImage: '/assets/gallery/members/Rich Cohn/COHN6.jpg',
+    story: 'Rich Cohn - LA Roadsters Member',
+  },
+  {
+    id: 4,
+    name: 'Doyle Gammell',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Doyle Gammell/gammell_car copy.jpg',
+    storyImage: '/assets/gallery/members/Doyle Gammell/gammell_car copy.jpg',
+    story: 'Doyle Gammell - LA Roadsters Member',
+  },
+  {
+    id: 5,
+    name: 'Randy Jordan',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Randy Jordan/jordan copy.JPG',
+    storyImage: '/assets/gallery/members/Randy Jordan/jordan copy.JPG',
+    story: 'Randy Jordan - LA Roadsters Member',
+  },
+  {
+    id: 6,
+    name: 'Bill Krebs',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Bill Krebs/kreb_carJT copy.jpg',
+    storyImage: '/assets/gallery/members/Bill Krebs/kreb_carJT copy.jpg',
+    story: 'Bill Krebs - LA Roadsters Member',
+  },
+  {
+    id: 7,
+    name: 'Dick Stritchfield',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Dick Stritchfield/Scritchfield_Roadster copy.jpg',
+    storyImage: '/assets/gallery/members/Dick Stritchfield/Scritchfield_Roadster copy.jpg',
+    story: 'Dick Stritchfield - LA Roadsters Member',
+  },
+  {
+    id: 8,
+    name: 'Rick Simeone',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Rick Simeone/simeone_car1 copy.JPG',
+    storyImage: '/assets/gallery/members/Rick Simeone/simeone_car1 copy.JPG',
+    story: 'Rick Simeone - LA Roadsters Member',
+  },
+  {
+    id: 9,
+    name: 'Jeff Tann',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Jeff Tann/tann cabby copy.jpg',
+    storyImage: '/assets/gallery/members/Jeff Tann/tann cabby copy.jpg',
+    story: 'Jeff Tann - LA Roadsters Member',
+  },
+  {
+    id: 10,
+    name: 'Paul Winson',
+    car: 'Roadster',
+    coverImage: '/assets/gallery/members/Paul Winson/winson copy.JPG',
+    storyImage: '/assets/gallery/members/Paul Winson/winson copy.JPG',
+    story: 'Paul Winson - LA Roadsters Member',
   },
 ];
 
