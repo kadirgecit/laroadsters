@@ -101,14 +101,14 @@ export function AboutUs() {
                 </p>
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <div className="text-center">
-                    <p className="text-red-500 font-semibold mb-2">Our "Founding Father"</p>
                     <img src="/Dick-Scritchfield.jpg" alt="Dick Stritchfield" className="w-full rounded-xl shadow-lg mb-2" />
-                    <p className="text-white font-semibold">Dick Stritchfield</p>
+                    <p className="text-red-500 font-semibold">Our "Founding Father"</p>
+                    <p className="text-gray-400">Dick Stritchfield</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-white font-semibold mb-2">The Club is famous for our red shirts and white pants</p>
                     <img src="/club-clothing.png" alt="Club Uniform" className="w-full rounded-xl shadow-lg mb-2" />
-                    <p className="text-gray-400 text-sm">A tradition since 1957</p>
+                    <p className="text-red-500 font-semibold">The Club is famous for our red shirts and white pants</p>
+                    <p className="text-gray-400">A tradition since 1957</p>
                   </div>
                 </div>
               </div>
