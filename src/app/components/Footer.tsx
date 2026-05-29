@@ -43,9 +43,6 @@ export function Footer() {
             <h3 className="text-4xl font-black text-white mb-4 bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">
               LOS ANGELES<br />ROADSTERS
             </h3>
-            <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
-              Celebrating 60 years of automotive excellence. The world's premier classic roadster club, hosting our 60th Anniversary Show & Swap at Fairplex, Pomona.
-            </p>
             <div className="text-sm text-gray-600">
               Established 1957 · 60th Anniversary 2026 · Pomona, California
             </div>

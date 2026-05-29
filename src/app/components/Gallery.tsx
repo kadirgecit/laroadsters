@@ -194,16 +194,6 @@ export function Gallery() {
             </div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-20 text-center">
-          <div className="inline-block p-12 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-            <h3 className="text-3xl font-bold text-white mb-4">Want to showcase your classic?</h3>
-            <p className="text-gray-400 mb-6 max-w-2xl">
-              Join us at the 60th Anniversary Roadster Show & Swap
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Member Story Modal */}
