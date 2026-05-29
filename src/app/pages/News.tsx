@@ -197,11 +197,7 @@ export function News() {
               <div>
                 <h2 className="text-3xl font-bold text-white mb-6">The Main Attraction</h2>
                 <p className="text-gray-300 text-lg">
-                  The main attraction will be the hundreds of classic open cars of all types and makes; 
-                  some original, some modified, all of the highest quality, completely finished with paint 
-                  and upholstery, and painstakingly restored to the owner's preference. Only finished 
-                  roadsters will be allowed to park in the Roadster Parking Area. No cruising fairgrounds 
-                  for liability reasons.
+                  The main attraction will be hundreds of open cars from 1936 and earlier, of all types and makes; some original, some modified, all of the highest quality, fully finished in paint and upholstery, and carefully restored to the owner's preference. Only finished roadsters will be allowed to park in the Show Roadster Parking Area. No cruising through the fairgrounds is allowed for liability reasons.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
