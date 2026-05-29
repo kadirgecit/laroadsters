@@ -148,6 +148,41 @@ export function Gallery() {
         }} />
       </div>
 
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Member Cards Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 member-grid">
+          {members.map((member) => (
+            <div
+              key={member.id}
+              onClick={() => setSelectedMember(member)}
+              className="member-card group cursor-pointer"
+            >
+              <div className="relative h-[300px] rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
+                {/* Member Photo */}
+                <img
+                  src={member.coverImage}
+                  alt={member.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
+                    {member.name}
+                  </h3>
+                  <div className="text-sm text-red-500 mt-1 font-semibold tracking-wider uppercase">
+                    {member.car}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Member Story Modal */}
       {selectedMember && (
         <div 
