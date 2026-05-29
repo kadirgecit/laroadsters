@@ -138,64 +138,6 @@ export function Gallery() {
         }} />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Title */}
-        <div className="gallery-title mb-20">
-          <div className="flex items-end justify-between flex-wrap gap-8">
-            <div>
-              <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-                COMMUNITY SPOTLIGHT
-              </div>
-              <h2 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.9] tracking-tight">
-                <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
-                  OUR<br />MEMBERS
-                </div>
-              </h2>
-            </div>
-            <a href="/member-news" className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold flex items-center gap-2 group">
-              View Member News
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-          </div>
-        </div>
-
-        {/* Member Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 member-grid">
-          {members.map((member) => (
-            <div
-              key={member.id}
-              onClick={() => setSelectedMember(member)}
-              className="member-card group cursor-pointer"
-            >
-              <div className="relative h-[400px] rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
-                {/* Member Photo */}
-                <img
-                  src={member.coverImage}
-                  alt={member.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="text-sm text-red-500 mb-1 font-semibold tracking-wider uppercase">
-                    {member.car}
-                  </div>
-                  <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                </div>
-
-                {/* Hover Effect */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Member Story Modal */}
       {selectedMember && (
         <div 
