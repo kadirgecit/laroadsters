@@ -107,7 +107,7 @@ export function Hero() {
   };
 
   return (
-    <div ref={heroRef} className="relative h-screen overflow-hidden bg-black">
+    <div ref={heroRef} className="relative h-screen overflow-hidden bg-black pt-16">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
