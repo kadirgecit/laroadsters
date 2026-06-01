@@ -229,28 +229,7 @@ export function PhotoGallery() {
               </div>
             </div>
           ))}
-        </div>
 
-        {/* Stats Section */}
-        <div className="mt-20 p-12 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-5xl font-black text-red-500 mb-2">60</div>
-              <div className="text-gray-400">Shows Documented</div>
-            </div>
-            <div>
-              <div className="text-5xl font-black text-red-500 mb-2">60</div>
-              <div className="text-gray-400">Years of Photos</div>
-            </div>
-            <div>
-              <div className="text-5xl font-black text-red-500 mb-2">1957</div>
-              <div className="text-gray-400">Club Founded</div>
-            </div>
-            <div>
-              <div className="text-5xl font-black text-red-500 mb-2">Pomona</div>
-              <div className="text-gray-400">Fairplex Location</div>
-            </div>
-          </div>
         </div>
       </div>
 
