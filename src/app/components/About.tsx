@@ -85,10 +85,10 @@ export function About() {
   };
 
   const stats = [
-    { icon: Calendar, value: '1957', label: 'Club Founded', color: 'from-red-500 to-red-600' },
-    { icon: Award, value: '69 Years', label: 'Club Strong', color: 'from-blue-500 to-red-600' },
-    { icon: Star, value: '60th', label: 'Show Anniversary', color: 'from-blue-500 to-cyan-600' },
-    { icon: MapPin, value: '60', label: 'Years Strong', color: 'from-yellow-500 to-red-600' },
+    { icon: Calendar, value: '1957', label: 'Founded', color: 'from-red-500 to-red-600' },
+    { icon: Award, value: '69 Years', label: 'Strong', color: 'from-blue-500 to-red-600' },
+    { icon: Star, value: '60th', label: 'Anniversary', color: 'from-blue-500 to-cyan-600' },
+    { icon: MapPin, value: '44th', label: 'Time @ Fairplex', color: 'from-yellow-500 to-red-600' },
   ];
 
   return (
