@@ -358,7 +358,7 @@ export function News() {
                   are available at the show.
                 </p>
                 <p className="text-red-500 font-semibold">
-                  Collectible mugs - complimentary for roadster drivers!
+                  Show T-shirts will be available at Brizio T-Shirts booth
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -427,6 +427,40 @@ export function News() {
               <p className="text-xl font-semibold text-white">Dave Meissen</p>
               <p>(916) 220-0514</p>
               <p>1932lar@gmail.com</p>
+            </div>
+          </section>
+
+          {/* Scooter & Wheelchair Rentals */}
+          <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
+            <h2 className="text-3xl font-bold text-white mb-6">Scooter & Wheelchair Rentals</h2>
+            <div className="space-y-4 text-gray-300">
+              <p>
+                Scooter and wheelchair rentals will be available at the show for a daily rental fee.
+              </p>
+              <p>
+                Reservations can be made on their website: <a href="https://EventScooters.com/Events" className="text-red-500 hover:text-white">EventScooters.com/Events</a>
+              </p>
+              <p>
+                For Reservations call: <span className="text-white font-semibold">(262) 677-2697</span>
+              </p>
+            </div>
+          </section>
+
+          {/* Recreational Vehicles */}
+          <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
+            <h2 className="text-3xl font-bold text-white mb-6">Recreational Vehicles</h2>
+            <div className="space-y-4 text-gray-300">
+              <p>
+                The Fairplex RV Park is located at:
+              </p>
+              <p className="text-white font-semibold">
+                2200 N. White Avenue<br />
+                Pomona, CA 91768<br />
+                (across the street from the Fairplex)
+              </p>
+              <p>
+                For reservations call: <span className="text-white font-semibold">(909) 593-8915</span>
+              </p>
             </div>
           </section>
         </div>
