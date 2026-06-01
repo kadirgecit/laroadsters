@@ -38,11 +38,6 @@ export function AboutUs() {
       desc: 'Building lasting friendships through our shared love of classic roadsters and automotive culture.',
     },
     {
-      icon: Award,
-      title: 'Quality',
-      desc: 'Only finished roadsters in the show area — no project cars. Quality above all else.',
-    },
-    {
       icon: Wrench,
       title: 'Preservation',
       desc: 'Keeping automotive heritage alive for future generations to enjoy and appreciate.',
@@ -55,7 +50,7 @@ export function AboutUs() {
         {/* Header */}
         <div className="mb-20 text-center">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-            ESTABLISHED 1957 · 60TH ANNIVERSARY
+            ESTABLISHED 1957 · 69TH ANNIVERSARY
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
@@ -147,22 +142,11 @@ export function AboutUs() {
                 <div className="text-gray-400">Year Founded</div>
               </div>
               <div className="text-center">
-                <div className="text-5xl font-black text-red-500 mb-2">60</div>
+                <div className="text-5xl font-black text-red-500 mb-2">69</div>
                 <div className="text-gray-400">Years Strong</div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Join CTA */}
-        <div className="about-section mt-20 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to be part of the 60th Anniversary?</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Download the flyer to reserve your vendor space or roadster spot for the Show
-          </p>
-          <a href="/60th-Anniversary-Flyer.pdf" download className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block">
-            Download Flyer (PDF)
-          </a>
         </div>
       </div>
     </div>
