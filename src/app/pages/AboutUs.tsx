@@ -50,7 +50,7 @@ export function AboutUs() {
         {/* Header */}
         <div className="mb-20 text-center">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">
-            ESTABLISHED 1957 · 69TH ANNIVERSARY
+            ESTABLISHED 1957 · 60TH ANNIVERSARY
           </div>
           <h1 className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tight mb-6">
             <div className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
