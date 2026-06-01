@@ -39,8 +39,8 @@ const souvenirImages = [
 
 const mugImages = [
   '/assets/photos/mugs1.jpg',
-  '/assets/photos/Run5.jpg',
-  '/assets/photos/Run7.jpg',
+  '/assets/photos/run5.jpg',
+  '/assets/photos/run7.jpg',
 ];
 
 const specImages = [
