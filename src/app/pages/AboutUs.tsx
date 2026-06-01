@@ -113,7 +113,7 @@ export function AboutUs() {
         {/* Values Grid */}
         <div className="about-section mb-20">
           <h2 className="text-4xl font-black text-white mb-12 text-center">Our Values</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 justify-center max-w-4xl mx-auto">
             {values.map((value, index) => (
               <div
                 key={index}
