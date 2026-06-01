@@ -160,7 +160,7 @@ export function AboutUs() {
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
             Download the flyer to reserve your vendor space or roadster spot for the Show
           </p>
-          <a href="/44th-Anniversary.pdf" download className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block">
+          <a href="/60th-Anniversary-Flyer.pdf" download className="px-10 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block">
             Download Flyer (PDF)
           </a>
         </div>

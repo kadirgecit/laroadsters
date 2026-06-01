@@ -87,7 +87,7 @@ export function Navigation() {
             {/* CTA Button */}
             <div className="hidden lg:block">
               <a
-                href="/44th-Anniversary.pdf"
+                href="/60th-Anniversary-Flyer.pdf"
                 download
                 className="px-6 py-3 bg-red-600 text-white text-sm font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block"
               >
@@ -129,7 +129,7 @@ export function Navigation() {
 
           <div className="pb-8">
             <a 
-              href="/44th-Anniversary.pdf" 
+              href="/60th-Anniversary-Flyer.pdf" 
               download
               className="w-full px-6 py-4 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300 inline-block text-center block"
             >

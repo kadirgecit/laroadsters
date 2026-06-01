@@ -103,7 +103,7 @@ export function News() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-white">60th Anniversary Flyer</h2>
               <a
-                href="/44th-Anniversary.pdf"
+                href="/60th-Anniversary-Flyer.pdf"
                 download
                 className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-full hover:bg-red-500 transition-colors duration-300"
               >
@@ -115,7 +115,7 @@ export function News() {
             {/* Embedded PDF Viewer */}
             <div className="w-full h-[600px] rounded-xl overflow-hidden border border-white/10 bg-white/5">
               <iframe
-                src="/44th-Anniversary.pdf"
+                src="/60th-Anniversary-Flyer.pdf"
                 className="w-full h-full"
                 title="60th Anniversary Flyer"
               />
