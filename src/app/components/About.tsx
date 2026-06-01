@@ -137,7 +137,7 @@ export function About() {
           <div ref={imageRef} className="relative">
             <div className="aspect-[4/3] bg-gradient-to-br from-red-600/20 to-blue-900/20 rounded-2xl border border-red-500/20 backdrop-blur-sm relative overflow-hidden group">
               <img 
-                src="/assets/photos/Run5.jpg" 
+                src="/assets/photos/mugs2.jpg" 
                 alt="Los Angeles Roadsters Heritage" 
                 className="w-full h-full object-cover"
               />
