@@ -90,6 +90,7 @@ export function Members() {
           <div className="flex items-center gap-4 mb-8">
             <FileText className="w-8 h-8 text-red-500" />
             <h2 className="text-3xl font-bold text-white">Club Documents</h2>
+            <p className="text-gray-400 mt-2">These documents are password-protected for members only.</p>
           </div>
           <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <div className="grid md:grid-cols-2 gap-4">
