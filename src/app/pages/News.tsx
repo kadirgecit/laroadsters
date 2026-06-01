@@ -184,9 +184,8 @@ export function News() {
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <img src="/assets/photos/show1.jpg" alt="Roadster Show" className="rounded-2xl w-full h-40 object-cover shadow-xl" />
-                <img src="/assets/photos/show2.jpg" alt="Roadster Show" className="rounded-2xl w-full h-40 object-cover shadow-xl mt-8" />
+              <div>
+                <img src="/assets/photos/lar socal.jpg" alt="LAR SoCal" className="rounded-2xl w-full h-64 object-cover shadow-xl" />
               </div>
             </div>
           </section>
@@ -248,7 +247,7 @@ export function News() {
           <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-6">Roadsters - Parking Information</h2>
+                <h2 className="text-3xl font-bold text-white mb-6">Roadsters</h2>
                 <div className="space-y-4 text-gray-300">
                   <p className="text-2xl font-bold text-red-500">
                     Pre-36 Roadsters are Free
