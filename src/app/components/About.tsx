@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from 'react-router-dom';
 import { Award, Star, Calendar, MapPin } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -126,9 +127,9 @@ export function About() {
                 Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.
               </p>
               <div className="pt-6">
-                <button className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold">
+                <Link to="/about" className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold inline-block">
                   Discover Our Story
-                </button>
+                </Link>
               </div>
             </div>
           </div>
