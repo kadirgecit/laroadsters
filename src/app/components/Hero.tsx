@@ -34,14 +34,16 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-        <div className="text-center max-w-4xl">
-          <h1 className="text-white text-5xl md:text-7xl font-black tracking-wide drop-shadow-2xl mb-4">
-            Los Angeles Roadsters
+        <div className="text-center">
+          <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.9] tracking-tight mb-4">
+            <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
+              Los Angeles Roadsters
+            </div>
           </h1>
-          <p className="text-white/90 text-xl md:text-2xl font-medium tracking-widest drop-shadow-lg">
+          <p className="text-[clamp(1.5rem,5vw,3rem)] font-bold text-white mb-4">
             60th Anniversary
           </p>
-          <p className="text-white/80 text-lg md:text-xl mt-4 drop-shadow-md">
+          <p className="text-xl md:text-2xl text-white/90 drop-shadow-lg">
             Father's Day Weekend • June 19-20, 2026
           </p>
         </div>
