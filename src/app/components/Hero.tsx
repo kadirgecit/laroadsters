@@ -22,7 +22,7 @@ export function Hero() {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative h-screen overflow-hidden">
+    <div ref={heroRef} className="relative min-h-[120vh] overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-no-repeat bg-center"
