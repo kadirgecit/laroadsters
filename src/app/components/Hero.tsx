@@ -28,9 +28,6 @@ export function Hero() {
         className="absolute inset-0 bg-cover bg-no-repeat bg-center"
         style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
       />
-      
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
       {/* Content */}
       <div className="relative z-10 pt-24 flex flex-col items-center px-4">
