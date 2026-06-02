@@ -22,30 +22,36 @@ export function Hero() {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative h-screen overflow-hidden bg-black">
+    <div ref={heroRef} className="relative h-screen overflow-hidden">
+      {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat bg-[length:150%] md:bg-[length:100%]"
-        style={{ backgroundImage: 'url(/hero-bg.jpg)', backgroundPosition: '50% 30%' }}
+        className="absolute inset-0 bg-cover bg-no-repeat bg-center"
+        style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
       />
+      
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
-      {/* Hero Text */}
-      <div className="relative z-10 pt-24 flex flex-col items-center justify-start px-4">
-        <style>{`
-          @font-face {
-            font-family: 'RAGE';
-            src: url('/RAGE_1.TTF') format('truetype');
-          }
-          .rage-font {
-            font-family: 'RAGE', sans-serif;
-          }
-        `}</style>
-        <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wider drop-shadow-lg">
-          Los Angeles Roadsters
-        </h1>
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
+        <div className="text-center max-w-4xl">
+          <h1 className="text-white text-5xl md:text-7xl font-black tracking-wide drop-shadow-2xl mb-4">
+            Los Angeles Roadsters
+          </h1>
+          <p className="text-white/90 text-xl md:text-2xl font-medium tracking-widest drop-shadow-lg">
+            60th Anniversary
+          </p>
+          <p className="text-white/80 text-lg md:text-xl mt-4 drop-shadow-md">
+            Father's Day Weekend • June 19-20, 2026
+          </p>
+        </div>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
+        <div className="w-6 h-10 border-2 border-white/70 rounded-full flex justify-center pt-2">
+          <div className="w-1.5 h-3 bg-white/70 rounded-full animate-bounce" />
+        </div>
       </div>
     </div>
   );
