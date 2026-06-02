@@ -33,7 +33,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 py-32">
         <div className="text-center">
           <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.9] tracking-tight mb-4">
             <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
