@@ -33,19 +33,13 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center px-4 py-32">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 py-20">
         <div className="text-center">
-          <h1 className="text-[clamp(2.5rem,7vw,8rem)] font-black tracking-tight mb-4">
+          <h1 className="text-[clamp(2.5rem,7vw,8rem)] font-black tracking-tight">
             <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
               Los Angeles Roadsters
             </div>
           </h1>
-          <p className="text-[clamp(1.2rem,4vw,2.5rem)] font-bold text-white mb-4">
-            60th Anniversary
-          </p>
-          <p className="text-xl md:text-2xl text-white/90 drop-shadow-lg">
-            Father's Day Weekend • June 19-20, 2026
-          </p>
         </div>
       </div>
 
