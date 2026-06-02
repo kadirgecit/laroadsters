@@ -39,7 +39,7 @@ export function Hero() {
             font-family: 'RAGE', sans-serif;
           }
         `}</style>
-        <h1 className="rage-font text-white text-7xl md:text-9xl font-bold tracking-wider drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+        <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wider drop-shadow-lg">
           Los Angeles Roadsters
         </h1>
       </div>
