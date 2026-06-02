@@ -22,7 +22,7 @@ export function Hero() {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative min-h-[140vh] overflow-hidden">
+    <div ref={heroRef} className="relative h-screen overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-no-repeat bg-center"
@@ -35,12 +35,12 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-center px-4 py-32">
         <div className="text-center">
-          <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.9] tracking-tight mb-4">
+          <h1 className="text-[clamp(2rem,6vw,5rem)] font-black leading-[0.9] tracking-tight mb-4">
             <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
               Los Angeles Roadsters
             </div>
           </h1>
-          <p className="text-[clamp(1.5rem,5vw,3rem)] font-bold text-white mb-4">
+          <p className="text-[clamp(1rem,3vw,2rem)] font-bold text-white mb-4">
             60th Anniversary
           </p>
           <p className="text-xl md:text-2xl text-white/90 drop-shadow-lg">
