@@ -235,72 +235,79 @@ export function PhotoGallery() {
 
       {/* Lightbox */}
       {selectedGallery && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center" 
+        <div
+          className="fixed inset-0 z-50 bg-black/95 overflow-y-auto"
           onClick={closeGallery}
         >
-          {/* Close button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              closeGallery();
-            }}
-            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-50"
-          >
-            <X className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Gallery title */}
-          <div className="absolute top-6 left-6 z-40">
-            <div className="text-sm text-red-500 font-semibold tracking-wider uppercase">
-              {selectedGallery.category.replace('-', ' ')}
+          {/* Top bar: title + close */}
+          <div className="sticky top-0 left-0 right-0 z-40 flex items-start justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 to-transparent">
+            <div>
+              <div className="text-xs md:text-sm text-red-500 font-semibold tracking-wider uppercase">
+                {selectedGallery.category.replace('-', ' ')}
+              </div>
+              <h2 className="text-lg md:text-2xl font-black text-white">{selectedGallery.title}</h2>
+              <div className="text-gray-400 text-xs md:text-sm mt-1">
+                {currentImageIndex + 1} of {currentImages.length}
+              </div>
             </div>
-            <h2 className="text-2xl font-black text-white">{selectedGallery.title}</h2>
-            <div className="text-gray-400 text-sm mt-1">
-              {currentImageIndex + 1} of {currentImages.length}
-            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                closeGallery();
+              }}
+              className="w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 flex-shrink-0"
+            >
+              <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
           </div>
 
-          {/* Prev button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prevImage();
-            }}
-            className="absolute left-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
-          >
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Next button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              nextImage();
-            }}
-            className="absolute right-6 w-12 h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-40"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Main image */}
-          <div 
-            className="max-w-5xl max-h-[80vh] px-20 cursor-default" 
+          {/* Image stage — centered, takes remaining viewport height */}
+          <div
+            className="relative flex items-center justify-center px-3 md:px-16 py-4"
+            style={{ minHeight: 'calc(100vh - 180px)' }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Prev button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+
+            {/* Next button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+
+            {/* Main image */}
             <img
               src={currentImages[currentImageIndex].src}
               alt={currentImages[currentImageIndex].caption}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              className="max-w-full max-h-[70vh] object-contain rounded-lg"
             />
-            <div className="text-center mt-4 text-gray-400">
-              {currentImages[currentImageIndex].caption}
-            </div>
+          </div>
+
+          {/* Caption */}
+          <div
+            className="text-center text-gray-400 text-sm md:text-base px-4 pb-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {currentImages[currentImageIndex].caption}
           </div>
 
           {/* Thumbnail strip */}
-          <div 
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-4 cursor-default" 
+          <div
+            className="flex gap-2 max-w-full overflow-x-auto px-4 pb-6 pt-2 cursor-default"
             onClick={(e) => e.stopPropagation()}
           >
             {currentImages.map((img, idx) => (
@@ -310,7 +317,7 @@ export function PhotoGallery() {
                   e.stopPropagation();
                   setCurrentImageIndex(idx);
                 }}
-                className={`w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
+                className={`w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
                   idx === currentImageIndex ? 'border-red-500' : 'border-transparent opacity-50 hover:opacity-100'
                 }`}
               >
