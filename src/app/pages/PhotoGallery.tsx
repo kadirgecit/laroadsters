@@ -1,7 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Filter, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { Filter, Maximize2 } from 'lucide-react';
+import Lightbox from 'yet-another-react-lightbox';
+import {
+  Fullscreen,
+  Thumbnails,
+  Zoom,
+  Counter,
+} from 'yet-another-react-lightbox/plugins';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import 'yet-another-react-lightbox/plugins/counter.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,31 +63,32 @@ const filters = [
 ];
 
 const galleries = [
-  { 
-    category: 'la-roadster-shows', 
-    title: "Father's Day Show 2025", 
+  {
+    category: 'la-roadster-shows',
+    title: "Father's Day Show 2025",
     count: galleryImages['la-roadster-shows'].length,
-    image: galleryImages['la-roadster-shows'][0].src
+    image: galleryImages['la-roadster-shows'][0].src,
   },
-  { 
-    category: 'runs', 
-    title: 'Club Runs', 
+  {
+    category: 'runs',
+    title: 'Club Runs',
     count: galleryImages['runs'].length,
-    image: galleryImages['runs'][0].src
+    image: galleryImages['runs'][0].src,
   },
-  { 
-    category: 'members', 
-    title: 'Member Cars', 
+  {
+    category: 'members',
+    title: 'Member Cars',
     count: galleryImages['members'].length,
-    image: galleryImages['members'][0].src
+    image: galleryImages['members'][0].src,
   },
 ];
 
 export function PhotoGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [selectedGallery, setSelectedGallery] = useState<typeof galleries[0] | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [slides, setSlides] = useState<{ src: string; alt: string; title?: string }[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -97,52 +108,35 @@ export function PhotoGallery() {
     return () => ctx.revert();
   }, []);
 
-  // Prevent body scroll when lightbox is open
+  // Body scroll lock when lightbox is open
   useEffect(() => {
-    if (selectedGallery) {
+    if (lightboxOpen) {
       document.body.style.overflow = 'hidden';
-      // Add escape key handler
-      const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          closeGallery();
-        }
-      };
-      document.addEventListener('keydown', handleEscape);
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-      };
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
-  }, [selectedGallery]);
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [lightboxOpen]);
 
-  const filteredGalleries = activeFilter === 'all'
-    ? galleries
-    : galleries.filter(g => g.category.toLowerCase() === activeFilter.toLowerCase());
+  const filteredGalleries =
+    activeFilter === 'all'
+      ? galleries
+      : galleries.filter((g) => g.category.toLowerCase() === activeFilter.toLowerCase());
 
-  const openGallery = (gallery: typeof galleries[0]) => {
-    setSelectedGallery(gallery);
-    setCurrentImageIndex(0);
+  const openGallery = (gallery: (typeof galleries)[0]) => {
+    const images = galleryImages[gallery.category as keyof typeof galleryImages];
+    setSlides(
+      images.map((img) => ({
+        src: img.src,
+        alt: img.caption,
+        title: img.caption,
+      })),
+    );
+    setLightboxIndex(0);
+    setLightboxOpen(true);
   };
-
-  const closeGallery = () => {
-    setSelectedGallery(null);
-    setCurrentImageIndex(0);
-  };
-
-  const nextImage = () => {
-    const images = galleryImages[selectedGallery!.category as keyof typeof galleryImages];
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    const images = galleryImages[selectedGallery!.category as keyof typeof galleryImages];
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-
-  const currentImages = selectedGallery 
-    ? galleryImages[selectedGallery.category as keyof typeof galleryImages]
-    : [];
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
@@ -193,8 +187,8 @@ export function PhotoGallery() {
             >
               <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
                 {/* Background Image */}
-                <img 
-                  src={gallery.image} 
+                <img
+                  src={gallery.image}
                   alt={gallery.title}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -219,7 +213,7 @@ export function PhotoGallery() {
 
                 {/* Hover Effect */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Click icon */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="w-16 h-16 bg-red-500/80 rounded-full flex items-center justify-center">
@@ -229,108 +223,27 @@ export function PhotoGallery() {
               </div>
             </div>
           ))}
-
         </div>
       </div>
 
-      {/* Lightbox */}
-      {selectedGallery && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/95 flex flex-col"
-          onClick={closeGallery}
-        >
-          {/* Top bar: title + close */}
-          <div
-            className="flex items-start justify-between p-4 md:p-6 bg-gradient-to-b from-black/90 to-transparent flex-shrink-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div>
-              <div className="text-xs md:text-sm text-red-500 font-semibold tracking-wider uppercase">
-                {selectedGallery.category.replace('-', ' ')}
-              </div>
-              <h2 className="text-lg md:text-2xl font-black text-white">{selectedGallery.title}</h2>
-              <div className="text-gray-400 text-xs md:text-sm mt-1">
-                {currentImageIndex + 1} of {currentImages.length}
-              </div>
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                closeGallery();
-              }}
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 flex-shrink-0"
-            >
-              <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
-            </button>
-          </div>
-
-          {/* Image stage — centered between top bar and thumbnail strip */}
-          <div
-            className="relative flex-1 flex items-center justify-center px-3 md:px-16 min-h-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Prev button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
-            </button>
-
-            {/* Next button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center transition-colors duration-300 z-10"
-            >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
-            </button>
-
-            {/* Main image + caption stack */}
-            <div className="flex flex-col items-center justify-center max-h-full">
-              <img
-                src={currentImages[currentImageIndex].src}
-                alt={currentImages[currentImageIndex].caption}
-                className="max-w-full max-h-full object-contain rounded-lg"
-                style={{ maxHeight: 'calc(100vh - 240px)' }}
-              />
-              <div className="text-center text-gray-400 text-sm md:text-base mt-2">
-                {currentImages[currentImageIndex].caption}
-              </div>
-            </div>
-          </div>
-
-          {/* Thumbnail strip */}
-          <div
-            className="flex gap-2 max-w-full overflow-x-auto px-4 py-4 bg-gradient-to-t from-black/90 to-transparent flex-shrink-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {currentImages.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentImageIndex(idx);
-                }}
-                className={`w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
-                  idx === currentImageIndex ? 'border-red-500' : 'border-transparent opacity-50 hover:opacity-100'
-                }`}
-              >
-                <img
-                  src={img.src}
-                  alt={`Thumbnail ${idx + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Lightbox — uses yet-another-react-lightbox for fullscreen, prev/next,
+          thumbnails, zoom, counter, click-outside, ESC, mobile gestures. */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={lightboxIndex}
+        slides={slides}
+        plugins={[Fullscreen, Thumbnails, Zoom, Counter]}
+        thumbnails={{ position: 'bottom', border: 0, borderRadius: 8, gap: 8, width: 80, height: 60 }}
+        counter={{ container: { style: { top: 'unset', bottom: 0, left: 0, right: 0 } } }}
+        carousel={{ finite: false, padding: 0, spacing: 0 }}
+        animation={{ fade: 250, swipe: 250 }}
+        controller={{ closeOnBackdropClick: true }}
+        styles={{
+          container: { backgroundColor: 'rgba(0, 0, 0, 0.95)' },
+          thumbnailsContainer: { backgroundColor: 'rgba(0, 0, 0, 0.85)' },
+        }}
+      />
     </div>
   );
 }

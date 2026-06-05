@@ -30,9 +30,9 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 pt-[18vh] flex flex-col items-center px-4">
+      <div className="relative z-10 pt-[13vh] pb-[8vh] flex flex-col items-center px-4">
         <div className="text-center max-w-[90vw]">
-          <h1 className="text-[clamp(2rem,6vw,6rem)] font-black tracking-tight leading-[1.05]">
+          <h1 className="text-[clamp(2rem,6vw,6rem)] font-black tracking-tight leading-[1.15] py-2">
             <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
               Los Angeles Roadsters
             </div>
