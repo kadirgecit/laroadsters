@@ -236,11 +236,14 @@ export function PhotoGallery() {
       {/* Lightbox */}
       {selectedGallery && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-black/95 flex flex-col"
           onClick={closeGallery}
         >
           {/* Top bar: title + close */}
-          <div className="sticky top-0 left-0 right-0 z-40 flex items-start justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 to-transparent">
+          <div
+            className="flex items-start justify-between p-4 md:p-6 bg-gradient-to-b from-black/90 to-transparent flex-shrink-0"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div>
               <div className="text-xs md:text-sm text-red-500 font-semibold tracking-wider uppercase">
                 {selectedGallery.category.replace('-', ' ')}
@@ -261,10 +264,9 @@ export function PhotoGallery() {
             </button>
           </div>
 
-          {/* Image stage — centered, takes remaining viewport height */}
+          {/* Image stage — centered between top bar and thumbnail strip */}
           <div
-            className="relative flex items-center justify-center px-3 md:px-16 py-4"
-            style={{ minHeight: 'calc(100vh - 180px)' }}
+            className="relative flex-1 flex items-center justify-center px-3 md:px-16 min-h-0"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Prev button */}
@@ -289,25 +291,23 @@ export function PhotoGallery() {
               <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </button>
 
-            {/* Main image */}
-            <img
-              src={currentImages[currentImageIndex].src}
-              alt={currentImages[currentImageIndex].caption}
-              className="max-w-full max-h-[70vh] object-contain rounded-lg"
-            />
-          </div>
-
-          {/* Caption */}
-          <div
-            className="text-center text-gray-400 text-sm md:text-base px-4 pb-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {currentImages[currentImageIndex].caption}
+            {/* Main image + caption stack */}
+            <div className="flex flex-col items-center justify-center max-h-full">
+              <img
+                src={currentImages[currentImageIndex].src}
+                alt={currentImages[currentImageIndex].caption}
+                className="max-w-full max-h-full object-contain rounded-lg"
+                style={{ maxHeight: 'calc(100vh - 240px)' }}
+              />
+              <div className="text-center text-gray-400 text-sm md:text-base mt-2">
+                {currentImages[currentImageIndex].caption}
+              </div>
+            </div>
           </div>
 
           {/* Thumbnail strip */}
           <div
-            className="flex gap-2 max-w-full overflow-x-auto px-4 pb-6 pt-2 cursor-default"
+            className="flex gap-2 max-w-full overflow-x-auto px-4 py-4 bg-gradient-to-t from-black/90 to-transparent flex-shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
             {currentImages.map((img, idx) => (
