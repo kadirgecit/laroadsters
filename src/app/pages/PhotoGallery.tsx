@@ -7,12 +7,10 @@ import {
   Fullscreen,
   Thumbnails,
   Zoom,
-  Counter,
   Captions,
 } from 'yet-another-react-lightbox/plugins';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
-import 'yet-another-react-lightbox/plugins/counter.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -235,7 +233,7 @@ export function PhotoGallery() {
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
         slides={slides}
-        plugins={[Fullscreen, Thumbnails, Zoom, Counter, Captions]}
+        plugins={[Fullscreen, Thumbnails, Zoom, Captions]}
         captions={{ descriptionTextAlign: 'center', descriptionMaxLines: 2 }}
         thumbnails={{ position: 'bottom', border: 0, borderRadius: 8, gap: 8, width: 80, height: 60 }}
         carousel={{ finite: false, padding: 0, spacing: 0 }}
