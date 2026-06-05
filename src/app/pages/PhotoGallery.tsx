@@ -17,12 +17,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Image data for each category
 const galleryImages = {
-  'la-roadster-shows': [
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg', caption: "Father's Day Show 2025" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg', caption: "Father's Day Show 2025" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg', caption: "Father's Day Show 2025" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg', caption: "Father's Day Show 2025" },
-  ],
   runs: [
     { src: '/assets/gallery/Runs/run1.jpeg', caption: 'Club Run' },
     { src: '/assets/gallery/Runs/run3.jpeg', caption: 'Club Run' },
@@ -40,6 +34,10 @@ const galleryImages = {
     { src: '/assets/gallery/Runs/run15.jpeg', caption: 'Club Run' },
     { src: '/assets/gallery/Runs/run16.jpg', caption: 'Club Run' },
     { src: '/assets/gallery/Runs/run17.jpg', caption: 'Club Run' },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg', caption: "Club Run" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg', caption: "Club Run" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg', caption: "Club Run" },
+    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg', caption: "Club Run" },
   ],
   members: [
     { src: '/assets/gallery/Club-cars/BUCKRDSTER3.jpg', caption: 'John Buck' },
@@ -57,18 +55,11 @@ const galleryImages = {
 
 const filters = [
   { id: 'all', label: 'All' },
-  { id: 'la-roadster-shows', label: 'LA Roadster Shows' },
   { id: 'runs', label: 'Runs' },
   { id: 'members', label: 'Members' },
 ];
 
 const galleries = [
-  {
-    category: 'la-roadster-shows',
-    title: "Father's Day Show 2025",
-    count: galleryImages['la-roadster-shows'].length,
-    image: galleryImages['la-roadster-shows'][0].src,
-  },
   {
     category: 'runs',
     title: 'Club Runs',
