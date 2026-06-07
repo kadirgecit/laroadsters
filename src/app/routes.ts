@@ -6,6 +6,7 @@ import { AboutUs } from './pages/AboutUs';
 import { Members } from './pages/Members';
 import { PhotoGallery } from './pages/PhotoGallery';
 import { Contact } from './pages/Contact';
+import { AdminLogin, AdminDashboard } from './admin/Admin';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,14 @@ export const router = createBrowserRouter([
       { path: 'member-news', Component: Members },
       { path: 'gallery', Component: PhotoGallery },
       { path: 'contact', Component: Contact },
+    ],
+  },
+  // Admin lives outside the public Root layout (no nav/footer).
+  {
+    path: '/admin',
+    children: [
+      { index: true, Component: AdminDashboard },
+      { path: 'login', Component: AdminLogin },
     ],
   },
 ]);
