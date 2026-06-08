@@ -125,7 +125,7 @@ export function AdminLogin() {
 
 // ---------- Dashboard ----------
 const SECTIONS = [
-  { icon: Newspaper, label: 'Show News Cards', desc: 'Edit the 11 cards on the Show News page', path: '/admin/news-cards', soon: true },
+  { icon: Newspaper, label: 'Show News Cards', desc: 'Edit the 14 cards on the Show News page', path: '/admin/news-cards' },
   { icon: FileText, label: 'Show Flyer', desc: 'Replace the annual PDF flyer', path: '/admin/flyer', soon: true },
   { icon: Users, label: 'Member News', desc: 'Add, edit, or remove news posts', path: '/admin/member-news', soon: true },
   { icon: FolderArchive, label: 'Club Documents', desc: 'Upload bylaws, roster, and forms', path: '/admin/documents', soon: true },

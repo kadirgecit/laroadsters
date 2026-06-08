@@ -7,6 +7,7 @@ import { Members } from './pages/Members';
 import { PhotoGallery } from './pages/PhotoGallery';
 import { Contact } from './pages/Contact';
 import { AdminLogin, AdminDashboard } from './admin/Admin';
+import { AdminNewsCards } from './admin/AdminNewsCards';
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: AdminDashboard },
       { path: 'login', Component: AdminLogin },
+      { path: 'news-cards', Component: AdminNewsCards },
     ],
   },
 ]);
