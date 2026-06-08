@@ -143,7 +143,9 @@ export default async function handler(req: AuthedRequest, res: ServerResponse) {
     }
 
     // req.url is like '/api/auth/login' (Vercel strips the function path)
-    const url = (req.url || '/').split('?')[0];
+    // We strip the /api prefix so route keys stay clean ('/auth/login', not '/api/auth/login')
+    const rawUrl = (req.url || '/').split('?')[0];
+    const url = rawUrl.replace(/^\/api/, '') || '/';
     const method = (req.method || 'GET').toUpperCase();
 
     // Parse JSON body for non-GET
