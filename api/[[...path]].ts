@@ -10,7 +10,8 @@ import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
 import { put, del } from '@vercel/blob';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import busboy from 'busboy';
+// busboy import removed for now — will add back when implementing file upload
+// import busboy from 'busboy';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
 // ---------- env / config ----------
@@ -154,9 +155,9 @@ const routes: Record<string, Partial<Record<Methods, Handler>>> = {
 };
 
 // ---------- entrypoint ----------
-// Use module.exports for Vercel function compatibility (works with both
-// 'type':'module' and CJS package.json settings).
-const handler = async (req: AuthedRequest, res: ServerResponse) => {
+// Single function exported as default (ESM-compatible). Vercel supports
+// default exports in .ts files under both 'module' and CJS package types.
+export default async function handler(req: AuthedRequest, res: ServerResponse) {
   try {
     const method = ((req.method || 'GET') as Methods).toUpperCase() as Methods;
 
@@ -191,10 +192,7 @@ const handler = async (req: AuthedRequest, res: ServerResponse) => {
     console.error('API error:', err);
     return json(res, 500, { error: err?.message || 'Internal server error' });
   }
-};
-
-module.exports = handler;
-module.exports.default = handler;
+}
 
 // ---------- auth handlers ----------
 async function handleLogin(req: AuthedRequest, res: ServerResponse) {
