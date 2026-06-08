@@ -154,7 +154,9 @@ const routes: Record<string, Partial<Record<Methods, Handler>>> = {
 };
 
 // ---------- entrypoint ----------
-export default async function handler(req: AuthedRequest, res: ServerResponse) {
+// Use module.exports for Vercel function compatibility (works with both
+// 'type':'module' and CJS package.json settings).
+const handler = async (req: AuthedRequest, res: ServerResponse) => {
   try {
     const method = ((req.method || 'GET') as Methods).toUpperCase() as Methods;
 
@@ -189,7 +191,10 @@ export default async function handler(req: AuthedRequest, res: ServerResponse) {
     console.error('API error:', err);
     return json(res, 500, { error: err?.message || 'Internal server error' });
   }
-}
+};
+
+module.exports = handler;
+module.exports.default = handler;
 
 // ---------- auth handlers ----------
 async function handleLogin(req: AuthedRequest, res: ServerResponse) {
