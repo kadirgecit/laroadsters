@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS news_cards (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug        TEXT NOT NULL UNIQUE,   -- 'about_show', 'main_attraction', 'general_public', etc.
   title       TEXT NOT NULL,
-  body_text   TEXT NOT NULL DEFAULT '',
+  body_text   TEXT NOT NULL DEFAULT '',  -- plain text fallback
+  body_html   TEXT NOT NULL DEFAULT '',  -- rich HTML, rendered on the public site
   flyer_url   TEXT,                    -- nullable; only the flyer card uses this
   image_urls  JSONB NOT NULL DEFAULT '[]'::jsonb,  -- array of URLs for the photo grid
   enabled     BOOLEAN NOT NULL DEFAULT TRUE,
@@ -106,3 +107,6 @@ CREATE INDEX IF NOT EXISTS idx_documents_category_sort ON documents (category, s
 CREATE INDEX IF NOT EXISTS idx_sponsors_sort ON sponsors (sort_order);
 CREATE INDEX IF NOT EXISTS idx_gallery_albums_sort ON gallery_albums (sort_order);
 CREATE INDEX IF NOT EXISTS idx_gallery_photos_album ON gallery_photos (album_id, sort_order);
+
+-- Idempotent column additions for live DBs that pre-date the column.
+ALTER TABLE news_cards ADD COLUMN IF NOT EXISTS body_html TEXT NOT NULL DEFAULT '';

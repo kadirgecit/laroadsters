@@ -224,7 +224,7 @@ async function handleMe(req: IncomingMessage, res: ServerResponse) {
 // ---------- public reads ----------
 async function handlePublicNewsCards(_req: AuthedRequest, res: ServerResponse) {
   const rows = await db()`
-    SELECT slug, title, body_text, flyer_url, image_urls, enabled, sort_order
+    SELECT slug, title, body_text, body_html, flyer_url, image_urls, enabled, sort_order
     FROM news_cards
     WHERE enabled = TRUE
     ORDER BY sort_order ASC
@@ -310,7 +310,7 @@ async function handlePublicSettings(_req: AuthedRequest, res: ServerResponse) {
 async function handleAdminNewsCards(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const rows = await db()`
-    SELECT id, slug, title, body_text, flyer_url, image_urls, enabled, sort_order, updated_at
+    SELECT id, slug, title, body_text, body_html, flyer_url, image_urls, enabled, sort_order, updated_at
     FROM news_cards
     ORDER BY sort_order ASC
   `;
@@ -328,6 +328,7 @@ async function handleAdminNewsCardsUpdate(req: AuthedRequest, res: ServerRespons
       UPDATE news_cards
       SET title = COALESCE(${c.title ?? null}, title),
           body_text = COALESCE(${c.body_text ?? null}, body_text),
+          body_html = COALESCE(${c.body_html ?? null}, body_html),
           flyer_url = ${c.flyer_url ?? null},
           image_urls = COALESCE(${c.image_urls ? JSON.stringify(c.image_urls) : null}::jsonb, image_urls),
           enabled = COALESCE(${c.enabled ?? null}, enabled),

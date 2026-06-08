@@ -15,14 +15,14 @@ interface NewsCard {
   slug: string;
   title: string;
   body_text: string;
+  body_html: string;
   flyer_url: string | null;
   image_urls: string[];
   enabled: boolean;
   sort_order: number;
 }
 
-// Image arrays for cards. These are not editable in this phase — only the
-// card body text comes from the DB. Gallery admin (future) will replace this.
+// Image arrays for cards (hardcoded for now; gallery admin will replace).
 const vendorImages = [
   '/assets/photos/vendors1.jpg',
   '/assets/photos/vendors2.jpg',
@@ -56,7 +56,7 @@ const specImages = [
   '/assets/photos/spec3.jpg',
 ];
 
-// Sponsor list — also not editable in this phase. Sponsors admin (future) replaces.
+// Sponsors list (hardcoded for now; sponsors admin will replace).
 const SPONSORS: Sponsor[] = [
   { name: 'Bob Drake', logo: '/sponsors/bob-drake.webp', url: 'https://bobdrake.com' },
   { name: 'Brookville Roadster', logo: '/sponsors/brookville-roadster.webp', url: 'https://brookvilleroadster.com' },
@@ -67,12 +67,18 @@ const SPONSORS: Sponsor[] = [
 
 const DEFAULT_FLYER_URL = '/60th-Anniversary-Flyer.pdf';
 
-// Splits the DB body_text into paragraphs on blank lines.
-function paragraphs(text: string): string[] {
-  return text
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter((p) => p.length > 0);
+// Renders sanitized HTML. All content comes from the admin (TipTap) so we
+// trust it, but we still escape <script> via a basic sanitizer.
+function RichBody({ html }: { html: string }) {
+  if (!html) return null;
+  // Basic sanitization: strip <script>, <style>, on* attributes, javascript: URLs.
+  const clean = html
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/\son\w+="[^"]*"/gi, '')
+    .replace(/\son\w+='[^']*'/gi, '')
+    .replace(/javascript:/gi, '');
+  return <div dangerouslySetInnerHTML={{ __html: clean }} />;
 }
 
 export function News() {
@@ -89,9 +95,7 @@ export function News() {
         setCards(map);
       })
       .catch(() => {
-        // On fetch failure, keep all cards hidden rather than show stale content.
-        // The seed data will return the same content as before, so the site
-        // looks identical when the API is working.
+        // On failure, keep cards empty so nothing stale shows.
       })
       .finally(() => setLoaded(true));
   }, []);
@@ -114,7 +118,6 @@ export function News() {
     return () => ctx.revert();
   }, [loaded]);
 
-  // Lookups with safe fallbacks so the page renders even if API hasn't loaded.
   const flyer = cards['flyer'];
   const sponsorsCard = cards['sponsors'];
   const aboutShow = cards['about_show'];
@@ -132,7 +135,6 @@ export function News() {
 
   const flyerUrl = flyer?.flyer_url || DEFAULT_FLYER_URL;
   const isOn = (c: NewsCard | undefined) => c && c.enabled;
-  const body = (c: NewsCard | undefined): string[] => (c ? paragraphs(c.body_text) : []);
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
@@ -228,9 +230,7 @@ export function News() {
                 <div>
                   <h2 className="text-3xl font-bold text-white mb-6">{aboutShow?.title || 'About The Show'}</h2>
                   <div className="prose prose-invert max-w-none space-y-4 text-gray-300">
-                    {body(aboutShow).map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
+                    <RichBody html={aboutShow?.body_html || ''} />
                   </div>
                 </div>
                 <div>
@@ -247,7 +247,7 @@ export function News() {
                 <div>
                   <h2 className="text-3xl font-bold text-white mb-6">{mainAttraction?.title || 'The Main Attraction'}</h2>
                   <p className="text-gray-300 text-lg">
-                    {mainAttraction?.body_text}
+                    <RichBody html={mainAttraction?.body_html || ''} />
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -265,9 +265,7 @@ export function News() {
               <h2 className="text-3xl font-bold text-white mb-6">{generalPublic?.title || 'General Public'}</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 text-gray-300">
-                  {body(generalPublic).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                  <RichBody html={generalPublic?.body_html || ''} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <img src="/assets/photos/cars1.jpg" alt="Cars" className="rounded-2xl w-full h-36 object-cover shadow-xl" />
@@ -285,9 +283,7 @@ export function News() {
                 <div>
                   <h2 className="text-3xl font-bold text-white mb-6">{roadsters?.title || 'Roadsters'}</h2>
                   <div className="space-y-4 text-gray-300">
-                    {body(roadsters).map((p, i) => (
-                      <p key={i} className={i === 0 ? 'text-2xl font-bold text-red-500' : ''}>{p}</p>
-                    ))}
+                    <RichBody html={roadsters?.body_html || ''} />
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
@@ -305,9 +301,7 @@ export function News() {
               <h2 className="text-3xl font-bold text-white mb-6">{commercialVendors?.title || 'Commercial Vendors'}</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 text-gray-300">
-                  {body(commercialVendors).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                  <RichBody html={commercialVendors?.body_html || ''} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {vendorImages.map((src, i) => (
@@ -325,9 +319,7 @@ export function News() {
               <p className="text-lg text-red-500 font-semibold mb-6">Swap Meet spaces available — car parts and related items only.</p>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 text-gray-300">
-                  {body(swapMeet).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                  <RichBody html={swapMeet?.body_html || ''} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {swapImages.slice(0, 4).map((src, i) => (
@@ -344,9 +336,7 @@ export function News() {
               <h2 className="text-3xl font-bold text-white mb-6">{souvenirs?.title || 'Souvenirs & Memorabilia'}</h2>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="space-y-4 text-gray-300">
-                  {body(souvenirs).map((p, i) => (
-                    <p key={i} className={i === 1 ? 'text-red-500 font-semibold' : ''}>{p}</p>
-                  ))}
+                  <RichBody html={souvenirs?.body_html || ''} />
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {souvenirImages.map((src, i) => (
@@ -363,9 +353,7 @@ export function News() {
               <h2 className="text-3xl font-bold text-white mb-6">{streetRod?.title || 'Street Rod Specialty Parking'}</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 text-gray-300">
-                  {body(streetRod).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                  <RichBody html={streetRod?.body_html || ''} />
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {specImages.map((src, i) => (
@@ -392,7 +380,7 @@ export function News() {
                 </div>
                 <div className="mt-6">
                   <h3 className="text-xl font-bold text-white mb-3">Contact:</h3>
-                  {body(programAds).map((p, i) => <p key={i}>{p}</p>)}
+                  <RichBody html={programAds?.body_html || ''} />
                 </div>
               </div>
             </section>
@@ -403,9 +391,7 @@ export function News() {
             <section className="p-8 rounded-3xl bg-gradient-to-br from-red-600/20 to-white/0 border border-red-500/30">
               <h2 className="text-3xl font-bold text-white mb-6">{showChairman?.title || 'Show Chairman'}</h2>
               <div className="text-gray-300">
-                {body(showChairman).map((p, i) => (
-                  <p key={i} className={i === 0 ? 'text-xl font-semibold text-white' : ''}>{p}</p>
-                ))}
+                <RichBody html={showChairman?.body_html || ''} />
               </div>
             </section>
           )}
@@ -415,7 +401,7 @@ export function News() {
             <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
               <h2 className="text-3xl font-bold text-white mb-6">{scooterRentals?.title || 'Scooter & Wheelchair Rentals'}</h2>
               <div className="space-y-4 text-gray-300">
-                {body(scooterRentals).map((p, i) => <p key={i}>{p}</p>)}
+                <RichBody html={scooterRentals?.body_html || ''} />
               </div>
             </section>
           )}
@@ -425,7 +411,7 @@ export function News() {
             <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
               <h2 className="text-3xl font-bold text-white mb-6">{recreationalVehicles?.title || 'Recreational Vehicles'}</h2>
               <div className="space-y-4 text-gray-300">
-                {body(recreationalVehicles).map((p, i) => <p key={i}>{p}</p>)}
+                <RichBody html={recreationalVehicles?.body_html || ''} />
               </div>
             </section>
           )}

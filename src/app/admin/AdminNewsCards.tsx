@@ -6,17 +6,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ArrowLeft, ArrowUp, ArrowDown, Save, RefreshCw, Eye, EyeOff, Image as ImageIcon, FileText } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/app/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
-import { Textarea } from '@/app/components/ui/textarea';
 import { Switch } from '@/app/components/ui/switch';
+import { RichTextEditor } from './RichTextEditor';
 
 interface NewsCard {
   id: string;
   slug: string;
   title: string;
   body_text: string;
+  body_html: string;
   flyer_url: string | null;
   image_urls: string[];
   enabled: boolean;
@@ -45,7 +46,9 @@ export function AdminNewsCards() {
   const [savedAt, setSavedAt] = useState<Date | null>(null);
 
   // Hash of cards to detect changes
-  const currentHash = JSON.stringify(cards.map((c) => [c.slug, c.title, c.body_text, c.enabled, c.sort_order]));
+  const currentHash = JSON.stringify(
+    cards.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order]),
+  );
   const dirty = currentHash !== original;
 
   useEffect(() => {
@@ -62,7 +65,9 @@ export function AdminNewsCards() {
         // sort by current sort_order
         const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
         setCards(sorted);
-        setOriginal(JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_text, c.enabled, c.sort_order])));
+        setOriginal(
+          JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order])),
+        );
         setLoading(false);
       })
       .catch((e) => {
@@ -90,19 +95,37 @@ export function AdminNewsCards() {
     setSaving(true);
     setError('');
     try {
+      // Derive a plain-text version of the body for the legacy body_text column.
+      // Strips HTML, collapses whitespace.
+      const stripHtml = (html: string) =>
+        html
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<\/p>/gi, '\n\n')
+          .replace(/<[^>]+>/g, '')
+          .replace(/&nbsp;/g, ' ')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/\n{3,}/g, '\n\n')
+          .trim();
+
       await api('/admin/news-cards', {
         method: 'PUT',
         body: JSON.stringify({
           cards: cards.map((c) => ({
             slug: c.slug,
             title: c.title,
-            body_text: c.body_text,
+            body_text: stripHtml(c.body_html),
+            body_html: c.body_html,
             enabled: c.enabled,
             sort_order: c.sort_order,
           })),
         }),
       });
-      setOriginal(JSON.stringify(cards.map((c) => [c.slug, c.title, c.body_text, c.enabled, c.sort_order])));
+      setOriginal(
+        JSON.stringify(cards.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order])),
+      );
       setSavedAt(new Date());
     } catch (e: any) {
       setError(e.message);
@@ -117,7 +140,9 @@ export function AdminNewsCards() {
     const rows: NewsCard[] = await api('/admin/news-cards');
     const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
     setCards(sorted);
-    setOriginal(JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_text, c.enabled, c.sort_order])));
+    setOriginal(
+      JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order])),
+    );
     setLoading(false);
   }
 
@@ -253,16 +278,13 @@ export function AdminNewsCards() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor={`body-${card.slug}`} className="text-gray-400 text-xs">
-                  Body Text
-                  <span className="ml-2 text-gray-600">plain text · new lines = paragraph breaks</span>
+                <Label className="text-gray-400 text-xs">
+                  Body Content
+                  <span className="ml-2 text-gray-600">rich text — use toolbar to format</span>
                 </Label>
-                <Textarea
-                  id={`body-${card.slug}`}
-                  value={card.body_text}
-                  onChange={(e) => updateCard(card.slug, { body_text: e.target.value })}
-                  rows={Math.min(12, Math.max(3, card.body_text.split('\n').length + 1))}
-                  className="bg-white/5 border-white/10 text-white font-sans"
+                <RichTextEditor
+                  value={card.body_html}
+                  onChange={(html) => updateCard(card.slug, { body_html: html })}
                 />
               </div>
             </CardContent>
