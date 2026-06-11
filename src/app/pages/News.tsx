@@ -6,9 +6,11 @@ import { Download, ExternalLink } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 interface Sponsor {
+  id: string;
   name: string;
-  logo: string;
-  url: string;
+  logo_url: string;
+  url: string | null;
+  sort_order: number;
 }
 
 interface NewsCard {
@@ -56,14 +58,7 @@ const specImages = [
   '/assets/photos/spec3.jpg',
 ];
 
-// Sponsors list (hardcoded for now; sponsors admin will replace).
-const SPONSORS: Sponsor[] = [
-  { name: 'Bob Drake', logo: '/sponsors/bob-drake.webp', url: 'https://bobdrake.com' },
-  { name: 'Brookville Roadster', logo: '/sponsors/brookville-roadster.webp', url: 'https://brookvilleroadster.com' },
-  { name: 'California Car Cover', logo: '/sponsors/california-car-cover.jpg', url: 'https://calcarcover.com' },
-  { name: 'Grand National Roadster Show', logo: '/sponsors/grand-national-roadster-show.jpg', url: 'https://rodshows.com' },
-  { name: 'Rodding USA Magazine', logo: '/sponsors/rodding-usa.png', url: 'https://www.roddingusa.com' },
-];
+// Sponsors list now comes from the API at /api/public/sponsors (admin-managed).
 
 const DEFAULT_FLYER_URL = '/60th-Anniversary-Flyer.pdf';
 
@@ -84,20 +79,19 @@ function RichBody({ html }: { html: string }) {
 export function News() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [cards, setCards] = useState<Record<string, NewsCard>>({});
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    fetch('/api/public/news-cards')
-      .then((r) => r.json())
-      .then((rows: NewsCard[]) => {
-        const map: Record<string, NewsCard> = {};
-        for (const c of rows) map[c.slug] = c;
-        setCards(map);
-      })
-      .catch(() => {
-        // On failure, keep cards empty so nothing stale shows.
-      })
-      .finally(() => setLoaded(true));
+    Promise.all([
+      fetch('/api/public/news-cards').then((r) => r.json()).catch(() => []),
+      fetch('/api/public/sponsors').then((r) => r.json()).catch(() => []),
+    ]).then(([cardRows, sponsorRows]) => {
+      const map: Record<string, NewsCard> = {};
+      for (const c of cardRows) map[c.slug] = c;
+      setCards(map);
+      setSponsors(Array.isArray(sponsorRows) ? sponsorRows : []);
+    }).finally(() => setLoaded(true));
   }, []);
 
   useEffect(() => {
@@ -195,17 +189,17 @@ export function News() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-6">
-              {SPONSORS.map((sponsor, index) => (
+              {sponsors.map((sponsor) => (
                 <a
-                  key={index}
-                  href={sponsor.url}
+                  key={sponsor.id}
+                  href={sponsor.url || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group w-48"
                 >
                   <div className="p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-red-500/50 transition-all duration-500 flex items-center justify-center h-28">
                     <img
-                      src={sponsor.logo}
+                      src={sponsor.logo_url}
                       alt={sponsor.name}
                       className="max-w-full max-h-full object-contain"
                     />

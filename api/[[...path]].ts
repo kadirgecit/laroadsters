@@ -485,12 +485,20 @@ async function handleAdminSponsorCreate(req: AuthedRequest, res: ServerResponse)
 async function handleAdminSponsorUpdate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { id } = req.params!;
-  const { name, url, sort_order } = req.body || {};
-  const rows = await db()`
-    UPDATE sponsors SET
+  const { name, logo_url, url, sort_order } = req.body || {};
+  // If logo_url is being replaced, delete the old blob from storage.
+  if (logo_url) {
+    const cur = await db()`SELECT logo_url FROM sponsors WHERE id = ${id}` as any[];
+    if (cur[0]?.logo_url && cur[0].logo_url !== logo_url) {
+      try { await del(cur[0].logo_url, { token: BLOB_TOKEN }); } catch { /* ignore */ }
+    }
+  }
+  // COALESCE keeps the existing value when the field is absent from the body.
+  const rows = await db()`UPDATE sponsors SET
       name = COALESCE(${name ?? null}, name),
       url = COALESCE(${url ?? null}, url),
-      sort_order = COALESCE(${sort_order ?? null}, sort_order)
+      sort_order = COALESCE(${sort_order ?? null}, sort_order),
+      logo_url = COALESCE(${logo_url ?? null}, logo_url)
     WHERE id = ${id}
     RETURNING *
   `;
@@ -589,6 +597,8 @@ async function handleAdminUpload(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   if (!BLOB_TOKEN) return json(res, 500, { error: 'BLOB_READ_WRITE_TOKEN not configured' });
 
+  // Lazy-load busboy — top-level import crashes the serverless bundle.
+  const { default: busboy } = await import('busboy');
   const bb = busboy({ headers: req.headers });
   return new Promise<void>((resolve) => {
     let uploaded: { url: string; pathname: string } | null = null;
