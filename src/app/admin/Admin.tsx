@@ -5,6 +5,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { ConfirmDialogHost } from './ConfirmDialog';
 
 // ---------- tiny API client ----------
 async function api(path: string, opts: RequestInit = {}) {
@@ -119,6 +120,7 @@ export function AdminLogin() {
           </form>
         </CardContent>
       </Card>
+      <ConfirmDialogHost />
     </div>
   );
 }
@@ -242,6 +244,7 @@ export function AdminDashboard() {
           full section, built next. Each section is enabled one at a time.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

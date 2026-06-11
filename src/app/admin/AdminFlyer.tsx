@@ -9,6 +9,7 @@ import { ArrowLeft, Upload, FileText, Download, Loader2, CheckCircle2, AlertCirc
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/app/components/ui/card';
 import { uploadFile } from './upload';
+import { ConfirmDialogHost } from './ConfirmDialog';
 
 async function api(path: string, opts: RequestInit = {}) {
   const res = await fetch(`/api${path}`, {
@@ -246,6 +247,7 @@ export function AdminFlyer() {
           Files are stored in Vercel Blob and served from a public URL. The Show News page picks up the new flyer automatically.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

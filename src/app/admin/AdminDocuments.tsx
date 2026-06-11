@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { uploadFile } from './upload';
+import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
 interface Doc {
   id: string;
@@ -198,7 +199,14 @@ export function AdminDocuments() {
   }
 
   async function del(d: Doc) {
-    if (!confirm(`Remove document "${d.name}"? This deletes the file too.`)) return;
+    const ok = await confirmDialog({
+      title: 'Delete document?',
+      message: `Remove "${d.name}" from the Members page.`,
+      details: 'The file will be permanently deleted from Vercel Blob storage. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
     setSaving(true);
     setError('');
     try {
@@ -495,6 +503,7 @@ export function AdminDocuments() {
           Documents appear in the Club Documents section of the Members page, in order.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

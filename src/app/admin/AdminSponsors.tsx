@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { uploadFile } from './upload';
+import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
 interface Sponsor {
   id: string;
@@ -178,7 +179,14 @@ export function AdminSponsors() {
   }
 
   async function del(s: Sponsor) {
-    if (!confirm(`Remove sponsor "${s.name}"? This deletes the logo file too.`)) return;
+    const ok = await confirmDialog({
+      title: 'Delete sponsor?',
+      message: `Remove "${s.name}" from the News page.`,
+      details: 'The logo file will be permanently deleted from Vercel Blob storage. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
     setSaving(true);
     setError('');
     try {
@@ -444,6 +452,7 @@ export function AdminSponsors() {
           Sponsors appear in the "Thank You" section of the public News page, in order.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

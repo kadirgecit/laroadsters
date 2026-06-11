@@ -324,6 +324,16 @@ async function handleAdminNewsCardsUpdate(req: AuthedRequest, res: ServerRespons
 
   for (const c of cards) {
     if (!c.slug) continue;
+    // If flyer_url is being replaced (or set to null), delete the old blob from storage.
+    if ('flyer_url' in c) {
+      const cur = await db()`SELECT flyer_url FROM news_cards WHERE slug = ${c.slug}` as any[];
+      const oldUrl = cur[0]?.flyer_url;
+      const newUrl = c.flyer_url ?? null;
+      if (oldUrl && oldUrl !== newUrl && oldUrl.startsWith('https://')) {
+        // Only delete Blob-hosted URLs; skip local /assets/* paths.
+        try { await del(oldUrl, { token: BLOB_TOKEN }); } catch { /* ignore */ }
+      }
+    }
     await db()`
       UPDATE news_cards
       SET title = COALESCE(${c.title ?? null}, title),

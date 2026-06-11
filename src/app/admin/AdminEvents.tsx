@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { uploadFile } from './upload';
+import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
 interface Event {
   id: string;
@@ -186,7 +187,14 @@ export function AdminEvents() {
   }
 
   async function del(e: Event) {
-    if (!confirm(`Remove event "${e.title}"? This deletes the flyer PDF too.`)) return;
+    const ok = await confirmDialog({
+      title: 'Delete event?',
+      message: `Remove "${e.title}" from the Members page.`,
+      details: 'The flyer PDF will be permanently deleted from Vercel Blob storage. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
     setSaving(true);
     setError('');
     try {
@@ -490,6 +498,7 @@ export function AdminEvents() {
           Events appear in the Calendar of Events section of the Members page, in order.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

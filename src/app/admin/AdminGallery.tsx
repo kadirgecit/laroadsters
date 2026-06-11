@@ -17,6 +17,7 @@ import { Card, CardContent } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { uploadFile } from './upload';
+import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
 interface Album {
   id: string;
@@ -227,7 +228,14 @@ export function AdminGallery() {
   }
 
   async function deleteAlbum(a: Album) {
-    if (!confirm(`Delete album "${a.title}" and all ${photos.length} photo(s) in it? Files in Vercel Blob are also removed.`)) return;
+    const ok = await confirmDialog({
+      title: 'Delete album?',
+      message: `Delete album "${a.title}" and all ${photos.length} photo(s) in it.`,
+      details: 'All photo files will be permanently deleted from Vercel Blob storage. This cannot be undone.',
+      confirmLabel: 'Delete album',
+      danger: true,
+    });
+    if (!ok) return;
     setSaving(true);
     setError('');
     try {
@@ -259,7 +267,14 @@ export function AdminGallery() {
   }
 
   async function deletePhoto(p: Photo) {
-    if (!confirm('Delete this photo? File is also removed from Vercel Blob.')) return;
+    const ok = await confirmDialog({
+      title: 'Delete photo?',
+      message: 'Remove this photo from the album.',
+      details: 'The image file will be permanently deleted from Vercel Blob storage. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
     setSaving(true);
     setError('');
     try {
@@ -703,6 +718,7 @@ export function AdminGallery() {
             : 'Albums appear on the public Photo Gallery page in order.'}
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }

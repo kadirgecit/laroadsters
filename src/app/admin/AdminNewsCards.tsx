@@ -11,6 +11,7 @@ import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Switch } from '@/app/components/ui/switch';
 import { RichTextEditor } from './RichTextEditor';
+import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
 interface NewsCard {
   id: string;
@@ -135,7 +136,17 @@ export function AdminNewsCards() {
   }
 
   async function reload() {
-    if (dirty && !confirm('You have unsaved changes. Reload anyway?')) return;
+    if (dirty) {
+      const ok = await confirmDialog({
+        title: 'Discard changes?',
+        message: 'You have unsaved changes.',
+        details: 'Reloading will discard your edits. This cannot be undone.',
+        confirmLabel: 'Discard & Reload',
+        cancelLabel: 'Keep editing',
+        danger: true,
+      });
+      if (!ok) return;
+    }
     setLoading(true);
     const rows: NewsCard[] = await api('/admin/news-cards');
     const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
@@ -295,6 +306,7 @@ export function AdminNewsCards() {
           Tip: toggle off a card to hide it from the public site without deleting it.
         </div>
       </main>
+      <ConfirmDialogHost />
     </div>
   );
 }
