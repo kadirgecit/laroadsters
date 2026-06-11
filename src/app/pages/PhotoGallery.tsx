@@ -99,11 +99,10 @@ export function PhotoGallery() {
     };
   }, [lightboxOpen]);
 
-  // Only show the categories the design hardcodes (runs, members).
-  // Other albums in the DB are still manageable in the admin but not surfaced here.
-  const visibleAlbums = (['runs', 'members'] as const)
-    .filter((slug) => albums[slug])
-    .map((slug) => albums[slug]);
+  // Show every album returned by the API. The Runs/Members filter tabs
+  // narrow by slug (so the customer's existing categories still filter
+  // correctly), but any new album the admin creates will appear under All.
+  const visibleAlbums = Object.values(albums);
 
   const filteredGalleries =
     activeFilter === 'all'
