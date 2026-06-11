@@ -292,6 +292,34 @@ async function seedNewsCards() {
   console.log('  done.');
 }
 
+// Initial sponsors — the 5 logos that ship with the site. The customer can
+// add, edit, reorder, or remove these from /admin/sponsors. Idempotent: only
+// inserts if the table is empty, so the customer's edits aren't overwritten.
+const initialSponsors = [
+  { name: 'Bob Drake',                   logo_url: '/sponsors/bob-drake.webp',                     url: 'https://bobdrake.com',            sort_order: 10 },
+  { name: 'Brookville Roadster',         logo_url: '/sponsors/brookville-roadster.webp',           url: 'https://brookvilleroadster.com',  sort_order: 20 },
+  { name: 'California Car Cover',        logo_url: '/sponsors/california-car-cover.jpg',           url: 'https://calcarcover.com',         sort_order: 30 },
+  { name: 'Grand National Roadster Show', logo_url: '/sponsors/grand-national-roadster-show.jpg', url: 'https://rodshows.com',            sort_order: 40 },
+  { name: 'Rodding USA Magazine',        logo_url: '/sponsors/rodding-usa.png',                    url: 'https://www.roddingusa.com',      sort_order: 50 },
+];
+
+async function seedSponsors() {
+  const rows = await sql`SELECT COUNT(*)::int AS n FROM sponsors`;
+  const n = (rows as any[])[0]?.n ?? 0;
+  if (n > 0) {
+    console.log(`Sponsors table already has ${n} row(s) — skipping seed.`);
+    return;
+  }
+  console.log(`Seeding ${initialSponsors.length} sponsors (only on first run)...`);
+  for (const s of initialSponsors) {
+    await sql`
+      INSERT INTO sponsors (name, logo_url, url, sort_order)
+      VALUES (${s.name}, ${s.logo_url}, ${s.url}, ${s.sort_order})
+    `;
+  }
+  console.log('  done.');
+}
+
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
@@ -310,6 +338,7 @@ async function seedAdmin() {
 
 async function main() {
   await seedNewsCards();
+  await seedSponsors();
   await seedAdmin();
   console.log('Seed complete.');
 }
