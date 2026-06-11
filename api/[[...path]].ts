@@ -617,34 +617,45 @@ async function handleAdminGalleryPhotoDelete(req: AuthedRequest, res: ServerResp
   return json(res, 200, { ok: true });
 }
 
-// Generic file upload. Image compression for gallery is done client-side.
+// File upload via JSON+base64. Client sends { filename, contentType, data }
+// where `data` is base64-encoded file bytes. We decode to a Buffer and write
+// directly to Vercel Blob. This avoids busboy/stream-parsing issues on
+// serverless and works reliably across Vercel runtimes.
 async function handleAdminUpload(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   if (!BLOB_TOKEN) return json(res, 500, { error: 'BLOB_READ_WRITE_TOKEN not configured' });
 
-  // Lazy-load busboy — top-level import crashes the serverless bundle.
-  const { default: busboy } = await import('busboy');
-  const bb = busboy({ headers: req.headers });
-  return new Promise<void>((resolve) => {
-    let uploaded: { url: string; pathname: string } | null = null;
-    bb.on('file', async (_name: string, file: NodeJS.ReadableStream, info: any) => {
-      const safeName = (info.filename || 'file').replace(/[^a-zA-Z0-9._-]/g, '_');
-      const blob = await put(safeName, file as any, {
-        access: 'public',
-        token: BLOB_TOKEN,
-      });
-      uploaded = { url: blob.url, pathname: blob.pathname };
+  const { filename, contentType, data } = req.body || {};
+  if (!filename || !data) {
+    return json(res, 400, { error: 'filename and data required' });
+  }
+  if (typeof data !== 'string') {
+    return json(res, 400, { error: 'data must be a base64 string' });
+  }
+  // Vercel serverless function payload cap on the hobby plan is 4.5 MB.
+  // Base64 inflates by ~33%, so the original must be <= ~3.3 MB to stay
+  // safely under that. The client compresses images to <= 2 MB before
+  // upload, well within limits.
+  let buffer: Buffer;
+  try {
+    buffer = Buffer.from(data, 'base64');
+  } catch (e: any) {
+    return json(res, 400, { error: 'Invalid base64 data' });
+  }
+  if (buffer.length === 0) {
+    return json(res, 400, { error: 'Empty file' });
+  }
+  const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+  try {
+    const blob = await put(safeName, buffer, {
+      access: 'public',
+      token: BLOB_TOKEN,
+      contentType: contentType || 'application/octet-stream',
     });
-    bb.on('close', () => {
-      if (!uploaded) {
-        json(res, 400, { error: 'No file uploaded' });
-      } else {
-        json(res, 200, uploaded);
-      }
-      resolve();
-    });
-    req.pipe(bb);
-  });
+    return json(res, 200, { url: blob.url, pathname: blob.pathname });
+  } catch (e: any) {
+    return json(res, 500, { error: e?.message || 'Upload to Blob failed' });
+  }
 }
 
 async function handleAdminSettingsUpdate(req: AuthedRequest, res: ServerResponse) {

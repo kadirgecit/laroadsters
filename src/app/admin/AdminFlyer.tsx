@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { ArrowLeft, Upload, FileText, Download, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/app/components/ui/card';
+import { uploadFile } from './upload';
 
 async function api(path: string, opts: RequestInit = {}) {
   const res = await fetch(`/api${path}`, {
@@ -18,28 +19,6 @@ async function api(path: string, opts: RequestInit = {}) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   return data;
-}
-
-// Raw upload — FormData POST, no JSON Content-Type, returns { url, pathname }.
-async function uploadPdf(file: File, onProgress: (pct: number) => void): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/admin/upload');
-    xhr.withCredentials = 'true';
-    xhr.upload.onprogress = (e) => {
-      if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
-    };
-    xhr.onload = () => {
-      let body: any = {};
-      try { body = JSON.parse(xhr.responseText); } catch {}
-      if (xhr.status >= 200 && xhr.status < 300 && body.url) resolve(body.url);
-      else reject(new Error(body.error || `HTTP ${xhr.status}`));
-    };
-    xhr.onerror = () => reject(new Error('Network error'));
-    const fd = new FormData();
-    fd.append('file', file);
-    xhr.send(fd);
-  });
 }
 
 const MAX_BYTES = 25 * 1024 * 1024; // 25 MB
@@ -91,8 +70,8 @@ export function AdminFlyer() {
     setUploading(true);
     setUploadPct(0);
     try {
-      // Upload PDF to Vercel Blob via the existing admin upload endpoint.
-      const url = await uploadPdf(file, setUploadPct);
+      // Upload PDF to Vercel Blob via the admin upload endpoint.
+      const url = await uploadFile(file, setUploadPct);
 
       // Save the new URL to the news_cards.flyer_url for slug='flyer'.
       await api('/admin/news-cards', {
