@@ -15,63 +15,29 @@ import 'yet-another-react-lightbox/plugins/captions.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Image data for each category
-const galleryImages = {
-  runs: [
-    { src: '/assets/gallery/Runs/run1.jpeg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run3.jpeg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run4.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run5.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run6.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run7.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run8.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run9.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run10.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run11.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run12.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run13.jpeg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run14.jpeg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run15.jpeg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run16.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/Runs/run17.jpg', caption: 'Club Run' },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD1.jpeg', caption: "Club Run" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD2.jpeg', caption: "Club Run" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD3.jpeg', caption: "Club Run" },
-    { src: '/assets/gallery/LA-Roadster-Shows/2025NWDD4.jpeg', caption: "Club Run" },
-  ],
-  members: [
-    { src: '/assets/gallery/Club-cars/BUCKRDSTER3.jpg', caption: 'John Buck' },
-    { src: '/assets/gallery/Club-cars/BUTLER1.jpg', caption: 'Ken Butler' },
-    { src: '/assets/gallery/Club-cars/COHN6.jpg', caption: 'Rich Cohn' },
-    { src: '/assets/gallery/Club-cars/gammell_car copy.jpg', caption: 'Doyle Gammell' },
-    { src: '/assets/gallery/Club-cars/jordan copy.JPG', caption: 'Randy Jordan' },
-    { src: '/assets/gallery/Club-cars/kreb_carJT copy.jpg', caption: 'Bill Krebs' },
-    { src: '/assets/gallery/Club-cars/Scritchfield_Roadster copy.jpg', caption: 'Dick Stritchfield' },
-    { src: '/assets/gallery/Club-cars/simeone_car1 copy.JPG', caption: 'Rick Simeone' },
-    { src: '/assets/gallery/Club-cars/tann cabby copy.jpg', caption: 'Jeff Tann' },
-    { src: '/assets/gallery/Club-cars/winson copy.JPG', caption: 'Paul Winson' },
-  ],
-};
+interface Album {
+  id: string;
+  slug: string;
+  title: string;
+  cover_url: string | null;
+  sort_order: number;
+}
 
+interface Photo {
+  id: string;
+  blob_url: string;
+  title: string | null;
+  caption: string | null;
+  sort_order: number;
+}
+
+// Filter categories are hardcoded to match the customer's design.
+// Each category maps to an album by slug. The admin pre-creates albums with
+// these slugs; if the DB has no matching album, that category is hidden.
 const filters = [
   { id: 'all', label: 'All' },
   { id: 'runs', label: 'Runs' },
   { id: 'members', label: 'Members' },
-];
-
-const galleries = [
-  {
-    category: 'runs',
-    title: 'Club Runs',
-    count: galleryImages['runs'].length,
-    image: galleryImages['runs'][0].src,
-  },
-  {
-    category: 'members',
-    title: 'Member Cars',
-    count: galleryImages['members'].length,
-    image: galleryImages['members'][0].src,
-  },
 ];
 
 export function PhotoGallery() {
@@ -80,6 +46,8 @@ export function PhotoGallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [slides, setSlides] = useState<{ src: string; alt: string; title?: string }[]>([]);
+  const [albums, setAlbums] = useState<Record<string, Album & { photos: Photo[]; count: number }>>({});
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -99,6 +67,26 @@ export function PhotoGallery() {
     return () => ctx.revert();
   }, []);
 
+  // Fetch all albums, then fetch photos per album in parallel.
+  useEffect(() => {
+    fetch('/api/public/gallery-albums')
+      .then((r) => r.json())
+      .then(async (rows: Album[]) => {
+        const map: Record<string, Album & { photos: Photo[]; count: number }> = {};
+        await Promise.all(
+          rows.map(async (a) => {
+            const pr = await fetch(`/api/public/gallery-photos?album=${encodeURIComponent(a.id)}`);
+            const photos: Photo[] = await pr.json();
+            const sorted = [...photos].sort((x, y) => x.sort_order - y.sort_order);
+            map[a.slug] = { ...a, photos: sorted, count: sorted.length };
+          }),
+        );
+        setAlbums(map);
+      })
+      .catch(() => { /* leave empty on failure */ })
+      .finally(() => setLoaded(true));
+  }, []);
+
   // Body scroll lock when lightbox is open
   useEffect(() => {
     if (lightboxOpen) {
@@ -111,18 +99,23 @@ export function PhotoGallery() {
     };
   }, [lightboxOpen]);
 
+  // Only show the categories the design hardcodes (runs, members).
+  // Other albums in the DB are still manageable in the admin but not surfaced here.
+  const visibleAlbums = (['runs', 'members'] as const)
+    .filter((slug) => albums[slug])
+    .map((slug) => albums[slug]);
+
   const filteredGalleries =
     activeFilter === 'all'
-      ? galleries
-      : galleries.filter((g) => g.category.toLowerCase() === activeFilter.toLowerCase());
+      ? visibleAlbums
+      : visibleAlbums.filter((a) => a.slug === activeFilter);
 
-  const openGallery = (gallery: (typeof galleries)[0]) => {
-    const images = galleryImages[gallery.category as keyof typeof galleryImages];
+  const openGallery = (album: Album & { photos: Photo[]; count: number }) => {
     setSlides(
-      images.map((img) => ({
-        src: img.src,
-        alt: img.caption,
-        title: img.caption,
+      album.photos.map((p) => ({
+        src: p.blob_url,
+        alt: p.caption || p.title || '',
+        title: p.title || p.caption || '',
       })),
     );
     setLightboxIndex(0);
@@ -170,50 +163,60 @@ export function PhotoGallery() {
 
         {/* Gallery Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredGalleries.map((gallery, index) => (
-            <div
-              key={index}
-              className="gallery-grid-item group cursor-pointer"
-              onClick={() => openGallery(gallery)}
-            >
-              <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
-                {/* Background Image */}
-                <img
-                  src={gallery.image}
-                  alt={gallery.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+          {filteredGalleries.length === 0 && loaded ? (
+            <div className="col-span-full text-center py-12 text-gray-500 text-sm">
+              No albums available yet.
+            </div>
+          ) : (
+            filteredGalleries.map((gallery) => (
+              <div
+                key={gallery.id}
+                className="gallery-grid-item group cursor-pointer"
+                onClick={() => openGallery(gallery)}
+              >
+                <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-red-600/20 to-blue-900/20 border border-white/10 hover:border-red-500/50 transition-all duration-500">
+                  {/* Background Image */}
+                  {gallery.cover_url ? (
+                    <img
+                      src={gallery.cover_url}
+                      alt={gallery.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-gray-600 text-sm">No photos yet</div>
+                  )}
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
-                {/* Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full">
-                  {gallery.count} Photos
-                </div>
-
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="text-sm text-red-500 mb-2 font-semibold tracking-wider uppercase">
-                    {gallery.category.replace('-', ' ')}
+                  {/* Badge */}
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full">
+                    {gallery.count} Photos
                   </div>
-                  <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
-                    {gallery.title}
-                  </h3>
-                </div>
 
-                {/* Hover Effect */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="text-sm text-red-500 mb-2 font-semibold tracking-wider uppercase">
+                      {gallery.slug.replace('-', ' ')}
+                    </div>
+                    <h3 className="text-2xl font-black text-white group-hover:text-red-400 transition-colors duration-300">
+                      {gallery.title}
+                    </h3>
+                  </div>
 
-                {/* Click icon */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-16 h-16 bg-red-500/80 rounded-full flex items-center justify-center">
-                    <Maximize2 className="w-8 h-8 text-white" />
+                  {/* Hover Effect */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.3),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Click icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="w-16 h-16 bg-red-500/80 rounded-full flex items-center justify-center">
+                      <Maximize2 className="w-8 h-8 text-white" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 

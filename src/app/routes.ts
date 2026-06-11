@@ -12,6 +12,7 @@ import { AdminFlyer } from './admin/AdminFlyer';
 import { AdminSponsors } from './admin/AdminSponsors';
 import { AdminDocuments } from './admin/AdminDocuments';
 import { AdminEvents } from './admin/AdminEvents';
+import { AdminGallery } from './admin/AdminGallery';
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: 'sponsors', Component: AdminSponsors },
       { path: 'documents', Component: AdminDocuments },
       { path: 'events', Component: AdminEvents },
+      { path: 'gallery', Component: AdminGallery },
     ],
   },
 ]);

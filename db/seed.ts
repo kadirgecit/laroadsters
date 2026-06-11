@@ -349,6 +349,32 @@ async function seedEvents() {
   console.log('  done.');
 }
 
+// Initial gallery albums — the two categories the public Photo Gallery shows
+// (filter slugs are hardcoded in the public page to "runs" and "members").
+// Photos must be uploaded by the customer via /admin/gallery.
+// Idempotent: only inserts if the table is empty, so the customer's edits aren't overwritten.
+const initialAlbums = [
+  { slug: 'runs',    title: 'Club Runs',   sort_order: 10 },
+  { slug: 'members', title: 'Member Cars', sort_order: 20 },
+];
+
+async function seedGalleryAlbums() {
+  const rows = await sql`SELECT COUNT(*)::int AS n FROM gallery_albums`;
+  const n = (rows as any[])[0]?.n ?? 0;
+  if (n > 0) {
+    console.log(`Gallery albums table already has ${n} row(s) — skipping seed.`);
+    return;
+  }
+  console.log(`Seeding ${initialAlbums.length} gallery album(s) (only on first run)...`);
+  for (const a of initialAlbums) {
+    await sql`
+      INSERT INTO gallery_albums (slug, title, sort_order)
+      VALUES (${a.slug}, ${a.title}, ${a.sort_order})
+    `;
+  }
+  console.log('  done.');
+}
+
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
@@ -369,6 +395,7 @@ async function main() {
   await seedNewsCards();
   await seedSponsors();
   await seedEvents();
+  await seedGalleryAlbums();
   await seedAdmin();
   console.log('Seed complete.');
 }
