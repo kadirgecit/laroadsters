@@ -228,9 +228,18 @@ export function AdminGallery() {
   }
 
   async function deleteAlbum(a: Album) {
+    // Fetch the live photo count for this album so the confirm message is accurate.
+    // (The list view doesn't load photos until you open the album.)
+    let count = 0;
+    try {
+      const r = await fetch(`/api/public/gallery-photos?album=${encodeURIComponent(a.id)}`);
+      const rows = await r.json();
+      count = Array.isArray(rows) ? rows.length : 0;
+    } catch { /* fall back to whatever's in state */ count = openAlbumId === a.id ? photos.length : 0; }
+
     const ok = await confirmDialog({
       title: 'Delete album?',
-      message: `Delete album "${a.title}" and all ${photos.length} photo(s) in it.`,
+      message: `Delete album "${a.title}" and all ${count} photo${count === 1 ? '' : 's'} in it.`,
       details: 'All photo files will be permanently deleted from Vercel Blob storage. This cannot be undone.',
       confirmLabel: 'Delete album',
       danger: true,
