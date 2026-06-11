@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Calendar, MapPin, FileText, Download } from 'lucide-react';
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface DocumentItem {
@@ -11,6 +10,16 @@ interface DocumentItem {
   file_url: string;
   size_label: string | null;
   category: string | null;
+  sort_order: number;
+}
+
+interface EventItem {
+  id: string;
+  title: string;
+  date: string;
+  location: string | null;
+  description: string | null;
+  flyer_pdf_url: string | null;
   sort_order: number;
 }
 
@@ -36,7 +45,9 @@ export function Members() {
   }, []);
 
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [docLoaded, setDocLoaded] = useState(false);
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [eventLoaded, setEventLoaded] = useState(false);
 
   useEffect(() => {
     fetch('/api/public/documents')
@@ -46,17 +57,19 @@ export function Members() {
         setDocuments(sorted);
       })
       .catch(() => { /* leave empty on failure */ })
-      .finally(() => setLoaded(true));
+      .finally(() => setDocLoaded(true));
   }, []);
 
-  const events = [
-    {
-      date: 'June 19-20, 2026',
-      title: '60th Anniversary Roadster Show & Swap',
-      location: 'Fairplex, Pomona',
-      description: "Father's Day Weekend - The premier classic roadster event of the year",
-    },
-  ];
+  useEffect(() => {
+    fetch('/api/public/events')
+      .then((r) => r.json())
+      .then((rows: EventItem[]) => {
+        const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
+        setEvents(sorted);
+      })
+      .catch(() => { /* leave empty on failure */ })
+      .finally(() => setEventLoaded(true));
+  }, []);
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
@@ -80,24 +93,45 @@ export function Members() {
             <h2 className="text-3xl font-bold text-white">Calendar of Events</h2>
           </div>
           <div className="space-y-4">
-            {events.map((event, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="text-red-500 font-semibold mb-2">{event.date}</div>
-                    <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
-                    <p className="text-gray-400">{event.description}</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-500">
-                    <MapPin className="w-4 h-4" />
-                    <span>{event.location}</span>
+            {eventLoaded && events.length === 0 ? (
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm text-center text-gray-500 text-sm">
+                No upcoming events.
+              </div>
+            ) : (
+              events.map((event) => (
+                <div
+                  key={event.id}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="text-red-500 font-semibold mb-2">{event.date}</div>
+                      <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
+                      {event.description && (
+                        <p className="text-gray-400">{event.description}</p>
+                      )}
+                      {event.flyer_pdf_url && (
+                        <a
+                          href={event.flyer_pdf_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          className="inline-flex items-center gap-1 text-sm text-red-500 hover:text-white mt-2"
+                        >
+                          <Download className="w-3 h-3" /> Download Flyer PDF
+                        </a>
+                      )}
+                    </div>
+                    {event.location && (
+                      <div className="flex items-center gap-2 text-gray-500">
+                        <MapPin className="w-4 h-4" />
+                        <span>{event.location}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </section>
 
@@ -109,7 +143,7 @@ export function Members() {
             <p className="text-gray-400 mt-2">These documents are password-protected for members only.</p>
           </div>
           <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-            {loaded && documents.length === 0 ? (
+            {docLoaded && documents.length === 0 ? (
               <div className="text-center text-gray-500 text-sm py-8">
                 No documents available yet.
               </div>

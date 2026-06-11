@@ -393,9 +393,15 @@ async function handleAdminEventCreate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { title, date, location, description, flyer_pdf_url } = req.body || {};
   if (!title) return json(res, 400, { error: 'title required' });
+  // Auto-assign sort_order = max + 10 unless the caller provided one.
+  let sort_order = Number(req.body?.sort_order) || 0;
+  if (!req.body?.sort_order) {
+    const maxRow = await db()`SELECT COALESCE(MAX(sort_order), 0) AS m FROM events` as any[];
+    sort_order = (maxRow[0]?.m || 0) + 10;
+  }
   const rows = await db()`
-    INSERT INTO events (title, date, location, description, flyer_pdf_url)
-    VALUES (${title}, ${date || ''}, ${location || null}, ${description || null}, ${flyer_pdf_url || null})
+    INSERT INTO events (title, date, location, description, flyer_pdf_url, sort_order)
+    VALUES (${title}, ${date || ''}, ${location || null}, ${description || null}, ${flyer_pdf_url || null}, ${sort_order})
     RETURNING *
   `;
   return json(res, 200, (rows as any[])[0]);
@@ -404,6 +410,13 @@ async function handleAdminEventUpdate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { id } = req.params!;
   const { title, date, location, description, flyer_pdf_url, sort_order } = req.body || {};
+  // If flyer_pdf_url is being replaced, delete the old blob from storage.
+  if (flyer_pdf_url) {
+    const cur = await db()`SELECT flyer_pdf_url FROM events WHERE id = ${id}` as any[];
+    if (cur[0]?.flyer_pdf_url && cur[0].flyer_pdf_url !== flyer_pdf_url) {
+      try { await del(cur[0].flyer_pdf_url, { token: BLOB_TOKEN }); } catch { /* ignore */ }
+    }
+  }
   const rows = await db()`
     UPDATE events SET
       title = COALESCE(${title ?? null}, title),
@@ -420,6 +433,10 @@ async function handleAdminEventUpdate(req: AuthedRequest, res: ServerResponse) {
 async function handleAdminEventDelete(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { id } = req.params!;
+  const row = await db()`SELECT flyer_pdf_url FROM events WHERE id = ${id}` as any[];
+  if (row[0]?.flyer_pdf_url) {
+    try { await del(row[0].flyer_pdf_url, { token: BLOB_TOKEN }); } catch { /* ignore */ }
+  }
   await db()`DELETE FROM events WHERE id = ${id}`;
   return json(res, 200, { ok: true });
 }

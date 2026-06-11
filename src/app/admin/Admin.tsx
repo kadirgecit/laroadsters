@@ -132,7 +132,7 @@ const SECTIONS = [
   { icon: LayoutDashboard, label: 'Homepage', desc: 'Edit show info shown on the home page', path: '/admin/homepage', soon: true },
   { icon: Image, label: 'Sponsors', desc: 'Add, edit, or remove sponsor logos', path: '/admin/sponsors' },
   { icon: Image, label: 'Gallery', desc: 'Create albums and upload photos', path: '/admin/gallery', soon: true },
-  { icon: Calendar, label: 'Events', desc: 'Manage the events list', path: '/admin/events', soon: true },
+  { icon: Calendar, label: 'Events', desc: 'Manage the events list', path: '/admin/events' },
 ];
 
 export function AdminDashboard() {

@@ -320,6 +320,35 @@ async function seedSponsors() {
   console.log('  done.');
 }
 
+// Initial event — the 60th Anniversary show. The customer can add, edit, or
+// remove this from /admin/events. Idempotent: only inserts if the table is empty.
+const initialEvents = [
+  {
+    title: "60th Anniversary Roadster Show & Swap",
+    date: "June 19-20, 2026",
+    location: "Fairplex, Pomona",
+    description: "Father's Day Weekend - The premier classic roadster event of the year",
+    sort_order: 10,
+  },
+];
+
+async function seedEvents() {
+  const rows = await sql`SELECT COUNT(*)::int AS n FROM events`;
+  const n = (rows as any[])[0]?.n ?? 0;
+  if (n > 0) {
+    console.log(`Events table already has ${n} row(s) — skipping seed.`);
+    return;
+  }
+  console.log(`Seeding ${initialEvents.length} event(s) (only on first run)...`);
+  for (const e of initialEvents) {
+    await sql`
+      INSERT INTO events (title, date, location, description, sort_order)
+      VALUES (${e.title}, ${e.date}, ${e.location}, ${e.description}, ${e.sort_order})
+    `;
+  }
+  console.log('  done.');
+}
+
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
@@ -339,6 +368,7 @@ async function seedAdmin() {
 async function main() {
   await seedNewsCards();
   await seedSponsors();
+  await seedEvents();
   await seedAdmin();
   console.log('Seed complete.');
 }
