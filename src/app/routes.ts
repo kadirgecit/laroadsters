@@ -13,6 +13,8 @@ import { AdminSponsors } from './admin/AdminSponsors';
 import { AdminDocuments } from './admin/AdminDocuments';
 import { AdminEvents } from './admin/AdminEvents';
 import { AdminGallery } from './admin/AdminGallery';
+import { AdminMemberNews } from './admin/AdminMemberNews';
+import { AdminHomepage } from './admin/AdminHomepage';
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,8 @@ export const router = createBrowserRouter([
       { path: 'documents', Component: AdminDocuments },
       { path: 'events', Component: AdminEvents },
       { path: 'gallery', Component: AdminGallery },
+      { path: 'member-news', Component: AdminMemberNews },
+      { path: 'homepage', Component: AdminHomepage },
     ],
   },
 ]);

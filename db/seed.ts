@@ -375,6 +375,44 @@ async function seedGalleryAlbums() {
   console.log('  done.');
 }
 
+// Default site_settings — Hero, Event, About text used on the public Home
+// page. These match the hardcoded values in Hero.tsx, Event.tsx, About.tsx.
+// The customer can edit any of these via /admin/homepage.
+const defaultSettings: Record<string, string> = {
+  'hero.title':         'Los Angeles Roadsters',
+  'event.title':        '60th Anniversary',
+  'event.subtitle':     'Los Angeles Roadsters Show and Swap',
+  'event.date_line':    "Father's Day Weekend - June 19-20, 2026",
+  'event.hours':        '7:00 am – 4:00 pm',
+  'event.venue_name':   'Fairplex in Pomona',
+  'event.address1':     '1101 W. McKinley Avenue',
+  'event.city':         'Pomona, California',
+  'about.heading1':     'LEGENDARY',
+  'about.heading2':     'HERITAGE',
+  'about.lede':         "The Los Angeles Roadsters Car Club — established in 1957 and still going strong. We're celebrating our 60th Anniversary in 2026.",
+  'about.body1':        "For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 60th Anniversary Show & Swap brings together the finest classics on Father's Day Weekend.",
+  'about.body2':        'Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.',
+  'about.stat_founded':         '1957',
+  'about.stat_years_strong':    '69 Years',
+  'about.stat_anniversary':     '60th',
+  'about.stat_years_at_venue':  '44th',
+};
+
+async function seedSiteSettings() {
+  // Insert only keys that don't already exist. Never overwrite the
+  // customer's edits — the customer owns site_settings.
+  let inserted = 0;
+  for (const [k, v] of Object.entries(defaultSettings)) {
+    const res = await sql`
+      INSERT INTO site_settings (key, value, updated_at)
+      VALUES (${k}, ${v}, NOW())
+      ON CONFLICT (key) DO NOTHING
+    `;
+    if (res) inserted++;
+  }
+  console.log(`  seeded ${inserted} site setting key(s) (existing keys preserved).`);
+}
+
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
@@ -396,6 +434,7 @@ async function main() {
   await seedSponsors();
   await seedEvents();
   await seedGalleryAlbums();
+  await seedSiteSettings();
   await seedAdmin();
   console.log('Seed complete.');
 }

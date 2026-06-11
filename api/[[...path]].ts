@@ -151,7 +151,7 @@ const routes: Record<string, Partial<Record<Methods, Handler>>> = {
   '/admin/gallery-photos': { POST: handleAdminGalleryPhotoCreate },
   '/admin/gallery-photos/:id': { PUT: handleAdminGalleryPhotoUpdate, DELETE: handleAdminGalleryPhotoDelete },
   '/admin/upload': { POST: handleAdminUpload },
-  '/admin/settings': { PUT: handleAdminSettingsUpdate },
+  '/admin/settings': { GET: handleAdminSettings, PUT: handleAdminSettingsUpdate },
 };
 
 // ---------- entrypoint ----------
@@ -667,6 +667,14 @@ async function handleAdminUpload(req: AuthedRequest, res: ServerResponse) {
   } catch (e: any) {
     return json(res, 500, { error: e?.message || 'Upload to Blob failed' });
   }
+}
+
+async function handleAdminSettings(req: AuthedRequest, res: ServerResponse) {
+  if (!requireAdmin(req, res)) return;
+  const rows = await db()`SELECT key, value FROM site_settings`;
+  const out: Record<string, string> = {};
+  for (const r of rows as any[]) out[r.key] = r.value;
+  return json(res, 200, out);
 }
 
 async function handleAdminSettingsUpdate(req: AuthedRequest, res: ServerResponse) {

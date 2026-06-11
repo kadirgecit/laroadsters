@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSettings } from './useSettings';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Event() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const { get } = useSettings();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -83,20 +85,20 @@ export function Event() {
           <div className="event-title">
             <h2 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.9] tracking-tight mb-8">
               <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
-                60th Anniversary
+                {get('event.title', '60th Anniversary')}
               </div>
             </h2>
             <h3 className="text-[clamp(1.5rem,5vw,4rem)] font-bold text-white mb-8">
-              Los Angeles Roadsters Show and Swap
+              {get('event.subtitle', 'Los Angeles Roadsters Show and Swap')}
             </h3>
             <p className="text-2xl md:text-3xl text-red-500 font-semibold mb-8">
-              Father's Day Weekend - June 19-20, 2026
+              {get('event.date_line', "Father's Day Weekend - June 19-20, 2026")}
             </p>
             <div className="text-xl md:text-2xl text-gray-300 space-y-2">
-              <p>7:00 am – 4:00 pm</p>
-              <p>Fairplex in Pomona</p>
-              <p>1101 W. McKinley Avenue</p>
-              <p>Pomona, California</p>
+              <p>{get('event.hours', '7:00 am – 4:00 pm')}</p>
+              <p>{get('event.venue_name', 'Fairplex in Pomona')}</p>
+              <p>{get('event.address1', '1101 W. McKinley Avenue')}</p>
+              <p>{get('event.city', 'Pomona, California')}</p>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router';
 import { Award, Star, Calendar, MapPin } from 'lucide-react';
+import { useSettings } from './useSettings';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,7 @@ export function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const { get } = useSettings();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -86,10 +88,10 @@ export function About() {
   };
 
   const stats = [
-    { icon: Calendar, value: '1957', label: 'Founded', color: 'from-red-500 to-red-600' },
-    { icon: Award, value: '69 Years', label: 'Strong', color: 'from-blue-500 to-red-600' },
-    { icon: Star, value: '60th', label: 'Anniversary', color: 'from-blue-500 to-cyan-600' },
-    { icon: MapPin, value: '44th', label: 'Time @ Fairplex', color: 'from-yellow-500 to-red-600' },
+    { icon: Calendar, value: get('about.stat_founded', '1957'),         label: 'Founded',         color: 'from-red-500 to-red-600' },
+    { icon: Award,    value: get('about.stat_years_strong', '69 Years'), label: 'Strong',         color: 'from-blue-500 to-red-600' },
+    { icon: Star,     value: get('about.stat_anniversary', '60th'),      label: 'Anniversary',     color: 'from-blue-500 to-cyan-600' },
+    { icon: MapPin,   value: get('about.stat_years_at_venue', '44th'),   label: 'Time @ Fairplex', color: 'from-yellow-500 to-red-600' },
   ];
 
   return (
@@ -105,10 +107,10 @@ export function About() {
         <div className="mb-32">
           <h2 className="text-[clamp(2.5rem,8vw,7rem)] font-black leading-[0.9] tracking-tight mb-8">
             <div className="overflow-hidden text-white">
-              LEGENDARY
+              {get('about.heading1', 'LEGENDARY')}
             </div>
             <div className="overflow-hidden text-white" style={{ textShadow: '0 0 40px rgba(255,255,255,0.3)' }}>
-              HERITAGE
+              {get('about.heading2', 'HERITAGE')}
             </div>
           </h2>
         </div>
@@ -118,13 +120,13 @@ export function About() {
           <div ref={textRef}>
             <div className="about-text space-y-6 text-lg text-gray-400 leading-relaxed">
               <p className="text-2xl text-white font-light">
-                The Los Angeles Roadsters Car Club — established in 1957 and still going strong. We're celebrating our 60th Anniversary in 2026.
+                {get('about.lede', 'The Los Angeles Roadsters Car Club — established in 1957 and still going strong. We\'re celebrating our 60th Anniversary in 2026.')}
               </p>
               <p>
-                For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 60th Anniversary Show & Swap brings together the finest classics on Father's Day Weekend.
+                {get('about.body1', "For six decades, we've hosted the world's premier classic roadster show at the Fairplex in Pomona, California. Our 60th Anniversary Show & Swap brings together the finest classics on Father's Day Weekend.")}
               </p>
               <p>
-                Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.
+                {get('about.body2', 'Only finished roadsters park in our Show area — no project cars, no exceptions. Every car that makes the cut represents the pinnacle of automotive craftsmanship and passion.')}
               </p>
               <div className="pt-6">
                 <Link to="/about" className="px-8 py-4 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold inline-block">

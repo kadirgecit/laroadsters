@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSettings } from './useSettings';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
   const heroRef = useRef(null);
+  const { get } = useSettings();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,7 +36,7 @@ export function Hero() {
         <div className="text-center max-w-[90vw]">
           <h1 className="text-[clamp(2rem,6vw,6rem)] font-black tracking-tight leading-[1.15] py-2">
             <div className="bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent">
-              Los Angeles Roadsters
+              {get('hero.title', 'Los Angeles Roadsters')}
             </div>
           </h1>
         </div>
