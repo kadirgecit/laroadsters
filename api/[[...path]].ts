@@ -651,6 +651,7 @@ async function handleAdminUpload(req: AuthedRequest, res: ServerResponse) {
       access: 'public',
       token: BLOB_TOKEN,
       contentType: contentType || 'application/octet-stream',
+      allowOverwrite: true,
     });
     return json(res, 200, { url: blob.url, pathname: blob.pathname });
   } catch (e: any) {
