@@ -443,10 +443,18 @@ async function handleAdminDocumentCreate(req: AuthedRequest, res: ServerResponse
 async function handleAdminDocumentUpdate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { id } = req.params!;
-  const { name, size_label, category, sort_order } = req.body || {};
+  const { name, file_url, size_label, category, sort_order } = req.body || {};
+  // If file_url is being replaced, delete the old blob from storage.
+  if (file_url) {
+    const cur = await db()`SELECT file_url FROM documents WHERE id = ${id}` as any[];
+    if (cur[0]?.file_url && cur[0].file_url !== file_url) {
+      try { await del(cur[0].file_url, { token: BLOB_TOKEN }); } catch { /* ignore */ }
+    }
+  }
   const rows = await db()`
     UPDATE documents SET
       name = COALESCE(${name ?? null}, name),
+      file_url = COALESCE(${file_url ?? null}, file_url),
       size_label = COALESCE(${size_label ?? null}, size_label),
       category = COALESCE(${category ?? null}, category),
       sort_order = COALESCE(${sort_order ?? null}, sort_order)

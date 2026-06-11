@@ -1,9 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Calendar, MapPin, FileText } from 'lucide-react';
+import { Calendar, MapPin, FileText, Download } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
+
+interface DocumentItem {
+  id: string;
+  name: string;
+  file_url: string;
+  size_label: string | null;
+  category: string | null;
+  sort_order: number;
+}
 
 export function Members() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -26,6 +35,20 @@ export function Members() {
     return () => ctx.revert();
   }, []);
 
+  const [documents, setDocuments] = useState<DocumentItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/public/documents')
+      .then((r) => r.json())
+      .then((rows: DocumentItem[]) => {
+        const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
+        setDocuments(sorted);
+      })
+      .catch(() => { /* leave empty on failure */ })
+      .finally(() => setLoaded(true));
+  }, []);
+
   const events = [
     {
       date: 'June 19-20, 2026',
@@ -33,13 +56,6 @@ export function Members() {
       location: 'Fairplex, Pomona',
       description: "Father's Day Weekend - The premier classic roadster event of the year",
     },
-  ];
-
-  const documents = [
-    { name: 'Club Bylaws', size: 'PDF' },
-    { name: 'Club Roster', size: 'PDF' },
-    { name: 'Membership Application', size: 'PDF' },
-    { name: 'Mailing Labels', size: 'PDF' },
   ];
 
   return (
@@ -93,20 +109,32 @@ export function Members() {
             <p className="text-gray-400 mt-2">These documents are password-protected for members only.</p>
           </div>
           <div className="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-            <div className="grid md:grid-cols-2 gap-4">
-              {documents.map((doc, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <FileText className="w-5 h-5 text-red-500" />
-                    <span className="text-white">{doc.name}</span>
-                  </div>
-                  <span className="text-gray-500 text-sm">{doc.size}</span>
-                </div>
-              ))}
-            </div>
+            {loaded && documents.length === 0 ? (
+              <div className="text-center text-gray-500 text-sm py-8">
+                No documents available yet.
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-4">
+                {documents.map((doc) => (
+                  <a
+                    key={doc.id}
+                    href={doc.file_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/50 transition-colors group"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <FileText className="w-5 h-5 text-red-500 shrink-0" />
+                      <span className="text-white truncate">{doc.name}</span>
+                    </div>
+                    <span className="text-gray-500 text-sm inline-flex items-center gap-1 shrink-0 group-hover:text-red-500 transition-colors">
+                      {doc.size_label || 'Download'}
+                      <Download className="w-3 h-3" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </div>
