@@ -87,9 +87,13 @@ async function migrateSponsors() {
       continue;
     }
     const logo_url = await uploadFile(localPath, 'sponsors');
+    // Insert with only the columns we know exist in production:
+    // (id, name, logo_url, url, sort_order, created_at). The schema.sql
+    // does NOT have an `enabled` column on sponsors — the API handler
+    // references one but it's not yet migrated to the production DB.
     await sql`
-      INSERT INTO sponsors (name, logo_url, url, sort_order, enabled)
-      VALUES (${s.name}, ${logo_url}, ${s.url}, ${(i + 1) * 10}, true)
+      INSERT INTO sponsors (name, logo_url, url, sort_order)
+      VALUES (${s.name}, ${logo_url}, ${s.url}, ${(i + 1) * 10})
     `;
     console.log(`  + inserted ${s.name}`);
   }
