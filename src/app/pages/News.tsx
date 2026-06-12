@@ -384,6 +384,13 @@ export function News() {
 
   visibleSections.sort((a, b) => a.effectiveOrder - b.effectiveOrder);
 
+  // Split into top-level sections (flyer + sponsors) and the 12 detail
+  // cards. The detail cards need to be wrapped in a single container with
+  // `space-y-16` to match the original design's even spacing.
+  const TOP_LEVEL_SLUGS = new Set(['flyer', 'sponsors']);
+  const topLevel = visibleSections.filter((s) => TOP_LEVEL_SLUGS.has(s.slug));
+  const detail = visibleSections.filter((s) => !TOP_LEVEL_SLUGS.has(s.slug));
+
   return (
     <div className="min-h-screen bg-black pt-32 pb-20 px-4">
       <div className="max-w-7xl mx-auto" ref={sectionRef}>
@@ -402,10 +409,20 @@ export function News() {
           </p>
         </div>
 
-        {/* Sections — rendered in admin-controlled sort_order */}
-        {visibleSections.map((s) => (
+        {/* Top-level sections (flyer, sponsors) — each renders its own mb-20 */}
+        {topLevel.map((s) => (
           <div key={s.slug}>{s.render({ card: s.card, sponsors })}</div>
         ))}
+
+        {/* Detail cards — wrapped in a single space-y-16 container for even
+            vertical spacing between cards (matches the original design). */}
+        {detail.length > 0 && (
+          <div className="news-section mb-20 space-y-16">
+            {detail.map((s) => (
+              <div key={s.slug}>{s.render({ card: s.card, sponsors })}</div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
