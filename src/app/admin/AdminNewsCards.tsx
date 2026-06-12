@@ -1,6 +1,9 @@
-// /admin/news-cards — edit the 14 Show News page cards.
-// Each card has: title, body_text (plain, newline-separated), enabled toggle.
-// Changes are saved with one bulk PUT (all cards at once).
+// /admin/news-cards — edit the 12 editable Show News page cards.
+// Two of the 14 page cards (flyer, sponsors) are managed by their own
+// dedicated admin sections (Show Flyer, Sponsors) and are intentionally
+// hidden from this list to avoid confusing the customer about where to
+// edit them. The data rows still exist in the DB; the public page renders
+// them with hardcoded fallback titles.
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -37,6 +40,9 @@ async function api(path: string, opts: RequestInit = {}) {
   return data;
 }
 
+// Slugs that have their own dedicated admin section and are hidden here.
+const HIDDEN_SLUGS = new Set(['flyer', 'sponsors']);
+
 export function AdminNewsCards() {
   const navigate = useNavigate();
   const [cards, setCards] = useState<NewsCard[]>([]);
@@ -63,8 +69,10 @@ export function AdminNewsCards() {
   useEffect(() => {
     api('/admin/news-cards')
       .then((rows: NewsCard[]) => {
+        // Hide cards that are managed by their own dedicated admin section.
+        const filtered = rows.filter((r) => !HIDDEN_SLUGS.has(r.slug));
         // sort by current sort_order
-        const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
+        const sorted = [...filtered].sort((a, b) => a.sort_order - b.sort_order);
         setCards(sorted);
         setOriginal(
           JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order])),
@@ -149,7 +157,8 @@ export function AdminNewsCards() {
     }
     setLoading(true);
     const rows: NewsCard[] = await api('/admin/news-cards');
-    const sorted = [...rows].sort((a, b) => a.sort_order - b.sort_order);
+    const filtered = rows.filter((r) => !HIDDEN_SLUGS.has(r.slug));
+    const sorted = [...filtered].sort((a, b) => a.sort_order - b.sort_order);
     setCards(sorted);
     setOriginal(
       JSON.stringify(sorted.map((c) => [c.slug, c.title, c.body_html, c.enabled, c.sort_order])),
@@ -219,6 +228,10 @@ export function AdminNewsCards() {
       )}
 
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-4">
+        <div className="text-xs text-gray-500 px-2 py-2 border border-white/5 rounded-lg bg-white/[0.02]">
+          12 of 14 cards shown here. The <span className="text-gray-300">Show Flyer</span> and <span className="text-gray-300">Sponsors</span> cards
+          are managed in their own dedicated admin sections (Show Flyer, Sponsors) on the dashboard.
+        </div>
         {cards.map((card, index) => (
           <Card
             key={card.slug}
@@ -303,7 +316,7 @@ export function AdminNewsCards() {
         ))}
 
         <div className="text-center text-xs text-gray-500 py-4">
-          Tip: toggle off a card to hide it from the public site without deleting it.
+          Tip: use the arrow buttons to reorder cards, then Save Changes. The public Show News page renders cards in the order you set here.
         </div>
       </main>
       <ConfirmDialogHost />

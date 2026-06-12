@@ -1,2 +1,0 @@
-DATABASE_URL=postgresql://neondb_owner:npg_QjZkCBg3ic1n@ep-curly-truth-aqpvvprb-pooler.c-8.us-east-1.aws.neon.tech/neondb?channel_binding=require&sslmode=require
-BLOB_READ_WRITE_TOKEN=vercel_blob_rw_RJysBMfL2zABW6Rh_5akHmkZJzq2DCD3MEs85hqPMhKK3X8
