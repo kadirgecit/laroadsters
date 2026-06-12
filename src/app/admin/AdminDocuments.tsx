@@ -38,15 +38,6 @@ async function api(path: string, opts: RequestInit = {}) {
 
 const MAX_BYTES = 25 * 1024 * 1024; // 25 MB for a document
 
-const CATEGORIES = [
-  { value: '',         label: '— None —' },
-  { value: 'bylaws',   label: 'Bylaws' },
-  { value: 'form',     label: 'Form' },
-  { value: 'flyer',    label: 'Flyer' },
-  { value: 'roster',   label: 'Roster' },
-  { value: 'other',    label: 'Other' },
-];
-
 const emptyForm = (sortOrder: number) => ({
   name: '',
   file_url: '',
@@ -329,19 +320,6 @@ export function AdminDocuments() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor="doc-category" className="text-gray-400 text-xs">Category</Label>
-                  <select
-                    id="doc-category"
-                    value={form.category}
-                    onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                    className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-red-500/50"
-                  >
-                    {CATEGORIES.map((c) => (
-                      <option key={c.value} value={c.value} className="bg-gray-900">{c.label}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-1">
                   <Label htmlFor="doc-size" className="text-gray-400 text-xs">Type Label (e.g. PDF, DOCX)</Label>
                   <Input
                     id="doc-size"
@@ -484,7 +462,7 @@ export function AdminDocuments() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <div className="text-[10px] tracking-widest text-gray-500 font-mono">
-                      #{i + 1} · order {d.sort_order}{d.category ? ` · ${d.category}` : ''}
+                      #{i + 1} · order {d.sort_order}
                     </div>
                     {!d.show_in_club && (
                       <span className="text-[10px] tracking-widest text-yellow-500 font-mono uppercase border border-yellow-500/30 rounded px-1.5 py-0.5">
