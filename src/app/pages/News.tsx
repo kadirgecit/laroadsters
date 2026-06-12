@@ -309,8 +309,7 @@ export function News() {
           {/* Swap Meet */}
           {isOn(swapMeet) && (
             <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
-              <h2 className="text-3xl font-bold text-white mb-2">{swapMeet?.title || 'Swap Meet'}</h2>
-              <p className="text-lg text-red-500 font-semibold mb-6">Swap Meet spaces available — car parts and related items only.</p>
+              <h2 className="text-3xl font-bold text-white mb-6">{swapMeet?.title || 'Swap Meet'}</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 text-gray-300">
                   <RichBody html={swapMeet?.body_html || ''} />
@@ -363,19 +362,7 @@ export function News() {
             <section className="p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm">
               <h2 className="text-3xl font-bold text-white mb-6">{programAds?.title || 'Show Program Ads'}</h2>
               <div className="space-y-4 text-gray-300">
-                <div className="mt-6 p-4 rounded-xl bg-red-600/20 border border-red-500/30">
-                  <a
-                    href="/2026 Program Rate Sheet.pdf"
-                    download
-                    className="text-xl font-bold text-red-500 hover:text-white transition-colors duration-300"
-                  >
-                    Download Program Advertising Rate Sheet
-                  </a>
-                </div>
-                <div className="mt-6">
-                  <h3 className="text-xl font-bold text-white mb-3">Contact:</h3>
-                  <RichBody html={programAds?.body_html || ''} />
-                </div>
+                <RichBody html={programAds?.body_html || ''} />
               </div>
             </section>
           )}
