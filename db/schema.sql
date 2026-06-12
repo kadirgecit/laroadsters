@@ -51,13 +51,14 @@ CREATE TABLE IF NOT EXISTS events (
 
 -- Club documents (bylaws, roster, forms) available for download.
 CREATE TABLE IF NOT EXISTS documents (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name        TEXT NOT NULL,            -- display name, customer-editable
-  file_url    TEXT NOT NULL,            -- Vercel Blob URL
-  size_label  TEXT,                     -- "PDF", "DOCX", etc. display hint
-  category    TEXT,                     -- 'bylaws' | 'form' | 'flyer' | 'other'
-  sort_order  INT NOT NULL DEFAULT 0,
-  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name          TEXT NOT NULL,            -- display name, customer-editable
+  file_url      TEXT NOT NULL,            -- Vercel Blob URL (always accessible, even if hidden below)
+  size_label    TEXT,                     -- "PDF", "DOCX", etc. display hint
+  category      TEXT,                     -- 'bylaws' | 'form' | 'flyer' | 'other'
+  sort_order    INT NOT NULL DEFAULT 0,
+  show_in_club  BOOLEAN NOT NULL DEFAULT true,  -- show on public Members page Club Documents list
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- Sponsors shown in the News page and footer.

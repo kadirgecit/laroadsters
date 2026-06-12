@@ -5,11 +5,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, ArrowUp, ArrowDown, Save, RefreshCw, Trash2, Plus, X, FileText, Loader2, Download } from 'lucide-react';
+import { ArrowLeft, ArrowUp, ArrowDown, Save, RefreshCw, Trash2, Plus, X, FileText, Loader2, Download, Copy, Check } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
+import { Switch } from '@/app/components/ui/switch';
 import { uploadFile } from './upload';
 import { confirmDialog, ConfirmDialogHost } from './ConfirmDialog';
 
@@ -20,6 +21,7 @@ interface Doc {
   size_label: string | null;
   category: string | null;
   sort_order: number;
+  show_in_club: boolean;
   created_at: string;
 }
 
@@ -51,6 +53,7 @@ const emptyForm = (sortOrder: number) => ({
   size_label: 'PDF',
   category: '',
   sort_order: sortOrder,
+  show_in_club: true,
   fileUploading: false,
   filePct: 0,
   fileError: '',
@@ -66,6 +69,7 @@ export function AdminDocuments() {
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [editing, setEditing] = useState<string | 'new' | null>(null);
   const [form, setForm] = useState(emptyForm(10));
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -113,6 +117,7 @@ export function AdminDocuments() {
       size_label: d.size_label || 'PDF',
       category: d.category || '',
       sort_order: d.sort_order,
+      show_in_club: d.show_in_club,
       fileUploading: false,
       filePct: 0,
       fileError: '',
@@ -164,6 +169,7 @@ export function AdminDocuments() {
         size_label: form.size_label.trim() || null,
         category: form.category || null,
         sort_order: form.sort_order,
+        show_in_club: form.show_in_club,
       };
       if (editing === 'new') {
         await api('/admin/documents', { method: 'POST', body: JSON.stringify(payload) });
@@ -195,6 +201,18 @@ export function AdminDocuments() {
       setError(e.message);
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function copyLink(d: Doc) {
+    if (!d.file_url) return;
+    try {
+      await navigator.clipboard.writeText(d.file_url);
+      setCopiedId(d.id);
+      setTimeout(() => setCopiedId((cur) => (cur === d.id ? null : cur)), 1800);
+    } catch {
+      // Fallback for older browsers: select-and-prompt.
+      window.prompt('Copy this link:', d.file_url);
     }
   }
 
@@ -245,7 +263,12 @@ export function AdminDocuments() {
             <div className="min-w-0">
               <h1 className="text-xl font-black truncate">Club Documents</h1>
               <p className="text-xs text-gray-500">
-                {docs.length} document{docs.length === 1 ? '' : 's'} shown on the Members page
+                {(() => {
+                  const visible = docs.filter((d) => d.show_in_club).length;
+                  return docs.length === 0
+                    ? 'No documents yet'
+                    : `${visible} of ${docs.length} shown on the Members page`;
+                })()}
               </p>
             </div>
           </div>
@@ -338,6 +361,24 @@ export function AdminDocuments() {
                     className="bg-white/5 border-white/10 text-white"
                   />
                 </div>
+              </div>
+
+              {/* Visibility toggle: show on the public Club Documents list? */}
+              <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/[0.03] border border-white/10">
+                <div>
+                  <Label htmlFor="doc-show" className="text-white text-sm font-semibold">
+                    Show on Members page
+                  </Label>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    When on, this document appears in the public Club Documents list. When off, the file is still
+                    uploaded and the link still works — you can paste it into news cards or anywhere else.
+                  </p>
+                </div>
+                <Switch
+                  id="doc-show"
+                  checked={form.show_in_club}
+                  onCheckedChange={(v) => setForm((f) => ({ ...f, show_in_club: v }))}
+                />
               </div>
 
               {/* File uploader */}
@@ -441,19 +482,44 @@ export function AdminDocuments() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="text-[10px] tracking-widest text-gray-500 font-mono mb-0.5">
-                    #{i + 1} · order {d.sort_order}{d.category ? ` · ${d.category}` : ''}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="text-[10px] tracking-widest text-gray-500 font-mono">
+                      #{i + 1} · order {d.sort_order}{d.category ? ` · ${d.category}` : ''}
+                    </div>
+                    {!d.show_in_club && (
+                      <span className="text-[10px] tracking-widest text-yellow-500 font-mono uppercase border border-yellow-500/30 rounded px-1.5 py-0.5">
+                        Hidden from Members
+                      </span>
+                    )}
                   </div>
                   <div className="text-white font-semibold truncate">{d.name}</div>
                   {d.file_url && (
-                    <a
-                      href={d.file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-red-500 hover:text-white inline-flex items-center gap-1 truncate"
-                    >
-                      <Download className="w-3 h-3" /> Open file
-                    </a>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <a
+                        href={d.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-red-500 hover:text-white inline-flex items-center gap-1 truncate"
+                      >
+                        <Download className="w-3 h-3" /> Open file
+                      </a>
+                      <button
+                        onClick={() => copyLink(d)}
+                        className="text-xs text-gray-500 hover:text-white inline-flex items-center gap-1 shrink-0"
+                        title="Copy direct download link to clipboard"
+                      >
+                        {copiedId === d.id ? (
+                          <>
+                            <Check className="w-3 h-3 text-green-500" />
+                            <span className="text-green-500">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3 h-3" /> Copy link
+                          </>
+                        )}
+                      </button>
+                    </div>
                   )}
                 </div>
 

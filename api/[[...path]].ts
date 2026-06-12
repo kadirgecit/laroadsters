@@ -252,9 +252,10 @@ async function handlePublicEvents(_req: AuthedRequest, res: ServerResponse) {
 
 async function handlePublicDocuments(_req: AuthedRequest, res: ServerResponse) {
   const rows = await db()`
-    SELECT id, name, file_url, size_label, category, sort_order
+    SELECT id, name, file_url, size_label, category, sort_order, show_in_club
     FROM documents
-    ORDER BY category ASC, sort_order ASC
+    WHERE show_in_club = true
+    ORDER BY category, sort_order
   `;
   return json(res, 200, rows);
 }
@@ -458,11 +459,11 @@ async function handleAdminDocuments(req: AuthedRequest, res: ServerResponse) {
 }
 async function handleAdminDocumentCreate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
-  const { name, file_url, size_label, category, sort_order } = req.body || {};
+  const { name, file_url, size_label, category, sort_order, show_in_club } = req.body || {};
   if (!name || !file_url) return json(res, 400, { error: 'name and file_url required' });
   const rows = await db()`
-    INSERT INTO documents (name, file_url, size_label, category, sort_order)
-    VALUES (${name}, ${file_url}, ${size_label || null}, ${category || null}, ${sort_order || 0})
+    INSERT INTO documents (name, file_url, size_label, category, sort_order, show_in_club)
+    VALUES (${name}, ${file_url}, ${size_label || null}, ${category || null}, ${sort_order || 0}, ${show_in_club !== false})
     RETURNING *
   `;
   return json(res, 200, (rows as any[])[0]);
@@ -470,7 +471,7 @@ async function handleAdminDocumentCreate(req: AuthedRequest, res: ServerResponse
 async function handleAdminDocumentUpdate(req: AuthedRequest, res: ServerResponse) {
   if (!requireAdmin(req, res)) return;
   const { id } = req.params!;
-  const { name, file_url, size_label, category, sort_order } = req.body || {};
+  const { name, file_url, size_label, category, sort_order, show_in_club } = req.body || {};
   // If file_url is being replaced, delete the old blob from storage.
   if (file_url) {
     const cur = await db()`SELECT file_url FROM documents WHERE id = ${id}` as any[];
@@ -478,13 +479,17 @@ async function handleAdminDocumentUpdate(req: AuthedRequest, res: ServerResponse
       try { await del(cur[0].file_url, { token: BLOB_TOKEN }); } catch { /* ignore */ }
     }
   }
+  // COALESCE keeps the existing value when the field is absent from the body.
+  // For booleans, `false ?? null` is `false` (not null), so COALESCE picks false,
+  // letting us explicitly toggle show_in_club off.
   const rows = await db()`
     UPDATE documents SET
       name = COALESCE(${name ?? null}, name),
       file_url = COALESCE(${file_url ?? null}, file_url),
       size_label = COALESCE(${size_label ?? null}, size_label),
       category = COALESCE(${category ?? null}, category),
-      sort_order = COALESCE(${sort_order ?? null}, sort_order)
+      sort_order = COALESCE(${sort_order ?? null}, sort_order),
+      show_in_club = COALESCE(${show_in_club ?? null}, show_in_club)
     WHERE id = ${id}
     RETURNING *
   `;
