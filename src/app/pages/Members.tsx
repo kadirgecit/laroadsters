@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Calendar, MapPin, FileText, Download } from 'lucide-react';
+import { Calendar, MapPin, FileText, Download, Newspaper } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 interface DocumentItem {
@@ -21,6 +21,13 @@ interface EventItem {
   description: string | null;
   flyer_pdf_url: string | null;
   sort_order: number;
+}
+
+interface NewsPost {
+  id: string;
+  title: string;
+  body_text: string;
+  published_at: string;
 }
 
 export function Members() {
@@ -48,6 +55,8 @@ export function Members() {
   const [docLoaded, setDocLoaded] = useState(false);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [eventLoaded, setEventLoaded] = useState(false);
+  const [posts, setPosts] = useState<NewsPost[]>([]);
+  const [postsLoaded, setPostsLoaded] = useState(false);
 
   useEffect(() => {
     fetch('/api/public/documents')
@@ -69,6 +78,17 @@ export function Members() {
       })
       .catch(() => { /* leave empty on failure */ })
       .finally(() => setEventLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/public/news-posts')
+      .then((r) => r.json())
+      .then((rows: NewsPost[]) => {
+        // Server already orders by published_at DESC. Keep that order.
+        setPosts(Array.isArray(rows) ? rows : []);
+      })
+      .catch(() => { /* leave empty on failure */ })
+      .finally(() => setPostsLoaded(true));
   }, []);
 
   return (
@@ -130,6 +150,34 @@ export function Members() {
                     )}
                   </div>
                 </div>
+              ))
+            )}
+          </div>
+        </section>
+
+        {/* Latest News (news_posts from /admin/member-news) */}
+        <section className="member-section mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <Newspaper className="w-8 h-8 text-red-500" />
+            <h2 className="text-3xl font-bold text-white">Latest News</h2>
+          </div>
+          <div className="space-y-4">
+            {postsLoaded && posts.length === 0 ? (
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm text-center text-gray-500 text-sm">
+                No news posts yet.
+              </div>
+            ) : (
+              posts.map((p) => (
+                <article
+                  key={p.id}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm"
+                >
+                  <div className="text-[10px] tracking-widest text-gray-500 font-mono mb-2">
+                    {new Date(p.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{p.title}</h3>
+                  <p className="text-gray-400 whitespace-pre-wrap">{p.body_text}</p>
+                </article>
               ))
             )}
           </div>

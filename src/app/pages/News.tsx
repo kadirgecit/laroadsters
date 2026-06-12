@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Download, ExternalLink } from 'lucide-react';
+import { useSettings } from '../components/useSettings';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -116,7 +117,7 @@ const SECTIONS: { slug: string; defaultTitle: string; defaultOrder: number; rend
         <div className="text-center mb-12">
           <div className="text-sm tracking-[0.3em] text-red-500 mb-4 font-light">THANK YOU</div>
           <h2 className="text-4xl font-black text-white mb-4">{card?.title || 'Our Sponsors'}</h2>
-          <p className="text-gray-400">Supporting the 60th Anniversary Roadster Show &amp; Swap</p>
+          <p className="text-gray-400">{get('news.sponsors_subtext', 'Supporting the 60th Anniversary Roadster Show & Swap')}</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6">
           {sponsors.map((sponsor) => (
@@ -332,6 +333,7 @@ export function News() {
   const [cards, setCards] = useState<Record<string, NewsCard>>({});
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const { get } = useSettings();
 
   useEffect(() => {
     Promise.all([
@@ -405,7 +407,7 @@ export function News() {
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl">
-            60th Anniversary Roadster Show &amp; Swap — Father's Day Weekend, June 19-20, 2026
+            {get('news.header_subtext', "60th Anniversary Roadster Show & Swap — Father's Day Weekend, June 19-20, 2026")}
           </p>
         </div>
 

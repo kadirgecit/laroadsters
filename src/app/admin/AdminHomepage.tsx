@@ -62,6 +62,14 @@ const SECTIONS: { title: string; description: string; keys: { key: string; label
       { key: 'about.stat_years_at_venue',  label: 'Years at venue (e.g. 44th)', placeholder: '44th' },
     ],
   },
+  {
+    title: 'Show News',
+    description: 'The header subtext and sponsors section blurb on the Show News page.',
+    keys: [
+      { key: 'news.header_subtext',   label: 'Header subtext',     placeholder: "60th Anniversary Roadster Show & Swap — Father's Day Weekend, June 19-20, 2026", multiline: true },
+      { key: 'news.sponsors_subtext', label: 'Sponsors blurb',     placeholder: 'Supporting the 60th Anniversary Roadster Show & Swap' },
+    ],
+  },
 ];
 
 async function api(path: string, opts: RequestInit = {}) {
